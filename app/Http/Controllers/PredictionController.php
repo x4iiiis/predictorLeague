@@ -4,6 +4,8 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Prediction;
+use App\Match;
+use App\User;
 use Auth;
 
 class PredictionController extends Controller
@@ -64,6 +66,56 @@ class PredictionController extends Controller
         Auth::user()->save();
 
         return redirect('/home');
+    }
+
+    public function updateScores() {
+        //Update the users table's scores 
+        $allPredictions = Prediction::all();
+        //dd($allPredictions);
+
+        foreach($allPredictions as $prediction) {
+            $user = User::where('id', $prediction->userID)->first(); // Relevant User
+            $match = Match::where('id', $prediction->matchID)->first(); // Relevant Match
+
+            //dd($match->homegoals);
+            //dd($match[0]->homegoals);
+
+            $homeGoals = $match->homegoals; // Relevant Match Home Goals
+            $awayGoals = $match->awayGoals; // Relevant Match Away Goals
+            
+                //dd($user->correctScores);
+                //dd($user->name);
+                
+                //dd($prediction->homeGoals);
+                //dd($homeGoals);
+                //dd($prediction->awayGoals);
+                //dd($awayGoals);
+
+                //dd($prediction->homeGoals = $homeGoals);
+
+            if($prediction->homeGoals == $homeGoals && $prediction->awayGoals == $awayGoals) {
+                $user->correctScores += 1;
+                
+                //dd('correct score');
+            }
+            else if($prediction->homeGoals > $prediction->awayGoals && $match->homegoals > $match->awayGoals) {
+                $user->correctOutcomes += 1;
+                
+                //dd('1');
+            } 
+            else if($prediction->homeGoals < $prediction->awayGoals && $match->homegoals < $match->awayGoals) {
+                $user->correctOutcomes += 1;
+                //dd('2');
+            } 
+            else if($prediction->homeGoals == $prediction->awayGoals && $match->homegoals == $match->awayGoals) {
+                $user->correctOutcomes += 1;
+                //dd('3');
+            } 
+
+            
+            $user->save();
+
+        }
     }
 
     /**

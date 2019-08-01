@@ -25,7 +25,7 @@ class MatchController extends Controller
                                 ->with('matches',$matches);
         }
 
-        return "AlreadySubmitted, beat it";
+        return "Already submitted, beat it";
     }
 
     /**

@@ -5,6 +5,7 @@
     <div class="row justify-content-center">
         <div class="col-md-7">
             <div class="card">
+            
                 <div class="card-header">Upcoming Matches</div>
 
                     <div class="card-body">
@@ -14,18 +15,8 @@
                             </div>
                         @endif
 
-                        <div class="row py-2">
-                            <div class="col-4 mx-auto">
-                                <img src="img/clubEmblems/Hibernian.png">
-                            </div>
-                            <div class="form-group col-4 my-auto mx-auto">
-                                <input class="col-5"></input>
-                                <input class="col-5"></input>
-                            </div>
-                            <div class="col-4 mx-auto">
-                                <img src="img/clubEmblems/HeartOfMidlothian.png">
-                            </div>
-                        </div>
+                        <form action="{{ route('prediction.store') }}" method="post">
+                        @csrf
 
                         @foreach($matches as $match)
                         <div class="row py-2">
@@ -33,19 +24,16 @@
                                 <img src="{{ $match->homeEmblem }}" alt="{{ $match->homeTeam }}">
                             </div>
                             <div class="form-group col-4 my-auto mx-auto">
-                                <input class="col-5"></input>
-                                <input class="col-5"></input>
+                                <input class="col-5" name="home{{ $match->id }}"></input>
+                                <input class="col-5" name="away{{ $match->id }}"></input>
                             </div>
                             <div class="col-4 mx-auto">
                                 <img src="{{ $match->awayEmblem }}" alt="{{ $match->awayTeam }}">
                             </div>
                         </div>
                         @endforeach
-                    </div>
-                </div>
-                <div class="card-footer">
-                    <div class="text-center">
-                        <div class="btn btn-lg btn-primary mx-auto">Submit</div>
+                        <button class="btn btn-lg btn-primary mx-auto" type="submit">Submit</button>
+                        </form>
                     </div>
                 </div>
         </div>

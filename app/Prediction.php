@@ -4,9 +4,9 @@ namespace App;
 
 use Illuminate\Database\Eloquent\Model;
 
-class team extends Model
+class Prediction extends Model
 {
     protected $fillable = [
-        'name', 'emblem', 'league' 
+        'userID', 'matchID', 'homeGoals', 'awayGoals'
     ];
 }

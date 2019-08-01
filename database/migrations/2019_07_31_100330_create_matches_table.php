@@ -22,7 +22,6 @@ class CreateMatchesTable extends Migration
             $table->dateTime('kickoff');
             $table->integer('homegoals')->nullable();
             $table->integer('awayGoals')->nullable();
-            $table->json('predictions')->nullable();
             $table->timestamps();
         });
     }

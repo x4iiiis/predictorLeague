@@ -22,3 +22,4 @@ Route::get('/home', 'MatchController@index')->name('home');
 
 Route::get('/backend', 'MatchController@create')->name('backend');
 Route::post('/match/store', 'MatchController@store')->name('match.store');
+Route::post('/prediction/store', 'PredictionController@store')->name('prediction.store');

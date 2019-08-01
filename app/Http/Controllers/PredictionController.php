@@ -3,11 +3,10 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
-use App\Match;
-use App\User;
-use App\Team;
+use App\Prediction;
+use Auth;
 
-class MatchController extends Controller
+class PredictionController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -16,11 +15,7 @@ class MatchController extends Controller
      */
     public function index()
     {
-        $users = User::all();
-        $matches = Match::all();
-
-        return view('home')->with('users',$users)
-                            ->with('matches',$matches);
+        //
     }
 
     /**
@@ -29,9 +24,8 @@ class MatchController extends Controller
      * @return \Illuminate\Http\Response
      */
     public function create()
-    {   
-        $teams = Team::all();
-        return view('backend')->with('teams',$teams);
+    {
+        //
     }
 
     /**
@@ -42,24 +36,34 @@ class MatchController extends Controller
      */
     public function store(Request $request)
     {
-        $request->validate([
-            'homeTeam' => 'required|max:32',
-            'awayTeam' => 'required|max:32',
-            'kickoff' => 'required|date'
-        ]);
+        //Figure out what match we're dealing with based on the first variable name (matchID comes after 'home')
+        $firstMatchID = substr($request->request->keys()[1],4);
+        $matchID = (int)$firstMatchID;
 
-        $homeEmblem = Team::where('name', $request->homeTeam)->first();
-        $awayEmblem = Team::where('name', $request->awayTeam)->first();
+        //Loop through matches from there
+        for ($i = 1; $i <= count($request->request->keys())-1; $i+=2) {
 
-        $newMatch = Match::create([
-            'homeTeam' => $request->homeTeam,
-            'awayTeam' => $request->awayTeam,
-            'kickoff' => $request->kickoff,
-            'homeEmblem' => $homeEmblem->emblem,
-            'awayEmblem' => $awayEmblem->emblem
-        ]);
+            $homeGoals = $request->all()[$request->request->keys()[$i]];
+            $awayGoals = $request->all()[$request->request->keys()[$i+1]];
 
-        return redirect('/backend');
+            //Validate request
+
+
+            //Create match
+            $newMatch = Prediction::create([
+                'userID' => Auth::user()->id,
+                'matchID' => $matchID,
+                'homeGoals' => $homeGoals,
+                'awayGoals' => $awayGoals
+            ]);
+
+            $matchID++;
+        }
+        
+        Auth::user()->hasSubmitted = 1;
+        Auth::user()->save();
+
+        return redirect('/home');
     }
 
     /**

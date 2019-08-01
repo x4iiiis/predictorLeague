@@ -17,7 +17,7 @@ class MatchController extends Controller
     public function index()
     {
         $users = User::all();
-        $matches = Match::all();
+        $matches = Match::all()->where('kickoff', '>', date('Y-m-d H:i:s'));
 
         return view('home')->with('users',$users)
                             ->with('matches',$matches);

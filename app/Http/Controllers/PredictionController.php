@@ -71,50 +71,31 @@ class PredictionController extends Controller
     public function updateScores() {
         //Update the users table's scores 
         $allPredictions = Prediction::all();
-        //dd($allPredictions);
 
         foreach($allPredictions as $prediction) {
             $user = User::where('id', $prediction->userID)->first(); // Relevant User
             $match = Match::where('id', $prediction->matchID)->first(); // Relevant Match
 
-            //dd($match->homegoals);
-            //dd($match[0]->homegoals);
-
             $homeGoals = $match->homegoals; // Relevant Match Home Goals
             $awayGoals = $match->awayGoals; // Relevant Match Away Goals
-            
-                //dd($user->correctScores);
-                //dd($user->name);
-                
-                //dd($prediction->homeGoals);
-                //dd($homeGoals);
-                //dd($prediction->awayGoals);
-                //dd($awayGoals);
 
-                //dd($prediction->homeGoals = $homeGoals);
-
+            //Correct Score
             if($prediction->homeGoals == $homeGoals && $prediction->awayGoals == $awayGoals) {
                 $user->correctScores += 1;
-                
-                //dd('correct score');
             }
+            //Correct Outcome - Home Win
             else if($prediction->homeGoals > $prediction->awayGoals && $match->homegoals > $match->awayGoals) {
                 $user->correctOutcomes += 1;
-                
-                //dd('1');
             } 
+            //Correct Outcome - Away Win
             else if($prediction->homeGoals < $prediction->awayGoals && $match->homegoals < $match->awayGoals) {
                 $user->correctOutcomes += 1;
-                //dd('2');
             } 
+            //Correct Outcome - Draw
             else if($prediction->homeGoals == $prediction->awayGoals && $match->homegoals == $match->awayGoals) {
                 $user->correctOutcomes += 1;
-                //dd('3');
             } 
-
-            
             $user->save();
-
         }
     }
 

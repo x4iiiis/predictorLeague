@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use App\Match;
 use App\User;
 use App\Team;
+use Auth;
 
 class MatchController extends Controller
 {
@@ -19,8 +20,12 @@ class MatchController extends Controller
         $users = User::all();
         $matches = Match::all()->where('kickoff', '>', date('Y-m-d H:i:s'));
 
-        return view('home')->with('users',$users)
-                            ->with('matches',$matches);
+        if(Auth::user()->hasSubmitted == 0) {
+            return view('home')->with('users',$users)
+                                ->with('matches',$matches);
+        }
+
+        return "AlreadySubmitted, beat it";
     }
 
     /**

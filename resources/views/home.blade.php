@@ -69,7 +69,6 @@
                 <div class="card-body">
                     <p>Correct Score - 3pts</p>
                     <p>Wrong Score w/Correct Outcome  - 1pt</p>
-                    <p>Failure to submit will result in every game being predicted as 0-0</p>
                 </div>
             </div>
         </div>

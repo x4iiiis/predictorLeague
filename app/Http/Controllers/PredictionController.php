@@ -79,23 +79,26 @@ class PredictionController extends Controller
             $homeGoals = $match->homegoals; // Relevant Match Home Goals
             $awayGoals = $match->awayGoals; // Relevant Match Away Goals
 
-            //Correct Score
-            if($prediction->homeGoals == $homeGoals && $prediction->awayGoals == $awayGoals) {
-                $user->correctScores += 1;
+            if(!is_null($homeGoals)) {
+
+                //Correct Score
+                if($prediction->homeGoals == $homeGoals && $prediction->awayGoals == $awayGoals) {
+                    $user->correctScores += 1;
+                }
+                //Correct Outcome - Home Win
+                else if($prediction->homeGoals > $prediction->awayGoals && $match->homegoals > $match->awayGoals) {
+                    $user->correctOutcomes += 1;
+                } 
+                //Correct Outcome - Away Win
+                else if($prediction->homeGoals < $prediction->awayGoals && $match->homegoals < $match->awayGoals) {
+                    $user->correctOutcomes += 1;
+                } 
+                //Correct Outcome - Draw
+                else if($prediction->homeGoals == $prediction->awayGoals && $match->homegoals == $match->awayGoals) {
+                    $user->correctOutcomes += 1;
+                } 
+                $user->save();
             }
-            //Correct Outcome - Home Win
-            else if($prediction->homeGoals > $prediction->awayGoals && $match->homegoals > $match->awayGoals) {
-                $user->correctOutcomes += 1;
-            } 
-            //Correct Outcome - Away Win
-            else if($prediction->homeGoals < $prediction->awayGoals && $match->homegoals < $match->awayGoals) {
-                $user->correctOutcomes += 1;
-            } 
-            //Correct Outcome - Draw
-            else if($prediction->homeGoals == $prediction->awayGoals && $match->homegoals == $match->awayGoals) {
-                $user->correctOutcomes += 1;
-            } 
-            $user->save();
         }
     }
 

@@ -19,7 +19,7 @@ class MatchController extends Controller
     {
         if(Auth::user()) {
             $users = User::all();
-            $matches = Match::all()->where('kickoff', '>', date('Y-m-d H:i:s'))->orderBy('kickoff');
+            $matches = Match::all()->where('kickoff', '>', date('Y-m-d H:i:s'))->sortBy('kickoff');
 
             if(Auth::user()->hasSubmitted == 0) {
                 return view('home')->with('users',$users)

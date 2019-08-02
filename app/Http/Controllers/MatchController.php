@@ -17,15 +17,18 @@ class MatchController extends Controller
      */
     public function index()
     {
-        $users = User::all();
-        $matches = Match::all()->where('kickoff', '>', date('Y-m-d H:i:s'));
+        if(Auth::user()) {
+            $users = User::all();
+            $matches = Match::all()->where('kickoff', '>', date('Y-m-d H:i:s'));
 
-        if(Auth::user()->hasSubmitted == 0) {
-            return view('home')->with('users',$users)
-                                ->with('matches',$matches);
+            if(Auth::user()->hasSubmitted == 0) {
+                return view('home')->with('users',$users)
+                                    ->with('matches',$matches);
+            }
+
+            return "Already submitted, beat it";
         }
-
-        return "Already submitted, beat it";
+        return redirect('/login');
     }
 
     /**

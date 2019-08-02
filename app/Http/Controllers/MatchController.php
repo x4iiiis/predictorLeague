@@ -26,7 +26,7 @@ class MatchController extends Controller
                                     ->with('matches',$matches);
             }
 
-            return "Already submitted, beat it";
+            return view('home')->with('users',$users);
         }
         return redirect('/login');
     }

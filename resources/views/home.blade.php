@@ -18,21 +18,25 @@
                         <form action="{{ route('prediction.store') }}" method="post">
                         @csrf
 
-                        @foreach($matches as $match)
-                        <div class="row py-2">
-                            <div class="col-3 mx-auto">
-                                <img src="{{ $match->homeEmblem }}" alt="{{ $match->homeTeam }}">
-                            </div>
-                            <div class="form-group col-6 my-auto mx-auto">
-                                <input class="col-5" name="home{{ $match->id }}"></input>
-                                <input class="col-5" name="away{{ $match->id }}"></input>
-                            </div>
-                            <div class="col-3 mx-auto">
-                                <img src="{{ $match->awayEmblem }}" alt="{{ $match->awayTeam }}">
-                            </div>
-                        </div>
-                        @endforeach
-                        <button class="btn btn-lg btn-primary mx-auto" type="submit">Submit</button>
+                        @isset($matches)
+                            @if(sizeof($matches) == 0)
+                                @foreach($matches as $match)
+                                <div class="row py-2">
+                                    <div class="col-3 mx-auto">
+                                        <img src="{{ $match->homeEmblem }}" alt="{{ $match->homeTeam }}">
+                                    </div>
+                                    <div class="form-group col-6 my-auto mx-auto">
+                                        <input class="col-5" name="home{{ $match->id }}"></input>
+                                        <input class="col-5" name="away{{ $match->id }}"></input>
+                                    </div>
+                                    <div class="col-3 mx-auto">
+                                        <img src="{{ $match->awayEmblem }}" alt="{{ $match->awayTeam }}">
+                                    </div>
+                                </div>
+                                @endforeach
+                                <button class="btn btn-lg btn-primary mx-auto" type="submit">Submit</button>
+                            @endif
+                        @endisset
                         </form>
                     </div>
                 </div>

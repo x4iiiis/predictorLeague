@@ -74,8 +74,8 @@ class PredictionController extends Controller
 
         //Clear each user's scores
         foreach(User::all() as $user) {
-            $user->correctScore = 0;
-            $user->correctOutcome = 0;
+            $user->correctScores = 0;
+            $user->correctOutcomes = 0;
             $user->save();
         }
 

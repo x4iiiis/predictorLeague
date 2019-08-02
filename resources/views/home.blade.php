@@ -23,9 +23,9 @@
                             <div class="col-4 mx-auto">
                                 <img src="{{ $match->homeEmblem }}" alt="{{ $match->homeTeam }}">
                             </div>
-                            <div class="form-group col-4 my-auto mx-auto">
-                                <input class="col-6" name="home{{ $match->id }}"></input>
-                                <input class="col-6" name="away{{ $match->id }}"></input>
+                            <div class="form-group col-6 my-auto mx-auto">
+                                <input class="col-5" name="home{{ $match->id }}"></input>
+                                <input class="col-5" name="away{{ $match->id }}"></input>
                             </div>
                             <div class="col-4 mx-auto">
                                 <img src="{{ $match->awayEmblem }}" alt="{{ $match->awayTeam }}">

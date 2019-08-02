@@ -3,7 +3,7 @@
 @section('content')
 <div class="container">
     <div class="row justify-content-center">
-        <div class="col-md-7">
+        <div class="col-md-5">
             <div class="card">
             
                 <div class="card-header">Upcoming Matches</div>
@@ -38,12 +38,12 @@
                 </div>
         </div>
 
-        <div class="col-md-5">
+        <div class="col-md-7">
             <div class="card">
                 <div class="card-header">League Table</div>
 
                 <div class="card-body">
-                    <table>
+                    <table class="table table-hover">
                         <tr style="text-align:center">
                             <th></th>
                             <th>Points</th>

@@ -72,6 +72,13 @@ class PredictionController extends Controller
         //Update the users table's scores 
         $allPredictions = Prediction::all();
 
+        //Clear each user's scores
+        foreach(User::all() as $user) {
+            $user->correctScore = 0;
+            $user->correctOutcome = 0;
+            $user->save();
+        }
+
         foreach($allPredictions as $prediction) {
             $user = User::where('id', $prediction->userID)->first(); // Relevant User
             $match = Match::where('id', $prediction->matchID)->first(); // Relevant Match

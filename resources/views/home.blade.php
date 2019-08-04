@@ -3,7 +3,48 @@
 @section('content')
 <div class="container">
     <div class="row justify-content-center">
-        <div class="col-md-5 mb-2">
+        
+
+        <div class="col-md-7">
+            <div class="card">
+                <div class="card-header">League Table</div>
+
+                <div class="card-body">
+                    <table class="table table-hover" id="leagueTable">
+                        <tr style="text-align:center">
+                            <th></th>
+                            <th>Points</th>
+                            <th>Correct Score</th>
+                            <th>Correct Outcome</th>
+                        </tr>
+                        @foreach($users as $user)
+                        <tr style="text-align:center">
+                            <td>{{ $user->name }}</td>
+                            <td>{{ ($user->correctScores * 3) + $user->correctOutcomes }}</td>
+                            <td>{{ $user->correctScores }}</td>
+                            <td>{{ $user->correctOutcomes }}</td>
+                        </tr>
+                        @endforeach
+                    </table>
+                </div>
+            </div>
+
+        <div class="mr-0 ml-auto mt-2">
+            <div class="card">
+            <div class="card-header">Rules</div>
+
+                <div class="card-body">
+                    <p>Correct Score - 3pts</p>
+                    <p>Wrong Score w/Correct Outcome  - 1pt</p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+
+
+    <div class="col-md-5 mb-2">
             <div class="card">
             
                 <div class="card-header">Upcoming Matches</div>
@@ -55,6 +96,7 @@
                         @isset($prevMatches)
                             @if(sizeof($prevMatches) != 0)
                                 @foreach($prevMatches as $prevMatch)
+
                                 <div class="row py-2">
                                     <div class="col-3 mx-auto">
                                         <img src="{{ $prevMatch->homeEmblem }}" alt="{{ $prevMatch->homeTeam }}">
@@ -73,42 +115,7 @@
                     </div>
                 </div>
         </div>
-
-        <div class="col-md-7">
-            <div class="card">
-                <div class="card-header">League Table</div>
-
-                <div class="card-body">
-                    <table class="table table-hover" id="leagueTable">
-                        <tr style="text-align:center">
-                            <th></th>
-                            <th>Points</th>
-                            <th>Correct Score</th>
-                            <th>Correct Outcome</th>
-                        </tr>
-                        @foreach($users as $user)
-                        <tr style="text-align:center">
-                            <td>{{ $user->name }}</td>
-                            <td>{{ ($user->correctScores * 3) + $user->correctOutcomes }}</td>
-                            <td>{{ $user->correctScores }}</td>
-                            <td>{{ $user->correctOutcomes }}</td>
-                        </tr>
-                        @endforeach
-                    </table>
-                </div>
-            </div>
-
-        <div class="mr-0 ml-auto mt-2">
-            <div class="card">
-            <div class="card-header">Rules</div>
-
-                <div class="card-body">
-                    <p>Correct Score - 3pts</p>
-                    <p>Wrong Score w/Correct Outcome  - 1pt</p>
-                </div>
-            </div>
-        </div>
-    </div>
+</div>
 </div>
 
 <script>

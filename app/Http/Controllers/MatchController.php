@@ -20,13 +20,20 @@ class MatchController extends Controller
         if(Auth::user()) {
             $users = User::all();
             $matches = Match::all()->where('kickoff', '>', date('Y-m-d H:i:s'))->sortBy('kickoff');
+            $prevMatches = Match::all()->where('kickoff', '<', date('Y-m-d H:i:s'))->sortBy('kickoff')
+                                        ->where('homegoals', '>=', 0);
+
+            //$prevMatches = Match::whereNotNull('homegoals')->get()->all();
+            //dd($prevMatches);
 
             if(Auth::user()->hasSubmitted == 0) {
                 return view('home')->with('users',$users)
-                                    ->with('matches',$matches);
+                                    ->with('matches',$matches)
+                                    ->with('prevMatches',$prevMatches);
             }
 
-            return view('home')->with('users',$users);
+            return view('home')->with('users',$users)
+                                ->with('prevMatches',$prevMatches);
         }
         return redirect('/login');
     }

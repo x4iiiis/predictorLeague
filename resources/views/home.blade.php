@@ -29,7 +29,7 @@
                 </div>
             </div>
 
-        <div class="mr-0 ml-auto mt-2">
+        <div class="mr-0 ml-auto mx-2">
             <div class="card">
             <div class="card-header">Rules</div>
 

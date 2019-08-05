@@ -67,8 +67,8 @@
                                         <img src="{{ $match->homeEmblem }}" alt="{{ $match->homeTeam }}">
                                     </div>
                                     <div class="form-group col-6 my-auto mx-auto">
-                                        <input class="col-5" name="home{{ $match->id }}"></input>
-                                        <input class="col-5" name="away{{ $match->id }}"></input>
+                                        <input class="col-5" name="home{{ $match->id }}" required></input>
+                                        <input class="col-5" name="away{{ $match->id }}" required></input>
                                     </div>
                                     <div class="col-3 mx-auto">
                                         <img src="{{ $match->awayEmblem }}" alt="{{ $match->awayTeam }}">

@@ -65,7 +65,7 @@ class PredictionController extends Controller
         Auth::user()->hasSubmitted = 1;
         Auth::user()->save();
 
-        return redirect('/home');
+        return redirect('/');
     }
 
     public function updateScores() {

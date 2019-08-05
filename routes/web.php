@@ -18,7 +18,7 @@ Route::get('/', function () {
 Auth::routes();
 
 //Route::get('/home', 'HomeController@index')->name('home');
-Route::get('/home', 'MatchController@index')->name('home');
+Route::get('/', 'MatchController@index')->name('home');
 
 Route::get('/backend', 'MatchController@create')->name('backend');
 Route::post('/match/store', 'MatchController@store')->name('match.store');

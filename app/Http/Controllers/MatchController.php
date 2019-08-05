@@ -20,7 +20,7 @@ class MatchController extends Controller
         if(Auth::user()) {
             $users = User::all();
             $matches = Match::all()->where('kickoff', '>', date('Y-m-d H:i:s'))->sortBy('kickoff');
-            $prevMatches = Match::all()->where('kickoff', '<', date('Y-m-d H:i:s'))->sortBy('kickoff')
+            $prevMatches = Match::all()->where('kickoff', '<', date('Y-m-d H:i:s'))
                                         ->where('homegoals', '>=', 0);
 
             //$prevMatches = Match::whereNotNull('homegoals')->get()->all();

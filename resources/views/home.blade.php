@@ -66,7 +66,7 @@
                                     <div class="col-3 mx-auto">
                                         <img src="{{ $match->homeEmblem }}" alt="{{ $match->homeTeam }}">
                                     </div>
-                                    <div class="form-group col-6 my-auto mx-auto">
+                                    <div class="form-group col-6 my-auto mx-auto text-center">
                                         <input class="col-5" name="home{{ $match->id }}" required type="number"></input>
                                         <input class="col-5" name="away{{ $match->id }}" required type="number"></input>
                                     </div>

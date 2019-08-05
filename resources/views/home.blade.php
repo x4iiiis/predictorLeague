@@ -106,6 +106,22 @@
                                     <div class="col-6 mx-auto my-auto text-center">
                                         <h1 style="display: inline;">{{ $prevMatch->homegoals }} - </h1>
                                         <h1 style="display: inline;">{{ $prevMatch->awayGoals }}</h1>
+
+                                        @isset($predictions)
+                                            <table>
+                                            @foreach($predictions[  $prevMatch->id  - 1] as $prediction)
+                                            <tr>
+                                                <td style="text-align:right">
+                                                    <small>{{ $users[$prediction->userID]->name }}</small>
+                                                </td>
+                                                <td>
+                                                    <small>{{ $prediction->homeGoals }} - {{ $prediction->awayGoals }}</small>
+                                                </td>
+                                            </tr>
+                                            @endforeach
+                                            </table>
+                                        @endisset
+
                                     </div>
                                     <div class="col-3 mx-auto">
                                         <img src="{{ $prevMatch->awayEmblem }}" alt="{{ $prevMatch->awayTeam }}">

@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use App\Match;
 use App\User;
 use App\Team;
+use App\Prediction;
 use Auth;
 
 class MatchController extends Controller
@@ -23,17 +24,30 @@ class MatchController extends Controller
             $prevMatches = Match::all()->where('kickoff', '<', date('Y-m-d H:i:s'))
                                         ->where('homegoals', '>=', 0);
 
+            $predictions = []; 
+            
+            foreach(Match::all() as $match) {
+                //dd($prevMatch->id);
+                //dd(Prediction::all()->where('matchID', '==', $prevMatch->id));
+                array_push($predictions, Prediction::all()->where('matchID', '==', $match->id));
+            }
+            //dd($predictions);
+
+
+
             //$prevMatches = Match::whereNotNull('homegoals')->get()->all();
             //dd($prevMatches);
 
             if(Auth::user()->hasSubmitted == 0) {
                 return view('home')->with('users',$users)
                                     ->with('matches',$matches)
-                                    ->with('prevMatches',$prevMatches);
+                                    ->with('prevMatches',$prevMatches)
+                                    ->with('predictions',$predictions);
             }
 
             return view('home')->with('users',$users)
-                                ->with('prevMatches',$prevMatches);
+                                ->with('prevMatches',$prevMatches)
+                                ->with('predictions',$predictions);
         }
         return redirect('/login');
     }

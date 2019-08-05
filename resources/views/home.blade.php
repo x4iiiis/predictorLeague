@@ -75,7 +75,9 @@
                                     </div>
                                 </div>
                                 @endforeach
-                                <button class="btn btn-lg btn-primary mx-auto" type="submit">Submit</button>
+                                <div class="text-center">
+                                    <button class="btn btn-lg btn-primary mx-auto" type="submit">Submit</button>
+                                </div>
                             @endif
                         @endisset
                         </form>

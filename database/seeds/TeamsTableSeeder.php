@@ -157,7 +157,7 @@ class TeamsTableSeeder extends Seeder
             'league' => 'Premier League'
         ]);
         DB::table('teams')->insert([
-            'name' => 'CrystalPalace',
+            'name' => 'Crystal Palace',
             'emblem' => 'img/clubEmblems/CrystalPalace.png',
             'league' => 'Premier League'
         ]);

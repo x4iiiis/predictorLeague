@@ -6,134 +6,20 @@
         
 
         <div class="col-md-7">
-            <div class="card">
-                <div class="card-header">League Table</div>
+            <!-- League Table Vue Component -->
+            <League-Table></League-Table>
+            <!-- Rules Vue Component -->
+            <Rules></Rules>
+        </div>
 
-                <div class="card-body">
-                    <table class="table table-hover" id="leagueTable">
-                        <tr style="text-align:center">
-                            <th></th>
-                            <th>Points</th>
-                            <th>Correct Score</th>
-                            <th>Correct Outcome</th>
-                        </tr>
-                        @foreach($users as $user)
-                        <tr style="text-align:center">
-                            <td>{{ $user->name }}</td>
-                            <td>{{ ($user->correctScores * 3) + $user->correctOutcomes }}</td>
-                            <td>{{ $user->correctScores }}</td>
-                            <td>{{ $user->correctOutcomes }}</td>
-                        </tr>
-                        @endforeach
-                    </table>
-                </div>
-            </div>
 
-        <div class="mr-0 ml-auto my-2">
-            <div class="card">
-            <div class="card-header">Rules</div>
-
-                <div class="card-body">
-                    <p>Correct Score - 3pts</p>
-                    <p>Wrong Score w/Correct Outcome  - 1pt</p>
-                </div>
-            </div>
+        <div class="col-md-5 mb-2">
+            <!-- Fixtures Vue Component --> 
+            <Fixtures></Fixtures>
+            <!-- Results Vue Component -->
+            <Results></Results>
         </div>
     </div>
-
-
-
-
-    <div class="col-md-5 mb-2">
-            <div class="card">
-            
-                <div class="card-header">Upcoming Matches</div>
-
-                    <div class="card-body">
-                        @if (session('status'))
-                            <div class="alert alert-success" role="alert">
-                                {{ session('status') }}
-                            </div>
-                        @endif
-
-                        <form action="{{ route('prediction.store') }}" method="post">
-                        @csrf
-
-                        @isset($matches)
-                            @if(sizeof($matches) != 0)
-                                @foreach($matches as $match)
-                                <div class="row py-2">
-                                    <div class="col-3 mx-auto">
-                                        <img src="{{ $match->homeEmblem }}" alt="{{ $match->homeTeam }}">
-                                    </div>
-                                    <div class="form-group col-6 my-auto mx-auto text-center">
-                                        <input class="col-5" name="home{{ $match->id }}" required type="number"></input>
-                                        <input class="col-5" name="away{{ $match->id }}" required type="number"></input>
-                                    </div>
-                                    <div class="col-3 mx-auto">
-                                        <img src="{{ $match->awayEmblem }}" alt="{{ $match->awayTeam }}">
-                                    </div>
-                                </div>
-                                @endforeach
-                                <div class="text-center">
-                                    <button class="btn btn-lg btn-primary mx-auto" type="submit">Submit</button>
-                                </div>
-                            @endif
-                        @endisset
-                        </form>
-                    </div>
-                </div>
-
-                <div class="card mt-5">
-            
-                <div class="card-header">Previous Matches</div>
-
-                    <div class="card-body">
-                        @if (session('status'))
-                            <div class="alert alert-success" role="alert">
-                                {{ session('status') }}
-                            </div>
-                        @endif
-
-                        @isset($prevMatches)
-                            @if(sizeof($prevMatches) != 0)
-                                @foreach($prevMatches as $prevMatch)
-
-                                <div class="row py-2">
-                                    <div class="col-3 mx-auto">
-                                        <img src="{{ $prevMatch->homeEmblem }}" alt="{{ $prevMatch->homeTeam }}">
-                                    </div>
-                                    <div class="col-6 mx-auto my-auto text-center">
-                                        <h1 style="display: inline;">{{ $prevMatch->homegoals }} - </h1>
-                                        <h1 style="display: inline;">{{ $prevMatch->awayGoals }}</h1>
-
-                                        @isset($predictions)
-                                            <table>
-                                            @foreach($predictions[  $prevMatch->id  - 1] as $prediction)
-                                            <tr>
-                                                <td style="text-align:right">
-                                                    <small>{{ $users[$prediction->userID - 1]->name }}</small>
-                                                </td>
-                                                <td>
-                                                    <small>{{ $prediction->homeGoals }} - {{ $prediction->awayGoals }}</small>
-                                                </td>
-                                            </tr>
-                                            @endforeach
-                                            </table>
-                                        @endisset
-
-                                    </div>
-                                    <div class="col-3 mx-auto">
-                                        <img src="{{ $prevMatch->awayEmblem }}" alt="{{ $prevMatch->awayTeam }}">
-                                    </div>
-                                </div>
-                                @endforeach
-                            @endif
-                        @endisset
-                    </div>
-                </div>
-        </div>
-</div>
 </div>
 
 <script>

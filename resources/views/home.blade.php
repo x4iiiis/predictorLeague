@@ -129,7 +129,7 @@
                                 </div>
                                 @endforeach
                                 
-                                <div class="row">
+                                <div class="row pt-5">
                                     <div class="mx-auto text-center">
                                         {{ $prevMatches->links() }}
                                     </div>

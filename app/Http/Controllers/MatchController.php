@@ -21,8 +21,9 @@ class MatchController extends Controller
         if(Auth::user()) {
             $users = User::all();
             $matches = Match::all()->where('kickoff', '>', date('Y-m-d H:i:s'))->sortBy('kickoff');
-            $prevMatches = Match::all()->where('kickoff', '<', date('Y-m-d H:i:s'))
-                                        ->where('homegoals', '>=', 0);
+            $prevMatches = Match::where('kickoff', '<', date('Y-m-d H:i:s'))
+                                        ->where('homegoals', '>=', 0)
+                                        ->simplePaginate(5);
 
             $predictions = []; 
             

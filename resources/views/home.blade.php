@@ -128,6 +128,12 @@
                                     </div>
                                 </div>
                                 @endforeach
+                                
+                                <div class="row">
+                                    <div class="mx-auto text-center">
+                                        {{ $prevMatches->links() }}
+                                    </div>
+                                </div>
                             @endif
                         @endisset
                     </div>

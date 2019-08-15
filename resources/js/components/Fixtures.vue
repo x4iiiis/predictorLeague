@@ -2,7 +2,7 @@
     <div class="card">
             
                 <div class="card-header">Upcoming Matches</div>
-
+                    <!--
                     <div class="card-body">
                         @if (session('status'))
                             <div class="alert alert-success" role="alert">
@@ -36,6 +36,7 @@
                         @endisset
                         </form>
                     </div>
+                    -->
                 </div>
             </div>
 </template>

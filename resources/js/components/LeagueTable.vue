@@ -3,6 +3,7 @@
         <div class="row justify-content-center">
             <div class="col-md-8">
                 <div class="card">
+                    <!--
                     <div class="card-header">League Table</div>
 
                     <div class="card-body">
@@ -23,6 +24,7 @@
                             @endforeach
                         </table>
                     </div>
+                    -->
                 </div>
             </div>
         </div>
@@ -33,6 +35,19 @@
     export default {
         mounted() {
             console.log('League Table Component mounted.')
+            this.updateTable()
+        },
+        methods: {
+            updateTable() {
+                axios
+                    .get('/updatetable')
+                    .then(res => {
+                        console.log("League Table Updated");
+                    })
+                    .catch(err => {
+                        console.log(err.response);
+                    })
+            }
         }
     }
 </script>

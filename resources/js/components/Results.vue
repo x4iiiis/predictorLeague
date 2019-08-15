@@ -2,7 +2,7 @@
     <div class="card mt-5">
             
                 <div class="card-header">Previous Matches</div>
-
+                    <!--
                     <div class="card-body">
                         @if (session('status'))
                             <div class="alert alert-success" role="alert">
@@ -46,6 +46,7 @@
                             @endif
                         @endisset
                     </div>
+                    -->
                 </div>
         </div>
     </div>

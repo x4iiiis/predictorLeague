@@ -1912,11 +1912,45 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
-//
-//
 /* harmony default export */ __webpack_exports__["default"] = ({
   mounted: function mounted() {
     console.log('Fixtures Component mounted.');
+    this.getMatches();
+  },
+  data: function data() {
+    return {
+      user: [],
+      matches: [],
+      predictions: [],
+      ready: false
+    };
+  },
+  methods: {
+    getMatches: function getMatches() {
+      var _this = this;
+
+      axios.get('/getupcomingmatches').then(function (res) {
+        console.log('getting fixtures...');
+        console.log(res.data);
+        _this.user = res.data[1];
+        _this.matches = res.data[3];
+        console.log("fixtures:");
+        console.log(_this.matches);
+        _this.ready = true;
+      })["catch"](function (err) {
+        console.log(err.response);
+      });
+    },
+    validateInput: function validateInput() {
+      this.formSubmit();
+    },
+    formSubmit: function formSubmit() {
+      axios.post('/prediction/store', {
+        predictions: this.predictions
+      }).then(function (response) {
+        console.log(response.data);
+      });
+    }
   }
 });
 
@@ -1959,20 +1993,36 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
-//
-//
-//
-//
-//
 /* harmony default export */ __webpack_exports__["default"] = ({
   mounted: function mounted() {
     console.log('League Table Component mounted.');
+    this.getUsers();
     this.updateTable();
+  },
+  data: function data() {
+    return {
+      users: [],
+      ready: false
+    };
   },
   methods: {
     updateTable: function updateTable() {
       axios.get('/updatetable').then(function (res) {
-        console.log("League Table Updated");
+        console.log("League Table Updated cunt");
+      })["catch"](function (err) {
+        console.log(err.response);
+      });
+    },
+    getUsers: function getUsers() {
+      var _this = this;
+
+      axios.get('/getusers').then(function (res) {
+        console.log('getting users...');
+        console.log(res.data[1]);
+        _this.users = res.data[1];
+        console.log("users:");
+        console.log(_this.users);
+        _this.ready = true;
       })["catch"](function (err) {
         console.log(err.response);
       });
@@ -2042,12 +2092,40 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
-//
-//
-//
 /* harmony default export */ __webpack_exports__["default"] = ({
   mounted: function mounted() {
     console.log('Results Component mounted.');
+    this.getMatches();
+  },
+  data: function data() {
+    return {
+      users: [],
+      matches: [],
+      predictions: [],
+      ready: false
+    };
+  },
+  methods: {
+    getMatches: function getMatches() {
+      var _this = this;
+
+      axios.get('/getresultedmatches').then(function (res) {
+        console.log('getting results...');
+        console.log(res.data);
+        _this.users = res.data[1];
+        _this.matches = res.data[3];
+        _this.predictions = res.data[5];
+        console.log('users:');
+        console.log(_this.users);
+        console.log("results:");
+        console.log(_this.matches);
+        console.log('predictions:');
+        console.log(_this.predictions);
+        _this.ready = true;
+      })["catch"](function (err) {
+        console.log(err.response);
+      });
+    }
   }
 });
 
@@ -37421,23 +37499,8 @@ render._withStripped = true
 __webpack_require__.r(__webpack_exports__);
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "render", function() { return render; });
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "staticRenderFns", function() { return staticRenderFns; });
-var render = function() {
-  var _vm = this
-  var _h = _vm.$createElement
-  var _c = _vm._self._c || _h
-  return _vm._m(0)
-}
-var staticRenderFns = [
-  function() {
-    var _vm = this
-    var _h = _vm.$createElement
-    var _c = _vm._self._c || _h
-    return _c("div", { staticClass: "card" }, [
-      _c("div", { staticClass: "card-header" }, [_vm._v("Upcoming Matches")])
-    ])
-  }
-]
-render._withStripped = true
+var render = function () {}
+var staticRenderFns = []
 
 
 
@@ -37458,19 +37521,57 @@ var render = function() {
   var _vm = this
   var _h = _vm.$createElement
   var _c = _vm._self._c || _h
-  return _vm._m(0)
+  return _c("div", { staticClass: "row justify-content-center" }, [
+    _vm.ready
+      ? _c("div", { staticClass: "card" }, [
+          _c("div", { staticClass: "card-header" }, [_vm._v("League Table")]),
+          _vm._v(" "),
+          _c("div", { staticClass: "card-body" }, [
+            _c(
+              "table",
+              {
+                staticClass: "table table-hover",
+                attrs: { id: "leagueTable" }
+              },
+              [
+                _vm._m(0),
+                _vm._v(" "),
+                _vm._l(_vm.users, function(user) {
+                  return _c("tr", { staticStyle: { "text-align": "center" } }, [
+                    _c("td", [_vm._v(_vm._s(user.name))]),
+                    _vm._v(" "),
+                    _c("td", [
+                      _vm._v(
+                        _vm._s(user.correctScores * 3 + user.correctOutcomes)
+                      )
+                    ]),
+                    _vm._v(" "),
+                    _c("td", [_vm._v(_vm._s(user.correctScores))]),
+                    _vm._v(" "),
+                    _c("td", [_vm._v(_vm._s(user.correctOutcomes))])
+                  ])
+                })
+              ],
+              2
+            )
+          ])
+        ])
+      : _vm._e()
+  ])
 }
 var staticRenderFns = [
   function() {
     var _vm = this
     var _h = _vm.$createElement
     var _c = _vm._self._c || _h
-    return _c("div", { staticClass: "container" }, [
-      _c("div", { staticClass: "row justify-content-center" }, [
-        _c("div", { staticClass: "col-md-8" }, [
-          _c("div", { staticClass: "card" })
-        ])
-      ])
+    return _c("tr", { staticStyle: { "text-align": "center" } }, [
+      _c("th"),
+      _vm._v(" "),
+      _c("th", [_vm._v("Points")]),
+      _vm._v(" "),
+      _c("th", [_vm._v("Correct Score")]),
+      _vm._v(" "),
+      _c("th", [_vm._v("Correct Outcome")])
     ])
   }
 ]
@@ -37495,18 +37596,68 @@ var render = function() {
   var _vm = this
   var _h = _vm.$createElement
   var _c = _vm._self._c || _h
-  return _vm._m(0)
+  return _vm.ready
+    ? _c("div", { staticClass: "card" }, [
+        _c("div", { staticClass: "card-header" }, [_vm._v("Previous Matches")]),
+        _vm._v(" "),
+        _c(
+          "div",
+          { staticClass: "card-body" },
+          _vm._l(_vm.matches, function(match) {
+            return _c("div", { staticClass: "row py-2" }, [
+              _c("div", { staticClass: "col-3 mx-auto" }, [
+                _c("img", {
+                  attrs: { src: match.homeEmblem, alt: match.homeTeam }
+                })
+              ]),
+              _vm._v(" "),
+              _c("div", { staticClass: "col-6 mx-auto my-auto text-center" }, [
+                _c("h1", { staticStyle: { display: "inline" } }, [
+                  _vm._v(_vm._s(match.homegoals) + " - ")
+                ]),
+                _vm._v(" "),
+                _c("h1", { staticStyle: { display: "inline" } }, [
+                  _vm._v(_vm._s(match.awayGoals))
+                ]),
+                _vm._v(" "),
+                _c(
+                  "table",
+                  _vm._l(_vm.predictions[match.id - 1], function(prediction) {
+                    return _c("tr", [
+                      _c("td", { staticStyle: { "text-align": "right" } }, [
+                        _c("small", [
+                          _vm._v(_vm._s(_vm.users[prediction.userID - 1].name))
+                        ])
+                      ]),
+                      _vm._v(" "),
+                      _c("td", [
+                        _c("small", [
+                          _vm._v(
+                            _vm._s(prediction.homeGoals) +
+                              " - " +
+                              _vm._s(prediction.awayGoals)
+                          )
+                        ])
+                      ])
+                    ])
+                  }),
+                  0
+                )
+              ]),
+              _vm._v(" "),
+              _c("div", { staticClass: "col-3 mx-auto" }, [
+                _c("img", {
+                  attrs: { src: match.awayEmblem, alt: match.awayTeam }
+                })
+              ])
+            ])
+          }),
+          0
+        )
+      ])
+    : _vm._e()
 }
-var staticRenderFns = [
-  function() {
-    var _vm = this
-    var _h = _vm.$createElement
-    var _c = _vm._self._c || _h
-    return _c("div", { staticClass: "card mt-5" }, [
-      _c("div", { staticClass: "card-header" }, [_vm._v("Previous Matches")])
-    ])
-  }
-]
+var staticRenderFns = []
 render._withStripped = true
 
 

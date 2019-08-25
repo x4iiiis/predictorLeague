@@ -16,11 +16,44 @@ class MatchController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
+    public function upcomingMatches() {
+
+        if(Auth::user()) {
+            if(Auth::user()->hasSubmitted == 0) {
+                return [
+                    'user', Auth::user(),
+                    'matches', Match::all()->where('kickoff', '>', date('Y-m-d H:i:s'))
+                ];
+            }
+        }
+        return redirect('/login');
+    }
+
+    public function resultedMatches() {
+        if(Auth::user()) {
+
+            $prevMatches = Match::all()->where('kickoff', '<', date('Y-m-d H:i:s'))
+                                        ->where('homegoals', '>=', 0);
+            $predictions = []; 
+
+            foreach(Match::all() as $match) {
+                array_push($predictions, Prediction::all()->where('matchID', '==', $match->id));
+            }
+
+            return [
+                'users', User::all(),
+                'matches', $prevMatches,
+                'predictions', $predictions
+            ];
+        }
+        return redirect('/login');
+    }
+
     public function index()
     {
         if(Auth::user()) {
             $users = User::all();
-            $matches = Match::all()->where('kickoff', '>', date('Y-m-d H:i:s'))->sortBy('kickoff');
+            $matches = Match::all()->where('kickoff', '>', date('Y-m-d H:i:s'));
             $prevMatches = Match::all()->where('kickoff', '<', date('Y-m-d H:i:s'))
                                         ->where('homegoals', '>=', 0);
 

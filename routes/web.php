@@ -26,3 +26,7 @@ Route::post('/prediction/store', 'PredictionController@store')->name('prediction
 
 
 Route::get('/updatetable', 'PredictionController@updateScores')->name('update.scores');
+
+Route::get('/getusers', 'LeagueTableController@index');
+route::get('/getupcomingmatches', 'MatchController@upcomingMatches');
+route::get('/getresultedmatches', 'MatchController@resultedMatches');

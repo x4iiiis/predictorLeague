@@ -18,6 +18,8 @@ class MatchController extends Controller
      */
     public function index()
     {
+        return "Technical difficulties; Back soon. xoxo gossip girl";
+
         if(Auth::user()) {
             $users = User::all();
             $matches = Match::all()->where('kickoff', '>', date('Y-m-d H:i:s'))->sortBy('kickoff');

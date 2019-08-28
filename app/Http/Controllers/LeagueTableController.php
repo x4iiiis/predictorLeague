@@ -17,7 +17,7 @@ class LeagueTableController extends Controller
     {
         if(Auth::user()) {
             return [
-                'users', $users = User::all()->sortByDesc('points')
+                'users', User::orderBy('points', 'desc')->get()
             ];
         }
     }

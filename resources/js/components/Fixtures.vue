@@ -1,42 +1,26 @@
 <template>
     <div v-if="ready" class="card">
-            
-                <div class="card-header">Upcoming Matches</div>
-
-                    <div class="card-body">
-
-                        <!-- 
-                        <form action="{{ route('prediction.store') }}" method="post">
-                        @csrf
-
-                        @isset($matches)
-                            @if(sizeof($matches) != 0)
-                                @foreach($matches as $match) 
-                        -->
-                                <div v-for="match in matches" class="row py-2">
-                                    <div class="col-3 mx-auto">
-                                        <img :src="match.homeEmblem" :alt="match.homeTeam">
-                                    </div>
-                                    <div class="form-group col-6 my-auto mx-auto text-center">
-                                        <input class="col-5" name="home{{ match.id }}" required type="number"></input>
-                                        <input class="col-5" name="away{{ match.id }}" required type="number"></input>
-                                    </div>
-                                    <div class="col-3 mx-auto">
-                                        <img src="{{ match.awayEmblem }}" alt="{{ match.awayTeam }}">
-                                    </div>
-                                </div>
-                                <!-- @endforeach -->
-                                <div class="text-center">
-                                    <button class="btn btn-lg btn-primary mx-auto" @click="validateInput()">Submit</button>
-                                </div>
-                            <!-- @endif
-                        @endisset
-                        </form>
-                        -->
+        <div class="card-header">Upcoming Matches</div>
+            <div class="card-body">
+                <div v-for="match in matches" class="row py-2">
+                    <div class="col-3 mx-auto">
+                        <img :src="match.homeEmblem" :alt="match.homeTeam">
                     </div>
-                    
+                    <div class="form-group col-6 my-auto mx-auto text-center">
+                        <input class="col-5" :name="'home' + match.id" required type="number"></input>
+                        <input class="col-5" :name="'away' + match.id" required type="number"></input>
+                    </div>
+                    <div class="col-3 mx-auto">
+                        <img :src="match.awayEmblem" :alt="match.awayTeam">
+                    </div>
+                </div>
+                <!-- @endforeach -->
+                <div class="text-center">
+                    <button class="btn btn-lg btn-primary mx-auto" @click="validateInput()">Submit</button>
                 </div>
             </div>
+        </div>
+    </div>
 </template>
 
 <script>
@@ -50,6 +34,8 @@
                 user: [],
                 matches: [],
                 predictions: [],
+                //I want userID, matchID, homescore, awayscore in predictions
+                //But I dunno how tf to do it in Vue
                 ready: false
             }
         },

@@ -1896,22 +1896,6 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
 /* harmony default export */ __webpack_exports__["default"] = ({
   mounted: function mounted() {
     console.log('Fixtures Component mounted.');
@@ -1922,6 +1906,8 @@ __webpack_require__.r(__webpack_exports__);
       user: [],
       matches: [],
       predictions: [],
+      //I want userID, matchID, homescore, awayscore in predictions
+      //But I dunno how tf to do it in Vue
       ready: false
     };
   },
@@ -1991,13 +1977,11 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
-//
-//
 /* harmony default export */ __webpack_exports__["default"] = ({
   mounted: function mounted() {
     console.log('League Table Component mounted.');
-    this.getUsers();
     this.updateTable();
+    this.getUsers();
   },
   data: function data() {
     return {
@@ -2007,9 +1991,7 @@ __webpack_require__.r(__webpack_exports__);
   },
   methods: {
     updateTable: function updateTable() {
-      axios.get('/updatetable').then(function (res) {
-        console.log("League Table Updated cunt");
-      })["catch"](function (err) {
+      axios.get('/updatetable')["catch"](function (err) {
         console.log(err.response);
       });
     },
@@ -2017,11 +1999,7 @@ __webpack_require__.r(__webpack_exports__);
       var _this = this;
 
       axios.get('/getusers').then(function (res) {
-        console.log('getting users...');
-        console.log(res.data[1]);
         _this.users = res.data[1];
-        console.log("users:");
-        console.log(_this.users);
         _this.ready = true;
       })["catch"](function (err) {
         console.log(err.response);
@@ -2110,17 +2088,9 @@ __webpack_require__.r(__webpack_exports__);
       var _this = this;
 
       axios.get('/getresultedmatches').then(function (res) {
-        console.log('getting results...');
-        console.log(res.data);
         _this.users = res.data[1];
         _this.matches = res.data[3];
         _this.predictions = res.data[5];
-        console.log('users:');
-        console.log(_this.users);
-        console.log("results:");
-        console.log(_this.matches);
-        console.log('predictions:');
-        console.log(_this.predictions);
         _this.ready = true;
       })["catch"](function (err) {
         console.log(err.response);
@@ -37499,8 +37469,82 @@ render._withStripped = true
 __webpack_require__.r(__webpack_exports__);
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "render", function() { return render; });
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "staticRenderFns", function() { return staticRenderFns; });
-var render = function () {}
+var render = function() {
+  var _vm = this
+  var _h = _vm.$createElement
+  var _c = _vm._self._c || _h
+  return _vm.ready
+    ? _c("div", { staticClass: "card" }, [
+        _c("div", { staticClass: "card-header" }, [_vm._v("Upcoming Matches")]),
+        _vm._v(" "),
+        _c(
+          "div",
+          { staticClass: "card-body" },
+          [
+            _vm._l(_vm.matches, function(match) {
+              return _c("div", { staticClass: "row py-2" }, [
+                _c("div", { staticClass: "col-3 mx-auto" }, [
+                  _c("img", {
+                    attrs: { src: match.homeEmblem, alt: match.homeTeam }
+                  })
+                ]),
+                _vm._v(" "),
+                _c(
+                  "div",
+                  {
+                    staticClass: "form-group col-6 my-auto mx-auto text-center"
+                  },
+                  [
+                    _c("input", {
+                      staticClass: "col-5",
+                      attrs: {
+                        name: "home" + match.id,
+                        required: "",
+                        type: "number"
+                      }
+                    }),
+                    _vm._v(" "),
+                    _c("input", {
+                      staticClass: "col-5",
+                      attrs: {
+                        name: "away" + match.id,
+                        required: "",
+                        type: "number"
+                      }
+                    })
+                  ]
+                ),
+                _vm._v(" "),
+                _c("div", { staticClass: "col-3 mx-auto" }, [
+                  _c("img", {
+                    attrs: { src: match.awayEmblem, alt: match.awayTeam }
+                  })
+                ])
+              ])
+            }),
+            _vm._v(" "),
+            _c("div", { staticClass: "text-center" }, [
+              _c(
+                "button",
+                {
+                  staticClass: "btn btn-lg btn-primary mx-auto",
+                  on: {
+                    click: function($event) {
+                      return _vm.validateInput()
+                    }
+                  }
+                },
+                [_vm._v("Submit")]
+              )
+            ])
+          ],
+          2
+        )
+      ])
+    : _vm._e()
+}
 var staticRenderFns = []
+render._withStripped = true
 
 
 
@@ -37521,43 +37565,38 @@ var render = function() {
   var _vm = this
   var _h = _vm.$createElement
   var _c = _vm._self._c || _h
-  return _c("div", { staticClass: "row justify-content-center" }, [
-    _vm.ready
-      ? _c("div", { staticClass: "card" }, [
-          _c("div", { staticClass: "card-header" }, [_vm._v("League Table")]),
-          _vm._v(" "),
-          _c("div", { staticClass: "card-body" }, [
-            _c(
-              "table",
-              {
-                staticClass: "table table-hover",
-                attrs: { id: "leagueTable" }
-              },
-              [
-                _vm._m(0),
-                _vm._v(" "),
-                _vm._l(_vm.users, function(user) {
-                  return _c("tr", { staticStyle: { "text-align": "center" } }, [
-                    _c("td", [_vm._v(_vm._s(user.name))]),
-                    _vm._v(" "),
-                    _c("td", [
-                      _vm._v(
-                        _vm._s(user.correctScores * 3 + user.correctOutcomes)
-                      )
-                    ]),
-                    _vm._v(" "),
-                    _c("td", [_vm._v(_vm._s(user.correctScores))]),
-                    _vm._v(" "),
-                    _c("td", [_vm._v(_vm._s(user.correctOutcomes))])
-                  ])
-                })
-              ],
-              2
-            )
-          ])
+  return _vm.ready
+    ? _c("div", { staticClass: "card" }, [
+        _c("div", { staticClass: "card-header" }, [_vm._v("League Table")]),
+        _vm._v(" "),
+        _c("div", { staticClass: "card-body" }, [
+          _c(
+            "table",
+            { staticClass: "table table-hover", attrs: { id: "leagueTable" } },
+            [
+              _vm._m(0),
+              _vm._v(" "),
+              _vm._l(_vm.users, function(user) {
+                return _c("tr", { staticStyle: { "text-align": "center" } }, [
+                  _c("td", [_vm._v(_vm._s(user.name))]),
+                  _vm._v(" "),
+                  _c("td", [
+                    _vm._v(
+                      _vm._s(user.correctScores * 3 + user.correctOutcomes)
+                    )
+                  ]),
+                  _vm._v(" "),
+                  _c("td", [_vm._v(_vm._s(user.correctScores))]),
+                  _vm._v(" "),
+                  _c("td", [_vm._v(_vm._s(user.correctOutcomes))])
+                ])
+              })
+            ],
+            2
+          )
         ])
-      : _vm._e()
-  ])
+      ])
+    : _vm._e()
 }
 var staticRenderFns = [
   function() {

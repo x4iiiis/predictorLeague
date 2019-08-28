@@ -68,17 +68,9 @@
                 axios
                     .get('/getresultedmatches')
                     .then(res => {
-                        console.log('getting results...');
-                        console.log(res.data);
                         this.users = res.data[1];
                         this.matches = res.data[3];
                         this.predictions = res.data[5];
-                        console.log('users:');
-                        console.log(this.users);
-                        console.log("results:");
-                        console.log(this.matches);
-                        console.log('predictions:');
-                        console.log(this.predictions);
                         this.ready = true;
                     })
                     .catch(err => {

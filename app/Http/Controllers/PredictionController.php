@@ -38,34 +38,20 @@ class PredictionController extends Controller
      */
     public function store(Request $request)
     {
-        //Figure out what match we're dealing with based on the first variable name (matchID comes after 'home')
-        $firstMatchID = substr($request->request->keys()[1],4);
-        $matchID = (int)$firstMatchID;
+        foreach($request->match as $match) {
 
-        //Loop through matches from there
-        for ($i = 1; $i <= count($request->request->keys())-1; $i+=2) {
-
-            $homeGoals = $request->all()[$request->request->keys()[$i]];
-            $awayGoals = $request->all()[$request->request->keys()[$i+1]];
-
-            //Validate request
-
-
-            //Create match
-            $newMatch = Prediction::create([
-                'userID' => Auth::user()->id,
-                'matchID' => $matchID,
-                'homeGoals' => $homeGoals,
-                'awayGoals' => $awayGoals
-            ]);
-
-            $matchID++;
+            Prediction::create([
+                'userID' => $request->userID,
+                'matchID' => $match['id'],
+                'homeGoals' => $match['home'],
+                'awayGoals' => $match['away']
+                ]);   
         }
-        
-        Auth::user()->hasSubmitted = 1;
-        Auth::user()->save();
 
-        return redirect('/');
+        $user = User::where('id', $request->userID)->first();
+        $user->hasSubmitted = 1; 
+        $user->save();
+
     }
 
     public function updateScores() {

@@ -90,6 +90,7 @@ class PredictionController extends Controller
                 else if($prediction->homeGoals == $prediction->awayGoals && $match->homegoals == $match->awayGoals) {
                     $user->correctOutcomes += 1;
                 } 
+                $user->points = ($user->correctScores * 3) + $user->correctOutcomes;
                 $user->save();
             }
         }

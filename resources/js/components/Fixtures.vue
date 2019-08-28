@@ -2,23 +2,34 @@
     <div v-if="ready" class="card">
         <div class="card-header">Upcoming Matches</div>
             <div class="card-body">
-                <div v-for="match in matches" class="row py-2">
-                    <div class="col-3 mx-auto">
-                        <img :src="match.homeEmblem" :alt="match.homeTeam">
+                <form action="prediction/store" method="post" @submit="onSubmit">
+                    <input type="hidden" name="_token" :value="csrf">
+                    <div v-for="match in matches" class="row py-2">
+                        <div class="col-3 mx-auto">
+                            <img :src="match.homeEmblem" :alt="match.homeTeam">
+                        </div>
+                        <div class="form-group col-6 my-auto mx-auto text-center">
+                            <input class="col-5" :name="'home' + match.id" required type="number"></input>
+                            <input class="col-5" :name="'away' + match.id" required type="number"></input>
+                        </div>
+                        <div class="col-3 mx-auto">
+                            <img :src="match.awayEmblem" :alt="match.awayTeam">
+                        </div>
                     </div>
-                    <div class="form-group col-6 my-auto mx-auto text-center">
-                        <input class="col-5" :name="'home' + match.id" required type="number"></input>
-                        <input class="col-5" :name="'away' + match.id" required type="number"></input>
+                    <!-- @endforeach -->
+                    <div class="text-center">
+                        <button class="btn btn-lg btn-primary mx-auto">Submit</button>
                     </div>
-                    <div class="col-3 mx-auto">
-                        <img :src="match.awayEmblem" :alt="match.awayTeam">
-                    </div>
-                </div>
-                <!-- @endforeach -->
-                <div class="text-center">
-                    <button class="btn btn-lg btn-primary mx-auto" @click="validateInput()">Submit</button>
-                </div>
+                </form>
             </div>
+        </div>
+    </div>
+
+    <div v-else-if="submitted" class="card">
+        <div class="card-header">Upcoming Matches</div>
+        <div class="card-body">
+            <p>Thanks for your submission.</p>
+            <p>Good luck!</p>
         </div>
     </div>
 </template>
@@ -31,12 +42,14 @@
         },
         data() {
             return {
+                csrf: document.querySelector('meta[name="csrf-token"]').getAttribute('content'),
                 user: [],
                 matches: [],
                 predictions: [],
                 //I want userID, matchID, homescore, awayscore in predictions
                 //But I dunno how tf to do it in Vue
-                ready: false
+                ready: false,
+                submitted: false
             }
         },
         methods: {
@@ -56,17 +69,10 @@
                         console.log(err.response);
                     })
             },
-            validateInput() {
-                this.formSubmit()
-            },
-            formSubmit() {
-                axios
-                  .post('/prediction/store', {
-                        predictions: this.predictions
-                    })
-                  .then(response =>  {
-                        console.log(response.data)
-                    }) 
+            onSubmit() {
+                return true;
+                this.submitted = true;
+                this.ready = false;
             }
     }
 }

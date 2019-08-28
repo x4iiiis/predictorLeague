@@ -1896,6 +1896,17 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 /* harmony default export */ __webpack_exports__["default"] = ({
   mounted: function mounted() {
     console.log('Fixtures Component mounted.');
@@ -1903,12 +1914,14 @@ __webpack_require__.r(__webpack_exports__);
   },
   data: function data() {
     return {
+      csrf: document.querySelector('meta[name="csrf-token"]').getAttribute('content'),
       user: [],
       matches: [],
       predictions: [],
       //I want userID, matchID, homescore, awayscore in predictions
       //But I dunno how tf to do it in Vue
-      ready: false
+      ready: false,
+      submitted: false
     };
   },
   methods: {
@@ -1927,15 +1940,10 @@ __webpack_require__.r(__webpack_exports__);
         console.log(err.response);
       });
     },
-    validateInput: function validateInput() {
-      this.formSubmit();
-    },
-    formSubmit: function formSubmit() {
-      axios.post('/prediction/store', {
-        predictions: this.predictions
-      }).then(function (response) {
-        console.log(response.data);
-      });
+    onSubmit: function onSubmit() {
+      return true;
+      this.submitted = true;
+      this.ready = false;
     }
   }
 });
@@ -37477,73 +37485,98 @@ var render = function() {
     ? _c("div", { staticClass: "card" }, [
         _c("div", { staticClass: "card-header" }, [_vm._v("Upcoming Matches")]),
         _vm._v(" "),
-        _c(
-          "div",
-          { staticClass: "card-body" },
-          [
-            _vm._l(_vm.matches, function(match) {
-              return _c("div", { staticClass: "row py-2" }, [
-                _c("div", { staticClass: "col-3 mx-auto" }, [
-                  _c("img", {
-                    attrs: { src: match.homeEmblem, alt: match.homeTeam }
-                  })
-                ]),
-                _vm._v(" "),
-                _c(
-                  "div",
-                  {
-                    staticClass: "form-group col-6 my-auto mx-auto text-center"
-                  },
-                  [
-                    _c("input", {
-                      staticClass: "col-5",
-                      attrs: {
-                        name: "home" + match.id,
-                        required: "",
-                        type: "number"
-                      }
-                    }),
-                    _vm._v(" "),
-                    _c("input", {
-                      staticClass: "col-5",
-                      attrs: {
-                        name: "away" + match.id,
-                        required: "",
-                        type: "number"
-                      }
+        _c("div", { staticClass: "card-body" }, [
+          _c(
+            "form",
+            {
+              attrs: { action: "prediction/store", method: "post" },
+              on: { submit: _vm.onSubmit }
+            },
+            [
+              _c("input", {
+                attrs: { type: "hidden", name: "_token" },
+                domProps: { value: _vm.csrf }
+              }),
+              _vm._v(" "),
+              _vm._l(_vm.matches, function(match) {
+                return _c("div", { staticClass: "row py-2" }, [
+                  _c("div", { staticClass: "col-3 mx-auto" }, [
+                    _c("img", {
+                      attrs: { src: match.homeEmblem, alt: match.homeTeam }
                     })
-                  ]
-                ),
-                _vm._v(" "),
-                _c("div", { staticClass: "col-3 mx-auto" }, [
-                  _c("img", {
-                    attrs: { src: match.awayEmblem, alt: match.awayTeam }
-                  })
+                  ]),
+                  _vm._v(" "),
+                  _c(
+                    "div",
+                    {
+                      staticClass:
+                        "form-group col-6 my-auto mx-auto text-center"
+                    },
+                    [
+                      _c("input", {
+                        staticClass: "col-5",
+                        attrs: {
+                          name: "home" + match.id,
+                          required: "",
+                          type: "number"
+                        }
+                      }),
+                      _vm._v(" "),
+                      _c("input", {
+                        staticClass: "col-5",
+                        attrs: {
+                          name: "away" + match.id,
+                          required: "",
+                          type: "number"
+                        }
+                      })
+                    ]
+                  ),
+                  _vm._v(" "),
+                  _c("div", { staticClass: "col-3 mx-auto" }, [
+                    _c("img", {
+                      attrs: { src: match.awayEmblem, alt: match.awayTeam }
+                    })
+                  ])
                 ])
-              ])
-            }),
-            _vm._v(" "),
-            _c("div", { staticClass: "text-center" }, [
-              _c(
-                "button",
-                {
-                  staticClass: "btn btn-lg btn-primary mx-auto",
-                  on: {
-                    click: function($event) {
-                      return _vm.validateInput()
-                    }
-                  }
-                },
-                [_vm._v("Submit")]
-              )
-            ])
-          ],
-          2
-        )
+              }),
+              _vm._v(" "),
+              _vm._m(0)
+            ],
+            2
+          )
+        ])
+      ])
+    : _vm.submitted
+    ? _c("div", { staticClass: "card" }, [
+        _c("div", { staticClass: "card-header" }, [_vm._v("Upcoming Matches")]),
+        _vm._v(" "),
+        _vm._m(1)
       ])
     : _vm._e()
 }
-var staticRenderFns = []
+var staticRenderFns = [
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("div", { staticClass: "text-center" }, [
+      _c("button", { staticClass: "btn btn-lg btn-primary mx-auto" }, [
+        _vm._v("Submit")
+      ])
+    ])
+  },
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("div", { staticClass: "card-body" }, [
+      _c("p", [_vm._v("Thanks for your submission.")]),
+      _vm._v(" "),
+      _c("p", [_vm._v("Good luck!")])
+    ])
+  }
+]
 render._withStripped = true
 
 

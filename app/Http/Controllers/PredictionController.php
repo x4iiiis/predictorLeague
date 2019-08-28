@@ -38,8 +38,11 @@ class PredictionController extends Controller
      */
     public function store(Request $request)
     {
+        dd($request);
+
+
         //Figure out what match we're dealing with based on the first variable name (matchID comes after 'home')
-        $firstMatchID = substr($request->request->keys()[1],4);
+        $firstMatchID = substr($request->request->keys()[0],4);
         $matchID = (int)$firstMatchID;
 
         //Loop through matches from there

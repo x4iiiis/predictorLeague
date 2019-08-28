@@ -1,5 +1,5 @@
 <template>
-    <div v-if="ready" class="card">
+    <div v-if="ready" class="card my-2">
             
                 <div class="card-header">Previous Matches</div>
                     <div class="card-body">

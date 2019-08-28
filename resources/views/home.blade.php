@@ -13,9 +13,9 @@
         </div>
 
 
-        <div class="col-md-5 mb-2">
+        <div class="col-md-5">
             <!-- Fixtures Vue Component --> 
-            <Fixtures></Fixtures>
+            <Fixtures class="my-2"></Fixtures>
             <!-- Results Vue Component -->
             <Results></Results>
         </div>

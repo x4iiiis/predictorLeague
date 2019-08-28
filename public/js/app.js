@@ -1871,6 +1871,8 @@ __webpack_require__.r(__webpack_exports__);
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
+/* harmony import */ var axios__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! axios */ "./node_modules/axios/index.js");
+/* harmony import */ var axios__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(axios__WEBPACK_IMPORTED_MODULE_0__);
 //
 //
 //
@@ -1906,7 +1908,7 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
-//
+
 /* harmony default export */ __webpack_exports__["default"] = ({
   mounted: function mounted() {
     console.log('Fixtures Component mounted.');
@@ -1914,12 +1916,9 @@ __webpack_require__.r(__webpack_exports__);
   },
   data: function data() {
     return {
-      csrf: document.querySelector('meta[name="csrf-token"]').getAttribute('content'),
       user: [],
       matches: [],
-      predictions: [],
-      //I want userID, matchID, homescore, awayscore in predictions
-      //But I dunno how tf to do it in Vue
+      predictions: {},
       ready: false,
       submitted: false
     };
@@ -1928,20 +1927,23 @@ __webpack_require__.r(__webpack_exports__);
     getMatches: function getMatches() {
       var _this = this;
 
-      axios.get('/getupcomingmatches').then(function (res) {
-        console.log('getting fixtures...');
-        console.log(res.data);
+      axios__WEBPACK_IMPORTED_MODULE_0___default.a.get('/getupcomingmatches').then(function (res) {
         _this.user = res.data[1];
         _this.matches = res.data[3];
-        console.log("fixtures:");
-        console.log(_this.matches);
         _this.ready = true;
       })["catch"](function (err) {
         console.log(err.response);
       });
     },
     onSubmit: function onSubmit() {
-      return true;
+      axios__WEBPACK_IMPORTED_MODULE_0___default.a.post('/api/prediction', {
+        match: this.matches,
+        userID: this.user.id
+      }).then(function (response) {
+        console.log('Predictions received');
+      })["catch"](function (err) {
+        console.log(err.response);
+      });
       this.submitted = true;
       this.ready = false;
     }
@@ -37490,16 +37492,16 @@ var render = function() {
             "form",
             {
               attrs: { action: "prediction/store", method: "post" },
-              on: { submit: _vm.onSubmit }
+              on: {
+                submit: function($event) {
+                  $event.preventDefault()
+                  return _vm.onSubmit($event)
+                }
+              }
             },
             [
-              _c("input", {
-                attrs: { type: "hidden", name: "_token" },
-                domProps: { value: _vm.csrf }
-              }),
-              _vm._v(" "),
-              _vm._l(_vm.matches, function(match) {
-                return _c("div", { staticClass: "row py-2" }, [
+              _vm._l(_vm.matches, function(match, index) {
+                return _c("div", { key: match.id, staticClass: "row py-2" }, [
                   _c("div", { staticClass: "col-3 mx-auto" }, [
                     _c("img", {
                       attrs: { src: match.homeEmblem, alt: match.homeTeam }
@@ -37514,20 +37516,54 @@ var render = function() {
                     },
                     [
                       _c("input", {
+                        directives: [
+                          {
+                            name: "model",
+                            rawName: "v-model",
+                            value: match.home,
+                            expression: "match.home"
+                          }
+                        ],
                         staticClass: "col-5",
                         attrs: {
                           name: "home" + match.id,
                           required: "",
                           type: "number"
+                        },
+                        domProps: { value: match.home },
+                        on: {
+                          input: function($event) {
+                            if ($event.target.composing) {
+                              return
+                            }
+                            _vm.$set(match, "home", $event.target.value)
+                          }
                         }
                       }),
                       _vm._v(" "),
                       _c("input", {
+                        directives: [
+                          {
+                            name: "model",
+                            rawName: "v-model",
+                            value: match.away,
+                            expression: "match.away"
+                          }
+                        ],
                         staticClass: "col-5",
                         attrs: {
                           name: "away" + match.id,
                           required: "",
                           type: "number"
+                        },
+                        domProps: { value: match.away },
+                        on: {
+                          input: function($event) {
+                            if ($event.target.composing) {
+                              return
+                            }
+                            _vm.$set(match, "away", $event.target.value)
+                          }
                         }
                       })
                     ]
@@ -37599,7 +37635,7 @@ var render = function() {
   var _h = _vm.$createElement
   var _c = _vm._self._c || _h
   return _vm.ready
-    ? _c("div", { staticClass: "card" }, [
+    ? _c("div", { staticClass: "card my-2" }, [
         _c("div", { staticClass: "card-header" }, [_vm._v("League Table")]),
         _vm._v(" "),
         _c("div", { staticClass: "card-body" }, [
@@ -37669,7 +37705,7 @@ var render = function() {
   var _h = _vm.$createElement
   var _c = _vm._self._c || _h
   return _vm.ready
-    ? _c("div", { staticClass: "card" }, [
+    ? _c("div", { staticClass: "card my-2" }, [
         _c("div", { staticClass: "card-header" }, [_vm._v("Previous Matches")]),
         _vm._v(" "),
         _c(

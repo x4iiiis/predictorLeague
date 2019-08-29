@@ -1,9 +1,9 @@
 <template>
-    <div v-if="ready" class="card my-2">
+    <div  class="card my-2">
         
         <div class="card-header">League Table</div>
 
-        <div class="card-body">
+        <div v-if="ready" class="card-body">
             <table class="table table-hover" id="leagueTable">
                 <tr style="text-align:center">
                     <th></th>
@@ -21,6 +21,9 @@
                 <!--  @endforeach -->
             </table>
         </div>
+        <div v-else class="card-body">
+            <h1>Loading . . .</h1>
+        </div>
     </div>
 </template>
 
@@ -29,7 +32,6 @@
         mounted() {
             console.log('League Table Component mounted.')
             this.updateTable()
-            this.getUsers()
         },
         data() {
             return {
@@ -41,6 +43,9 @@
             updateTable() {
                 axios
                     .get('/updatetable')
+                    .then(res => {
+                        this.getUsers()
+                    })
                     .catch(err => {
                         console.log(err.response);
                     })

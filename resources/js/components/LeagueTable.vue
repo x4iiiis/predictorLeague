@@ -22,12 +22,18 @@
             </table>
         </div>
         <div v-else class="card-body">
-            <h1>Loading . . .</h1>
+            <div class="row">
+                <div class="mx-auto">
+                    <Spinner></Spinner>
+                </div>
+            </div>
         </div>
     </div>
 </template>
 
 <script>
+    import Spinner from '../components/Spinner.vue';
+
     export default {
         mounted() {
             console.log('League Table Component mounted.')
@@ -61,6 +67,10 @@
                         console.log(err.response);
                     })
             }
+        },
+        components: {
+            Spinner
         }
+
     }
 </script>

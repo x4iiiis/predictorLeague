@@ -34,8 +34,6 @@
 </template>
 
 <script>
-    import axios from 'axios';
-
     export default {
         mounted() {
             console.log('Fixtures Component mounted.')

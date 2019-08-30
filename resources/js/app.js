@@ -24,6 +24,7 @@ Vue.component('league-table', require('./components/LeagueTable.vue').default);
 Vue.component('rules', require('./components/Rules.vue').default);
 Vue.component('fixtures', require('./components/Fixtures.vue').default);
 Vue.component('results', require('./components/Results.vue').default);
+Vue.component('spinner', require('./components/Spinner.vue').default);
 
 /**
  * Next, we will create a fresh Vue application instance and attach it to

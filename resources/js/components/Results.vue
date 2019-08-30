@@ -31,7 +31,11 @@
                         </div>
                     </div>
                     <div v-else class="card-body">
-                        <p>Loading . . .</p>
+                        <div class="row">
+                            <div class="mx-auto">
+                                <Spinner></Spinner>
+                            </div>
+                        </div>
                     </div>  
                     
                 </div>
@@ -40,6 +44,8 @@
 </template>
 
 <script>
+    import Spinner from '../components/Spinner.vue';
+
     export default {
         mounted() {
             console.log('Results Component mounted.')
@@ -67,6 +73,9 @@
                         console.log(err.response);
                     })
             }
+    },
+    components: {
+        Spinner
     }
 }
 </script>

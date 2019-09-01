@@ -62,6 +62,7 @@ class PredictionController extends Controller
         foreach(User::all() as $user) {
             $user->correctScores = 0;
             $user->correctOutcomes = 0;
+            $user->points = 0;
             $user->save();
         }
 

@@ -24,6 +24,35 @@
         </div>
     </div>
 
+    <div v-else-if="previouslySubmitted" class="card">
+        <div class="card-header">Upcoming Matches</div>
+            <div class="card-body">
+                
+                <div v-for="(match, index) in matches" :key="match.id" class="row py-2">
+                    <div class="col-3 mx-auto">
+                        <img :src="match.homeEmblem" :alt="match.homeTeam">
+                    </div>
+                    <div class="col-6 mx-auto my-auto text-center">
+                        <table>
+                            <tr v-for="prediction in allPredictions[ index ]">
+                                <td style="text-align:right">
+                                    <small>{{ users[prediction.userID - 1].name }}</small>
+                                </td>
+                                <td>
+                                    <small>{{ prediction.homeGoals }} - {{ prediction.awayGoals }}</small>
+                                </td>
+                            </tr>
+                        </table>
+                    </div>
+                    <div class="col-3 mx-auto">
+                        <img :src="match.awayEmblem" :alt="match.awayTeam">
+                    </div>
+                </div>
+                    
+            </div>
+        </div>
+    </div>
+
     <div v-else-if="submitted" class="card">
         <div class="card-header">Upcoming Matches</div>
         <div class="card-body">
@@ -45,7 +74,12 @@
                 matches: [],
                 predictions: {},
                 ready: false,
-                submitted: false
+                submitted: false,
+                previouslySubmitted: false,
+
+                //Everyone, for when previously submitted = true
+                users: [],
+                allPredictions: []
             }
         },
         methods: {
@@ -55,9 +89,29 @@
                     .then(res => {
                         this.user = res.data[1]
                         this.matches = res.data[3];
-                        this.ready = true;
+
+                        if(res.data[5]) {
+                            //Get everyone's predictions here
+                            this.getUnresultedMatches()
+                        }
+                        else {
+                            this.ready = true;
+                        }
                     })
                     .catch(err => {
+                        console.log(err.response);
+                    })
+            },
+            getUnresultedMatches() {
+                axios
+                    .get('/getunresultedmatches')
+                    .then(res => {
+                        this.users = res.data[1];
+                        this.matches = res.data[3];
+                        this.allPredictions = res.data[5];
+                        this.previouslySubmitted = true;
+                    })
+                    .catch( err => {
                         console.log(err.response);
                     })
             },

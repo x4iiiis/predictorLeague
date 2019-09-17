@@ -30,3 +30,4 @@ Route::get('/updatetable', 'PredictionController@updateScores')->name('update.sc
 Route::get('/getusers', 'LeagueTableController@index');
 route::get('/getupcomingmatches', 'MatchController@upcomingMatches');
 route::get('/getresultedmatches', 'MatchController@resultedMatches');
+route::get('/getunresultedmatches', 'MatchController@unresultedMatches');

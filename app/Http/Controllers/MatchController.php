@@ -25,6 +25,16 @@ class MatchController extends Controller
                     'matches', Match::all()->where('kickoff', '>', date('Y-m-d H:i:s'))
                 ];
             }
+            else { 
+                // Show everyone's predictions on unresulted matches if the user has submitted
+                // Would be ideal if this ran beyond kickoff so we could see what people were 
+                // waiting on, to add to the fun of it all 
+                return [
+                    'user', Auth::user(),
+                    'matches', Match::all()->where('kickoff', '>', date('Y-m-d H:i:s')),
+                    'previouslySubmitted', true
+                ];
+            }
         }
         return redirect('/login');
     }
@@ -45,6 +55,29 @@ class MatchController extends Controller
                 'matches', $prevMatches,
                 'predictions', $predictions
             ];
+        }
+        return redirect('/login');
+    }
+
+    public function unresultedMatches() {
+        if(Auth::user()) {
+            if(Auth::user()->hasSubmitted == 1) {
+                
+                $unresultedMatches = Match::orderBy('kickoff')->where('kickoff', '>', date('Y-m-d H+2:i:s'))
+                ->where('homegoals', null)->get();
+
+                $predictions = [];
+
+                foreach($unresultedMatches as $match) {
+                    array_push($predictions, Prediction::all()->where('matchID', '==', $match->id));
+                }
+
+                return [
+                    'users', User::all(),
+                    'matches', $unresultedMatches,
+                    'predictions', $predictions
+                ];
+            }
         }
         return redirect('/login');
     }

@@ -8,6 +8,7 @@ use App\User;
 use App\Team;
 use App\Prediction;
 use Auth;
+use DateTime;
 
 class MatchController extends Controller
 {
@@ -62,9 +63,8 @@ class MatchController extends Controller
     public function unresultedMatches() {
         if(Auth::user()) {
             if(Auth::user()->hasSubmitted == 1) {
-                
-                $unresultedMatches = Match::orderBy('kickoff')->where('kickoff', '>', date('Y-m-d H+2:i:s'))
-                ->where('homegoals', null)->get();
+
+                $unresultedMatches = Match::orderBy('kickoff')->where('homegoals', null)->get();
 
                 $predictions = [];
 
@@ -75,7 +75,7 @@ class MatchController extends Controller
                 return [
                     'users', User::all(),
                     'matches', $unresultedMatches,
-                    'predictions', $predictions
+                    'predictions', $predictions,
                 ];
             }
         }

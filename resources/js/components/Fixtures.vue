@@ -1,7 +1,7 @@
 <template>
     <div v-if="ready" class="card">
         <div class="card-header">Upcoming Matches</div>
-            <div class="card-body">
+            <div v-if="!previouslySubmitted" class="card-body">
                 <form action="prediction/store" method="post" @submit.prevent="onSubmit">
                     <div v-for="(match, index) in matches" :key="match.id" class="row py-2">
                         <div class="col-3 mx-auto">
@@ -21,12 +21,8 @@
                     </div>
                 </form>
             </div>
-        </div>
-    </div>
 
-    <div v-else-if="previouslySubmitted" class="card">
-        <div class="card-header">Upcoming Matches</div>
-            <div class="card-body">
+            <div v-else class="card-body">
                 
                 <div v-for="(match, index) in matches" :key="match.id" class="row py-2">
                     <div class="col-3 mx-auto">
@@ -50,6 +46,7 @@
                 </div>
                     
             </div>
+
         </div>
     </div>
 
@@ -60,9 +57,22 @@
             <p>Good luck!</p>
         </div>
     </div>
+
+    <div v-else class="card">
+        <div class="card-header">Upcoming Matches</div>
+        <div class="card-body">
+            <div class="row">
+                <div class="mx-auto">
+                    <Spinner></Spinner>
+                </div>
+            </div>
+        </div>
+    </div>
 </template>
 
 <script>
+    import Spinner from '../components/Spinner.vue';
+
     export default {
         mounted() {
             console.log('Fixtures Component mounted.')
@@ -110,6 +120,7 @@
                         this.matches = res.data[3];
                         this.allPredictions = res.data[5];
                         this.previouslySubmitted = true;
+                        this.ready = true;
                     })
                     .catch( err => {
                         console.log(err.response);
@@ -127,6 +138,9 @@
                 this.submitted = true;
                 this.ready = false;
             }
+        },
+    components: {
+        Spinner
     }
 }
 </script>

@@ -5,24 +5,24 @@
     <div class="row justify-content-center">
         
 
-        <!-- <div class="col-md-7"> -->
+        <div class="col-md-7">
             <!-- League Table Vue Component -->
-            <!-- <League-Table></League-Table> -->
+            <League-Table></League-Table>
             <!-- Rules Vue Component -->
-            <!-- <Rules></Rules> -->
-        <!-- </div> -->
+            <Rules></Rules>
+        </div>
 
 
-        <!-- <div class="col-md-5"> -->
+        <div class="col-md-5">
             <!-- Fixtures Vue Component --> 
-            <!-- <Fixtures class="my-2"></Fixtures> -->
+            <Fixtures class="my-2"></Fixtures>
             <!-- Results Vue Component -->
-            <!-- <Results></Results> -->
-        <!-- </div> -->
+            <Results></Results>
+        </div>
 
-        <p>Down for some gentle TLC.</p>
+        <!-- <p>Down for some gentle TLC.</p>
         <br>
-        <p>Check back soon!</p>
+        <p>Check back soon!</p> -->
     </div>
 </div>
 @endsection

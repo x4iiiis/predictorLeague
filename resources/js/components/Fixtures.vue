@@ -1,6 +1,9 @@
 <template>
     <div v-if="ready" class="card">
         <div class="card-header">Upcoming Matches</div>
+            <div v-if="submitted" class="card-body text-success text-center">
+                Submission Successful! 
+            </div>
             <div v-if="!previouslySubmitted" class="card-body">
                 <form action="prediction/store" method="post" @submit.prevent="onSubmit">
                     <div v-for="(match, index) in matches" :key="match.id" class="row py-2">
@@ -137,6 +140,7 @@
                     })
                 this.submitted = true;
                 this.ready = false;
+                this.getUnresultedMatches();
             }
         },
     components: {

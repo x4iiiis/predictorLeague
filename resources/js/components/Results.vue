@@ -68,9 +68,6 @@
                         this.matches = res.data[3];
                         this.predictions = res.data[5];
                         this.ready = true;
-
-                        console.log('results predictions');
-                        console.log(this.predictions);
                     })
                     .catch(err => {
                         console.log(err.response);

@@ -6,6 +6,9 @@
                 <div class="card-body">
                     <p>Correct Score - 3pts</p>
                     <p>Wrong Score w/Correct Outcome  - 1pt</p>
+                    <hr>
+                    <p>Cup games will be based on 90 minutes</p>
+
                 </div>
             </div>
         </div>

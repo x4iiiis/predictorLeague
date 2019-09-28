@@ -23,6 +23,7 @@ Route::get('/', 'MatchController@index')->name('home');
 Route::get('/backend', 'MatchController@backend')->name('backend');
 Route::post('/match/store', 'MatchController@store')->name('match.store');
 Route::post('/prediction/store', 'PredictionController@store')->name('prediction.store');
+Route::post('/match/submitscores', 'MatchController@updateScores')->name('match.scores');
 
 
 Route::get('/updatetable', 'PredictionController@updateScores')->name('update.scores');

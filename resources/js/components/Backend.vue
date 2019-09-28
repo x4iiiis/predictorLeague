@@ -2,7 +2,7 @@
     <div class="container">
         <div class="row text-center">
 
-            <div class="col-md-5 card mx-auto">
+            <div class="col-md-5 card mx-auto my-2">
                 <h3 class="card-title pt-2">Match Maker</h3>
                 <div class="card-body">
 
@@ -34,11 +34,11 @@
                         <button type="submit" class="mt-5 btn btn-primary">Submit</button>
                     </form>
 
-
                 </div>
             </div>
 
-            <div class="col-md-6 card mx-auto">
+
+            <div class="col-md-6 card mx-auto my-2">
                 <h3 class="card-title pt-2">Unresulted Fixtures</h3>
 
 
@@ -53,27 +53,27 @@
                 <div v-else class="card-body">
 
                     <form action="match/addscores" method="post" @submit.prevent="onSubmitScores">
-                    <div v-for="(match, index) in matches" :key="match.id" class="row py-2">
-                        <div class="col-3 mx-auto">
-                            <img :src="match.homeEmblem" :alt="match.homeTeam">
+                        <div v-for="(match, index) in matches" :key="match.id" class="row py-2">
+                            <div class="col-3 mx-auto">
+                                <img :src="match.homeEmblem" :alt="match.homeTeam">
+                            </div>
+                            <div class="form-group col-6 my-auto mx-auto text-center">
+                                <input class="col-5" :name="'home' + match.id" v-model="match.homegoals" type="number"></input>
+                                <input class="col-5" :name="'away' + match.id" v-model="match.awayGoals" type="number"></input>
+                            </div>
+                            <div class="col-3 mx-auto">
+                                <img :src="match.awayEmblem" :alt="match.awayTeam">
+                            </div>
                         </div>
-                        <div class="form-group col-6 my-auto mx-auto text-center">
-                            <input class="col-5" :name="'home' + match.id" v-model="match.home" required type="number"></input>
-                            <input class="col-5" :name="'away' + match.id" v-model="match.away" required type="number"></input>
-                        </div>
-                        <div class="col-3 mx-auto">
-                            <img :src="match.awayEmblem" :alt="match.awayTeam">
-                        </div>
-                    </div>
 
-                    <div class="text-center">
-                        <button class="btn btn-lg btn-primary mx-auto">Submit</button>
-                    </div>
-                </form>
+                        <div class="text-center">
+                            <button type="submit" class="btn btn-lg btn-primary mx-auto">Submit</button>
+                        </div>
+                    </form>
                 </div>
 
-
             </div>
+
         </div>
     </div>
 </template>
@@ -93,10 +93,6 @@
                 match: {},
                 ready: false,
                 submitted: false,
-
-                //Everyone, for when previously submitted = true
-                users: [],
-                allPredictions: []
             }
         },
         methods: {
@@ -128,7 +124,7 @@
                         homeTeam: this.match.homeTeam,
                         awayTeam: this.match.awayTeam,
                         kickoff: this.match.kickoff
-                        })
+                    })
                     .then(response => {
                         console.log('Match Created');
                         this.ready = false;
@@ -139,7 +135,19 @@
                     })
             },
             onSubmitScores() {
-                //Submit scores
+                axios
+                    .post('/match/submitscores', {
+                        matches: this.matches,
+                    })
+                    .then(response => {
+                        console.log('Scores Recieved');
+                        console.log(response);
+                        this.ready = false;
+                        this.getUnresultedMatches();
+                    })
+                    .catch(err => {
+                        console.log(err.response);
+                    })
             }
         },
     components: {

@@ -172,6 +172,21 @@ class MatchController extends Controller
         return redirect('/backend');
     }
 
+    public function updateScores(Request $request)
+    {
+        foreach($request->matches as $match) {
+
+            if($match['homegoals'] != null) {
+
+                $relevantMatch = Match::where('id', $match['id'])->first();
+                $relevantMatch->homegoals = $match['homegoals'];
+                $relevantMatch->awayGoals = $match['awayGoals'];
+                $relevantMatch->save();
+            }
+        }
+        return 'Scores Updated';
+    }
+
     /**
      * Display the specified resource.
      *

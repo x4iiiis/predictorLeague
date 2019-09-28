@@ -129,8 +129,19 @@ class MatchController extends Controller
      */
     public function create()
     {   
-        $teams = Team::all();
-        return view('backend')->with('teams',$teams);
+        if(Auth::user()) {
+            return [
+                'teams', Team::all()
+            ];
+        }
+        return redirect('login');
+    }
+
+    public function backend() {
+        if(Auth::user()) {
+            return view('backend');
+        }
+        return redirect('login');
     }
 
     /**

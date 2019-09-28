@@ -20,13 +20,14 @@ Auth::routes();
 //Route::get('/home', 'HomeController@index')->name('home');
 Route::get('/', 'MatchController@index')->name('home');
 
-Route::get('/backend', 'MatchController@create')->name('backend');
+Route::get('/backend', 'MatchController@backend')->name('backend');
 Route::post('/match/store', 'MatchController@store')->name('match.store');
 Route::post('/prediction/store', 'PredictionController@store')->name('prediction.store');
 
 
 Route::get('/updatetable', 'PredictionController@updateScores')->name('update.scores');
 
+Route::get('/getteams', 'MatchController@create');
 Route::get('/getusers', 'LeagueTableController@index');
 route::get('/getupcomingmatches', 'MatchController@upcomingMatches');
 route::get('/getresultedmatches', 'MatchController@resultedMatches');

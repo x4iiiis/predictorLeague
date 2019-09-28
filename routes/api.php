@@ -17,7 +17,7 @@ Route::middleware('auth:api')->get('/user', function (Request $request) {
     return $request->user();
 });
 
-
+//Route::get('/getteams', 'MatchController@create');
 Route::get('/getusers', 'LeagueTableController@index');
 Route::get('/updatetable', 'PredictionController@updateScores')->name('update.scores');
 Route::post('/prediction', 'PredictionController@store')->name('prediction.store');

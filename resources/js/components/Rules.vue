@@ -8,7 +8,7 @@
                         <li><p>Correct Score: 3pts</p></li>
                         <li><p>Wrong Score w/Correct Outcome: 1pt</p></li>
                         <hr>
-                        <li><p>Cup games will be based on 90 minutes</p></li>
+                        <li><p>Cup games are based on 90 minutes</p></li>
                     </ul>
                 </div>
             </div>

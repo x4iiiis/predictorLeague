@@ -7,12 +7,25 @@
             <div v-if="!previouslySubmitted" class="card-body">
                 <form action="prediction/store" method="post" @submit.prevent="onSubmit">
                     <div v-for="(match, index) in matches" :key="match.id" class="row py-2">
+                        <div class="col-12 text-center mb-2">
+                            <hr>
+                            <small>
+                                {{match.kickoff.split(' ')[0]}}
+                                {{match.kickoff.split(' ')[1]}}
+                                {{match.kickoff.split(' ')[2]}}
+                                {{match.kickoff.split(' ')[3]}}
+                            </small>
+                            <h6>{{match.kickoff.split(' ')[4]}}</h6>
+                            <div class="col-9 mx-auto">
+                                <hr> 
+                            </div>
+                        </div>
                         <div class="col-3 mx-auto">
                             <img :src="match.homeEmblem" :alt="match.homeTeam">
                         </div>
                         <div class="form-group col-6 my-auto mx-auto text-center">
-                            <input class="col-5" :name="'home' + match.id" v-model="match.home" required type="number"></input>
-                            <input class="col-5" :name="'away' + match.id" v-model="match.away" required type="number"></input>
+                            <input class="col-5" :name="'home' + match.id" v-model="match.homegoals" required type="number"></input>
+                            <input class="col-5" :name="'away' + match.id" v-model="match.awayGoals" required type="number"></input>
                         </div>
                         <div class="col-3 mx-auto">
                             <img :src="match.awayEmblem" :alt="match.awayTeam">
@@ -28,6 +41,19 @@
             <div v-else class="card-body">
                 
                 <div v-for="(match, index) in matches" :key="match.id" class="row py-2">
+                    <div class="col-12 text-center mb-2">
+                        <hr>
+                        <small>
+                            {{match.kickoff.split(' ')[0]}}
+                            {{match.kickoff.split(' ')[1]}}
+                            {{match.kickoff.split(' ')[2]}}
+                            {{match.kickoff.split(' ')[3]}}
+                        </small>
+                        <h6>{{match.kickoff.split(' ')[4]}}</h6>
+                        <div class="col-9 mx-auto">
+                            <hr> 
+                        </div>
+                    </div>
                     <div class="col-3 mx-auto">
                         <img :src="match.homeEmblem" :alt="match.homeTeam">
                     </div>
@@ -134,13 +160,20 @@
                     .post('/api/prediction', { match: this.matches, userID: this.user.id })
                     .then((response) => {
                         console.log('Predictions received');
+                        
+                        this.submitted = true;
+                        this.ready = false;
+
+                        var self = this;
+                        setTimeout( function() {
+                            self.submitted = false;
+                            self.getUnresultedMatches();
+                        }, 2000);
                     })
                     .catch(err => {
                         console.log(err.response);
                     })
-                this.submitted = true;
-                this.ready = false;
-                this.getUnresultedMatches();
+                
             }
         },
     components: {

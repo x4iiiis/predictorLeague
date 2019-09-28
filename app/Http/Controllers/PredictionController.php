@@ -43,8 +43,8 @@ class PredictionController extends Controller
             Prediction::create([
                 'userID' => $request->userID,
                 'matchID' => $match['id'],
-                'homeGoals' => $match['home'],
-                'awayGoals' => $match['away']
+                'homeGoals' => $match['homegoals'],
+                'awayGoals' => $match['awayGoals']
                 ]);   
         }
 

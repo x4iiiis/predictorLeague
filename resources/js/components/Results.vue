@@ -5,6 +5,19 @@
                     <div v-if="ready" class="card-body">
 
                         <div v-for="match in matches" class="row py-2">
+                            <div class="col-12 text-center mb-2">
+                                <hr>
+                                <small>
+                                    {{match.kickoff.split(' ')[0]}}
+                                    {{match.kickoff.split(' ')[1]}}
+                                    {{match.kickoff.split(' ')[2]}}
+                                    {{match.kickoff.split(' ')[3]}}
+                                </small>
+                                <h6>{{match.kickoff.split(' ')[4]}}</h6>
+                                <div class="col-9 mx-auto">
+                                    <hr> 
+                                </div>
+                            </div>
                             <div class="col-3 mx-auto">
                                 <img :src="match.homeEmblem" :alt="match.homeTeam">
                             </div>

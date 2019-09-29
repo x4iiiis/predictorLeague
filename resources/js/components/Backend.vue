@@ -156,12 +156,23 @@
                         console.log('Scores Recieved');
                         console.log(response);
                         this.ready = false;
+                        this.updateTable();
                         this.getUnresultedMatches();
                     })
                     .catch(err => {
                         console.log(err.response);
                     })
-            }
+            },
+            updateTable() {
+                axios
+                    .get('/updatetable')
+                    .then(res => {
+                        console.log('League Table Updated');
+                    })
+                    .catch(err => {
+                        console.log(err.response);
+                    })
+            },
         },
     components: {
         Spinner

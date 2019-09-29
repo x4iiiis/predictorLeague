@@ -37,7 +37,12 @@
     export default {
         mounted() {
             console.log('League Table Component mounted.')
-            this.updateTable()
+            
+            var self = this;
+            setTimeout( function() {
+                self.getUsers();
+            }, 1000);
+            
         },
         data() {
             return {
@@ -46,16 +51,6 @@
             }
         },
         methods: {
-            updateTable() {
-                axios
-                    .get('/updatetable')
-                    .then(res => {
-                        this.getUsers()
-                    })
-                    .catch(err => {
-                        console.log(err.response);
-                    })
-            },
             getUsers() {
                 axios
                     .get('/getusers')

@@ -4,43 +4,10 @@
                 <div class="card-header">Previous Matches</div>
                     <div v-if="ready" class="card-body">
 
-                        <div v-for="match in matches" class="row py-2">
-                            <div class="col-12 text-center mb-2">
-                                <hr>
-                                <small>
-                                    {{match.kickoff.split(' ')[0]}}
-                                    {{match.kickoff.split(' ')[1]}}
-                                    {{match.kickoff.split(' ')[2]}}
-                                    {{match.kickoff.split(' ')[3]}}
-                                </small>
-                                <h6>{{match.kickoff.split(' ')[4]}}</h6>
-                                <div class="col-9 mx-auto">
-                                    <hr> 
-                                </div>
-                            </div>
-                            <div class="col-3 mx-auto">
-                                <img :src="match.homeEmblem" :alt="match.homeTeam">
-                            </div>
-                            <div class="col-6 mx-auto my-auto text-center">
-                                <h1 style="display: inline;">{{ match.homegoals }} - </h1>
-                                <h1 style="display: inline;">{{ match.awayGoals }}</h1>
-
-
-                                    <table>
-                                    <tr v-for="prediction in predictions[ match.id - 1 ]">
-                                        <td style="text-align:right">
-                                            <small>{{ users[prediction.userID - 1].name }}</small>
-                                        </td>
-                                        <td>
-                                            <small>{{ prediction.homeGoals }} - {{ prediction.awayGoals }}</small>
-                                        </td>
-                                    </tr>
-                                    </table>
-
-                            </div>
-                            <div class="col-3 mx-auto">
-                                <img :src="match.awayEmblem" :alt="match.awayTeam">
-                            </div>
+                        <div v-for="match in matches" :key="match.id" class="row py-2">
+                            
+                            <Result :match="match" :key="match.id" :predictions="predictions[ match.id - 1 ]" :users="users"></Result>
+                            
                         </div>
                     </div>
                     <div v-else class="card-body">
@@ -58,6 +25,7 @@
 
 <script>
     import Spinner from '../components/Spinner.vue';
+    import Result from '../components/Result.vue';
 
     export default {
         mounted() {
@@ -88,7 +56,8 @@
             }
     },
     components: {
-        Spinner
+        Spinner,
+        Result,
     }
 }
 </script>

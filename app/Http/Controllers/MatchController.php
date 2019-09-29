@@ -59,6 +59,21 @@ class MatchController extends Controller
         return redirect('/login');
     }
 
+    //For lazy loading results
+    public function moreResultedMatches($counter) {
+        if(Auth::user()) {
+
+            $limit = 5;
+            $prevMatches = Match::orderBy('kickoff', 'desc')->where('homegoals', '>=', 0)->find(range($counter,$counter+$limit));
+            
+            return [
+                'users', User::all(),
+                'matches', $prevMatches,
+            ];
+        }
+        return redirect('/login');
+    }
+
     //For each Result.vue Component
     public function getMatchPredictions($matchID) {
         if(Auth::user()) {

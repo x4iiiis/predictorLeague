@@ -37,13 +37,14 @@
                 users: [],
                 matches: [],
                 predictions: [],
-                ready: false
+                ready: false,
+                counter: 0
             }
         },
         methods: {
             getMatches() {
                 axios
-                    .get('/getresultedmatches')
+                    .get('/getresultedmatches/' + this.counter++)
                     .then(res => {
                         this.users = res.data[1];
                         this.matches = res.data[3];

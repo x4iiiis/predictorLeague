@@ -2,6 +2,9 @@
 <div v-if="ready" class="row">
   <div class="col-12 text-center mb-2">
         <hr>
+        <div v-if="!ready" class="mx-auto">
+            <Spinner></Spinner>
+        </div>
         <small>
             {{this.match.kickoff.split(' ')[0]}}
             {{this.match.kickoff.split(' ')[1]}}
@@ -35,10 +38,6 @@
     <div class="col-3 mx-auto">
         <img :src="this.match.awayEmblem" :alt="this.match.awayTeam">
     </div>
-</div>
-
-<div v-else class="col-12 text-center mx-auto">
-    <Spinner></Spinner>
 </div>
 </template>
 

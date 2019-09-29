@@ -6,9 +6,10 @@
 
                         <div v-for="match in matches" :key="match.id" class="row py-2">
                             
-                            <Result :match="match" :key="match.id" :users="users"></Result>
+                            <Result :match="match" :users="users"></Result>
                             
                         </div>
+                        <observer v-on:intersect="getMoreMatches()"></observer>
                     </div>
                     <div v-else class="card-body">
                         <div class="row">
@@ -26,6 +27,7 @@
 <script>
     import Spinner from '../components/Spinner.vue';
     import Result from '../components/Result.vue';
+    import Observer from '../components/Observer.vue';
 
     export default {
         mounted() {
@@ -36,7 +38,6 @@
             return {
                 users: [],
                 matches: [],
-                predictions: [],
                 ready: false,
                 counter: 0
             }
@@ -53,11 +54,22 @@
                     .catch(err => {
                         console.log(err.response);
                     })
+            },
+            async getMoreMatches() {
+                await axios
+                    .get('/getresultedmatches/' + this.counter++)
+                    .then(res => {
+                        this.matches = [...this.matches, ...res.data[3]];
+                    })
+                    .catch(err => {
+                        console.log(err.response);
+                    })
             }
     },
     components: {
         Spinner,
         Result,
+        Observer,
     }
 }
 </script>

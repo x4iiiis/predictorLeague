@@ -63,8 +63,21 @@ class MatchController extends Controller
     public function moreResultedMatches($counter) {
         if(Auth::user()) {
 
-            $limit = 5;
-            $prevMatches = Match::orderBy('kickoff', 'desc')->where('homegoals', '>=', 0)->find(range($counter,$counter+$limit));
+            $limit = 10;
+            $resultedTotal = sizeof(
+                                Match::orderBy('kickoff', 'desc')
+                                    ->where('kickoff', '<', date('Y-m-d H:i:s'))
+                                    ->where('homegoals', '>=', 0)
+                                    ->get()
+                                ) + 1;
+            //dd(Match::find($counter));
+            $prevMatches = Match::orderBy('kickoff', 'desc')
+                                ->where('kickoff', '<', date('Y-m-d H:i:s'))
+                                ->where('homegoals', '>=', 0)
+                                ->find(range(
+                                    $resultedTotal - (($counter) * $limit) - 1,
+                                    $resultedTotal - ($counter * $limit) - $limit)
+                                );
             
             return [
                 'users', User::all(),

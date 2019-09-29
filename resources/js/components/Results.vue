@@ -6,7 +6,7 @@
 
                         <div v-for="match in matches" :key="match.id" class="row py-2">
                             
-                            <Result :match="match" :key="match.id" :predictions="predictions[ match.id - 1 ]" :users="users"></Result>
+                            <Result :match="match" :key="match.id" :users="users"></Result>
                             
                         </div>
                     </div>
@@ -47,7 +47,6 @@
                     .then(res => {
                         this.users = res.data[1];
                         this.matches = res.data[3];
-                        this.predictions = res.data[5];
                         this.ready = true;
                     })
                     .catch(err => {

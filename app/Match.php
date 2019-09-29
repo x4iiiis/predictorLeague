@@ -13,4 +13,9 @@ class Match extends Model
     protected $casts = [
         'kickoff' => 'datetime:l jS F Y H:i',
     ];
+
+    public function predictions()
+    {
+        return $this->hasMany('App\Prediction');
+    }
 }

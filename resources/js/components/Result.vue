@@ -1,5 +1,5 @@
 <template>
-<div class="row">
+<div v-if="ready" class="row">
   <div class="col-12 text-center mb-2">
         <hr>
         <small>
@@ -36,9 +36,15 @@
         <img :src="this.match.awayEmblem" :alt="this.match.awayTeam">
     </div>
 </div>
+
+<div v-else class="col-12 text-center mx-auto">
+    <Spinner></Spinner>
+</div>
 </template>
 
 <script>
+import Spinner from '../components/Spinner.vue';
+
 export default {
     name: 'Result',
     mounted() {
@@ -46,11 +52,33 @@ export default {
         // console.log(this.match);
         // console.log(this.predictions);
         // console.log(this.users);
+        this.getPredictions();
     },
     props: {
         match: Object,
-        predictions: Object,
         users: Array,
+    },
+    data() {
+        return {
+            ready: false,
+            predictions: {},
+        };
+    },
+    methods: {
+        getPredictions() {
+            axios
+                .get('/getpredictions/' + this.match.id)
+                .then(res => {
+                    this.predictions = res.data[1];
+                    this.ready = true;
+                })
+                .catch(err => {
+                    console.log(err);
+                })
+        }
+    },
+    components: {
+        Spinner
     }
 }
 </script>

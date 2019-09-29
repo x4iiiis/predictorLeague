@@ -41,23 +41,31 @@ class MatchController extends Controller
     }
 
     public function resultedMatches() {
+
+        //TEMP
+        //dd(Match::first()->predictions()->get());
+
         if(Auth::user()) {
 
             $prevMatches = Match::orderBy('kickoff', 'desc')->where('kickoff', '<', date('Y-m-d H:i:s'))
                                         ->where('homegoals', '>=', 0)->get();
-            $predictions = []; 
-
-            foreach(Match::all() as $match) {
-                array_push($predictions, Prediction::all()->where('matchID', '==', $match->id));
-            }
+            
 
             return [
                 'users', User::all(),
                 'matches', $prevMatches,
-                'predictions', $predictions
             ];
         }
         return redirect('/login');
+    }
+
+    //For each Result.vue Component
+    public function getMatchPredictions($matchID) {
+        if(Auth::user()) {
+            return [
+                'predictions', Match::where('id', $matchID)->first()->predictions()->get()
+            ];
+        }
     }
 
     public function unresultedMatches() {
@@ -68,8 +76,12 @@ class MatchController extends Controller
 
                 $predictions = [];
 
+                // foreach($unresultedMatches as $match) {
+                //     array_push($predictions, Prediction::all()->where('match_id', '==', $match->id));
+                // }
+
                 foreach($unresultedMatches as $match) {
-                    array_push($predictions, Prediction::all()->where('matchID', '==', $match->id));
+                    array_push($predictions, $match->predictions()->get());
                 }
 
                 return [
@@ -81,6 +93,7 @@ class MatchController extends Controller
         }
         return redirect('/login');
     }
+
 
     public function index()
     {
@@ -99,7 +112,7 @@ class MatchController extends Controller
             foreach(Match::all() as $match) {
                 //dd($prevMatch->id);
                 //dd(Prediction::all()->where('matchID', '==', $prevMatch->id));
-                array_push($predictions, Prediction::all()->where('matchID', '==', $match->id));
+                array_push($predictions, Prediction::all()->where('match_id', '==', $match->id));
             }
             //dd($predictions);
 

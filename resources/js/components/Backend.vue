@@ -2,38 +2,57 @@
     <div class="container">
         <div class="row text-center">
 
-            <div class="col-md-5 card mx-auto my-2">
-                <h3 class="card-title pt-2">Match Maker</h3>
-                <div class="card-body">
-
-
-                    <form action="/match/store" method="post" @submit.prevent="onSubmit">
-                        <div class="form-group">
-                            <label>Home Team</label>
-                            <select  class="form-control" placeholder="homeTeam" v-model="match.homeTeam" :name="homeTeam">
-
-                                <option v-for="(team, index) in teams" :key="team.id">{{team.name}}</option>
-
-                            </select>
+            <div class="col-md-5 mx-auto">
+                <div class="card my-2">
+                    <div class="row">
+                        <a class="btn btn-round btn-success col-6" v-on:click="unlock()">Unlock Predictions</a>
+                        <a class="btn btn-round btn-danger col-6" v-on:click="lock()">Lock Predictions</a>
+                        
+                        <div v-if="locked" class="col-6 mx-auto">
+                            <span class="fa fa-lock fa-5x text-danger"></span>
                         </div>
-                        <br />
-                        <div class="form-group">
-                            <label>Away Team</label>
-                            <select  class="form-control" placeholder="awayTeam" v-model="match.awayTeam">
+                        <div v-else-if="unlocked" class="col-6 mx-auto">
+                            <span class="fa fa-unlock fa-5x text-success"></span>
+                        </div>
+                        <div v-else class="col-6 mx-auto">
+                            <span class="fa fa-key fa-5x"></span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="card my-2">
+                    <h3 class="card-title pt-2">Match Maker </h3>
+                    <div class="card-body">
+
+
+                        <form action="/match/store" method="post" @submit.prevent="onSubmit">
+                            <div class="form-group">
+                                <label>Home Team</label>
+                                <select  class="form-control" placeholder="homeTeam" v-model="match.homeTeam">
 
                                     <option v-for="(team, index) in teams" :key="team.id">{{team.name}}</option>
 
-                            </select>
-                        </div>
-                        <br />
-                        <div class="form-group">
-                            <label>Kickoff</label>
-                            <input class="form-control" type="datetime-local" id="kickoff" placeholder="dateTime" v-model="match.kickoff">
-                        </div>
-                        <br />
-                        <button type="submit" class="mt-5 btn btn-primary">Submit</button>
-                    </form>
+                                </select>
+                            </div>
+                            <br />
+                            <div class="form-group">
+                                <label>Away Team</label>
+                                <select  class="form-control" placeholder="awayTeam" v-model="match.awayTeam">
 
+                                        <option v-for="(team, index) in teams" :key="team.id">{{team.name}}</option>
+
+                                </select>
+                            </div>
+                            <br />
+                            <div class="form-group">
+                                <label>Kickoff</label>
+                                <input class="form-control" type="datetime-local" id="kickoff" placeholder="dateTime" v-model="match.kickoff">
+                            </div>
+                            <br />
+                            <button type="submit" class="mt-5 btn btn-primary">Submit</button>
+                        </form>
+
+                    </div>
                 </div>
             </div>
 
@@ -106,6 +125,8 @@
                 match: {},
                 ready: false,
                 submitted: false,
+                locked: false,
+                unlocked: false,
             }
         },
         methods: {
@@ -122,9 +143,9 @@
             },
             getUnresultedMatches() {
                 axios
-                    .get('/getunresultedmatches')
+                    .get('/getunresultedmatchesbackend')
                     .then(res => {
-                        this.matches = res.data[3];
+                        this.matches = res.data[1];
                         this.ready = true;
                     })
                     .catch( err => {
@@ -173,6 +194,30 @@
                         console.log(err.response);
                     })
             },
+            unlock() {
+                axios
+                    .get('/unlockpredictions')
+                    .then(res => {
+                        console.log('Predictions unlocked!');
+                        this.locked = false;
+                        this.unlocked = true;
+                    })
+                    .catch(err => {
+                        console.log(err);
+                    })
+            },
+            lock() {
+                axios
+                    .get('/lockpredictions')
+                    .then(res => {
+                        console.log('Predictions locked!');
+                        this.unlocked = false;
+                        this.locked = true;
+                    })
+                    .catch(err => {
+                        console.log(err);
+                    })
+            }
         },
     components: {
         Spinner

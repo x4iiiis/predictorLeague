@@ -122,6 +122,16 @@ class MatchController extends Controller
         return redirect('/login');
     }
 
+    public function unresultedMatchesBackend() {
+        if(Auth::user()) {
+
+            return [
+                'matches', Match::orderBy('kickoff')->where('homegoals', null)->get()
+            ];
+        }
+        return redirect('/login');
+    }
+
 
     public function index()
     {

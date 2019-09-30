@@ -27,6 +27,8 @@ Route::post('/match/submitscores', 'MatchController@updateScores')->name('match.
 
 
 Route::get('/updatetable', 'PredictionController@updateScores')->name('update.scores');
+Route::get('/lockpredictions', 'PredictionController@lock');
+Route::get('/unlockpredictions', 'PredictionController@unlock');
 
 Route::get('/getteams', 'MatchController@create');
 Route::get('/getusers', 'LeagueTableController@index');
@@ -35,3 +37,4 @@ route::get('/getresultedmatches', 'MatchController@resultedMatches');
 route::get('/getresultedmatches/{counter}', 'MatchController@moreResultedMatches');
 route::get('/getpredictions/{matchid}', 'MatchController@getMatchPredictions');
 route::get('/getunresultedmatches', 'MatchController@unresultedMatches');
+route::get('/getunresultedmatchesbackend', 'MatchController@unresultedMatchesBackend');

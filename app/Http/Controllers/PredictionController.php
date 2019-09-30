@@ -97,6 +97,23 @@ class PredictionController extends Controller
         }
     }
 
+    public function lock() {
+        if(Auth::user()) {
+            foreach (User::all() as $user) {
+                $user->hasSubmitted = 1;
+                $user->save();
+            }
+        }
+    }
+    public function unlock() {
+        if(Auth::user()) {
+            foreach (User::all() as $user) {
+                $user->hasSubmitted = 0;
+                $user->save();
+            }
+        }
+    }
+
     /**
      * Display the specified resource.
      *

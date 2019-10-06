@@ -25,12 +25,33 @@
 
             <table>
             <tr v-for="prediction in this.predictions" :key="prediction.id">
-                <td style="text-align:right">
-                    <small>{{ users[prediction.userID - 1].name }}</small>
-                </td>
-                <td>
-                    <small>{{ prediction.homeGoals }} - {{ prediction.awayGoals }}</small>
-                </td>
+                <div v-if="prediction.homeGoals == match.homegoals && prediction.awayGoals == match.awayGoals">
+                    <td style="text-align:right">
+                        <small class="text-success">{{ users[prediction.userID - 1].name }}</small>
+                    </td>
+                    <td>
+                        <small class="text-success">{{ prediction.homeGoals }} - {{ prediction.awayGoals }}</small>
+                    </td>
+                </div>
+                <div v-else-if="(prediction.homeGoals > prediction.awayGoals && match.homegoals > match.awayGoals) 
+                        || (prediction.homeGoals < prediction.awayGoals && match.homegoals < match.awayGoals) 
+                        || (prediction.homeGoals == prediction.awayGoals && match.homegoals == match.awayGoals)">
+                    <td style="text-align:right">
+                        <small style="color:#f6993f">{{ users[prediction.userID - 1].name }}</small>
+                    </td>
+                    <td>
+                        <small style="color:#f6993f">{{ prediction.homeGoals }} - {{ prediction.awayGoals }}</small>
+                    </td>
+                </div>
+                <div v-else>
+                    <td style="text-align:right">
+                        <small>{{ users[prediction.userID - 1].name }}</small>
+                    </td>
+                    <td>
+                        <small>{{ prediction.homeGoals }} - {{ prediction.awayGoals }}</small>
+                    </td>
+                </div>
+
             </tr>
             </table>
 

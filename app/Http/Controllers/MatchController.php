@@ -136,7 +136,7 @@ class MatchController extends Controller
         if(Auth::user()) {            
 
             return [
-                'matches', Match::orderBy('kickoff')->where('homegoals', '>=', 0)->get()
+                'matches', Match::orderBy('kickoff', 'DESC')->where('homegoals', '>=', 0)->get()
             ];
         }
         return redirect('/login');

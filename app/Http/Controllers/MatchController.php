@@ -132,6 +132,16 @@ class MatchController extends Controller
         return redirect('/login');
     }
 
+    public function resultedMatchesBackend() {
+        if(Auth::user()) {            
+
+            return [
+                'matches', Match::orderBy('kickoff')->where('homegoals', '>=', 0)->get()
+            ];
+        }
+        return redirect('/login');
+    }
+
 
     public function index()
     {
@@ -236,6 +246,13 @@ class MatchController extends Controller
             }
         }
         return 'Scores Updated';
+    }
+
+    public function resetMatch(Request $request) {
+        $relevantMatch = Match::where('id', $request->match['id'])->first();
+        $relevantMatch->homegoals = null;
+        $relevantMatch->awayGoals = null;
+        $relevantMatch->save();
     }
 
     /**

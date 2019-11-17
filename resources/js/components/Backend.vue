@@ -57,7 +57,11 @@
             </div>
 
 
-            <div class="col-md-6 card mx-auto my-2">
+            <div v-if="!showResulted" class="col-md-6 card mx-auto my-2">
+                <div class="row">
+                    <a class="btn btn-round btn-warning col-6 mx-auto" v-on:click="getResultedMatches()">Edit Resulted</a>
+                </div>
+
                 <h3 class="card-title pt-2">Unresulted Fixtures</h3>
 
 
@@ -90,7 +94,7 @@
                                 <img :src="match.homeEmblem" :alt="match.homeTeam">
                             </div>
                             <div class="form-group col-6 my-auto mx-auto text-center">
-                                <input class="col-5" :name="'home' + match.id" v-model="match.homegoals" type="number"></input>
+                                <input class="col-5" :name="'home' + match.id" v-model="match.g" type="number"></input>
                                 <input class="col-5" :name="'away' + match.id" v-model="match.awayGoals" type="number"></input>
                             </div>
                             <div class="col-3 mx-auto">
@@ -105,6 +109,61 @@
                 </div>
 
             </div>
+
+
+            <div v-else class="col-md-6 card mx-auto my-2">
+                <div class="row">
+                    <a class="btn btn-round btn-info col-6 mx-auto" v-on:click="getUnresultedMatches()">Edit Unresulted</a>
+                </div>
+                <h3 class="card-title pt-2">Resulted Fixtures</h3>
+
+
+                <div v-if="!ready" class="card-body">       
+                    <div class="row">
+                        <div class="mx-auto">
+                            <Spinner></Spinner>
+                        </div>
+                    </div>
+                </div>
+                
+                <div v-else class="card-body">
+
+                    <div v-for="(match, index) in matches" :key="match.id">
+                        <form action="match/addscores" method="post" @submit.prevent="resetScores(match)" class="row py-2">
+                            <div class="col-12 text-center mb-2">
+                                <hr>
+                                <small>
+                                    {{match.kickoff.split(' ')[0]}}
+                                    {{match.kickoff.split(' ')[1]}}
+                                    {{match.kickoff.split(' ')[2]}}
+                                    {{match.kickoff.split(' ')[3]}}
+                                </small>
+                                <h6>{{match.kickoff.split(' ')[4]}}</h6>
+                                <div class="col-9 mx-auto">
+                                    <hr> 
+                                </div>
+                            </div>
+                            <div class="col-3 mx-auto">
+                                <img :src="match.homeEmblem" :alt="match.homeTeam">
+                            </div>
+                            <div class="form-group col-6 my-auto mx-auto text-center">
+                                <h1 style="display: inline;">{{ match.homegoals }} - </h1>
+                                <h1 style="display: inline;">{{ match.awayGoals }}</h1>
+                            </div>
+                            <div class="col-3 mx-auto">
+                                <img :src="match.awayEmblem" :alt="match.awayTeam">
+                            </div>
+                            <div class="col-12 text-center">
+                                <button type="submit" class="btn btn-lg btn-warning mx-auto">Reset</button>
+                            </div>
+                        </form>
+                    </div>
+
+                </div>
+
+            </div>
+
+
 
         </div>
     </div>
@@ -127,6 +186,7 @@
                 submitted: false,
                 locked: false,
                 unlocked: false,
+                showResulted: false,
             }
         },
         methods: {
@@ -145,6 +205,19 @@
                 axios
                     .get('/getunresultedmatchesbackend')
                     .then(res => {
+                        this.showResulted = false;
+                        this.matches = res.data[1];
+                        this.ready = true;
+                    })
+                    .catch( err => {
+                        console.log(err.response);
+                    })
+            },
+            getResultedMatches() {
+                axios
+                    .get('/getresultedmatchesbackend')
+                    .then(res => {
+                        this.showResulted = true;
                         this.matches = res.data[1];
                         this.ready = true;
                     })
@@ -179,6 +252,25 @@
                         this.ready = false;
                         this.updateTable();
                         this.getUnresultedMatches();
+                    })
+                    .catch(err => {
+                        console.log(err.response);
+                    })
+            },
+            resetScores(match) {
+                match.homegoals = null;
+                match.awayGoals = null;
+
+                axios
+                    .post('/match/resetmatch', {
+                        match: match,
+                    })
+                    .then(response => {
+                        console.log('Scores Reset');
+                        console.log(response);
+                        this.ready = false;
+                        this.updateTable();
+                        this.getResultedMatches();
                     })
                     .catch(err => {
                         console.log(err.response);

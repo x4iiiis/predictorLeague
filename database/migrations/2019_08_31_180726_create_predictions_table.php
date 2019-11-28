@@ -15,8 +15,10 @@ class CreatePredictionsTable extends Migration
     {
         Schema::create('predictions', function (Blueprint $table) {
             $table->bigIncrements('id');
-            $table->integer('userID');
-            $table->integer('matchID');
+            $table->unsignedBigInteger('userID');
+            $table->foreign('userID')->references('id')->on('users');
+            $table->unsignedBigInteger('matchID');
+            $table->foreign('matchID')->references('id')->on('matches');
             $table->integer('homeGoals');
             $table->integer('awayGoals');
             $table->timestamps();

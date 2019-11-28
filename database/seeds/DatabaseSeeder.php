@@ -16,6 +16,7 @@ class DatabaseSeeder extends Seeder
             UsersTableSeeder::class,
             TeamsTableSeeder::class,
             MatchTableSeeder::class,
+            PredictionsTableSeeder::class,
         ]);
     }
 }

@@ -20,8 +20,14 @@ class CreateMatchesTable extends Migration
             $table->string('awayTeam');
             $table->string('awayEmblem');
             $table->dateTime('kickoff');
-            $table->integer('homegoals')->nullable();
+            $table->integer('homeGoals')->nullable();
             $table->integer('awayGoals')->nullable();
+            $table->boolean('etp_available')->default(0);
+            $table->integer('homeGoalsAET')->nullable();
+            $table->integer('awayGoalsAET')->nullable();
+            $table->integer('homeGoalsPens')->nullable();
+            $table->integer('awayGoalsPens')->nullable();
+
             $table->timestamps();
         });
     }

@@ -48,7 +48,7 @@ class MatchController extends Controller
         if(Auth::user()) {
 
             $prevMatches = Match::orderBy('kickoff', 'desc')->where('kickoff', '<', date('Y-m-d H:i:s'))
-                                        ->where('homegoals', '>=', 0)->get();
+                                        ->where('homeGoals', '>=', 0)->get();
             
 
             return [
@@ -67,13 +67,13 @@ class MatchController extends Controller
             $resultedTotal = sizeof(
                                 Match::orderBy('kickoff', 'desc')
                                     ->where('kickoff', '<', date('Y-m-d H:i:s'))
-                                    ->where('homegoals', '>=', 0)
+                                    ->where('homeGoals', '>=', 0)
                                     ->get()
                                 ) + 1;
             //dd(Match::find($counter));
             $prevMatches = Match::orderBy('kickoff', 'desc')
                                 ->where('kickoff', '<', date('Y-m-d H:i:s'))
-                                ->where('homegoals', '>=', 0)
+                                ->where('homeGoals', '>=', 0)
                                 ->find(range(
                                     $resultedTotal - (($counter) * $limit) - 1,
                                     $resultedTotal - ($counter * $limit) - $limit)
@@ -100,7 +100,7 @@ class MatchController extends Controller
         if(Auth::user()) {
             if(Auth::user()->hasSubmitted == 1) {
 
-                $unresultedMatches = Match::orderBy('kickoff')->where('homegoals', null)->get();
+                $unresultedMatches = Match::orderBy('kickoff')->where('homeGoals', null)->get();
 
                 $predictions = [];
 
@@ -126,7 +126,7 @@ class MatchController extends Controller
         if(Auth::user()) {
 
             return [
-                'matches', Match::orderBy('kickoff')->where('homegoals', null)->get()
+                'matches', Match::orderBy('kickoff')->where('homeGoals', null)->get()
             ];
         }
         return redirect('/login');
@@ -136,7 +136,7 @@ class MatchController extends Controller
         if(Auth::user()) {            
 
             return [
-                'matches', Match::orderBy('kickoff', 'DESC')->where('homegoals', '>=', 0)->get()
+                'matches', Match::orderBy('kickoff', 'DESC')->where('homeGoals', '>=', 0)->get()
             ];
         }
         return redirect('/login');
@@ -152,7 +152,7 @@ class MatchController extends Controller
             $matches = Match::all()->where('kickoff', '>', date('Y-m-d H:i:s'));
             $prevMatches = Match::orderBy('id', 'desc')
                                         ->where('kickoff', '<', date('Y-m-d H:i:s'))
-                                        ->where('homegoals', '>=', 0)
+                                        ->where('homeGoals', '>=', 0)
                                         ->simplePaginate(5);
 
             $predictions = []; 
@@ -166,7 +166,7 @@ class MatchController extends Controller
 
 
 
-            //$prevMatches = Match::whereNotNull('homegoals')->get()->all();
+            //$prevMatches = Match::whereNotNull('homeGoals')->get()->all();
             //dd($prevMatches);
 
             if(Auth::user()->hasSubmitted == 0) {
@@ -237,10 +237,10 @@ class MatchController extends Controller
     {
         foreach($request->matches as $match) {
 
-            if($match['homegoals'] != null) {
+            if($match['homeGoals'] != null) {
 
                 $relevantMatch = Match::where('id', $match['id'])->first();
-                $relevantMatch->homegoals = $match['homegoals'];
+                $relevantMatch->homeGoals = $match['homeGoals'];
                 $relevantMatch->awayGoals = $match['awayGoals'];
                 $relevantMatch->save();
             }
@@ -250,7 +250,7 @@ class MatchController extends Controller
 
     public function resetMatch(Request $request) {
         $relevantMatch = Match::where('id', $request->match['id'])->first();
-        $relevantMatch->homegoals = null;
+        $relevantMatch->homeGoals = null;
         $relevantMatch->awayGoals = null;
         $relevantMatch->save();
     }

@@ -24,7 +24,7 @@
                             <img :src="match.homeEmblem" :alt="match.homeTeam">
                         </div>
                         <div class="form-group col-6 my-auto mx-auto text-center">
-                            <input class="col-5" :name="'home' + match.id" v-model="match.homegoals" required type="number"></input>
+                            <input class="col-5" :name="'home' + match.id" v-model="match.homeGoals" required type="number"></input>
                             <input class="col-5" :name="'away' + match.id" v-model="match.awayGoals" required type="number"></input>
                         </div>
                         <div class="col-3 mx-auto">

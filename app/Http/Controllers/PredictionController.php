@@ -43,7 +43,7 @@ class PredictionController extends Controller
             Prediction::create([
                 'userID' => $request->userID,
                 'match_id' => $match['id'],
-                'homeGoals' => $match['homegoals'],
+                'homeGoals' => $match['homeGoals'],
                 'awayGoals' => $match['awayGoals']
                 ]);   
         }
@@ -70,7 +70,7 @@ class PredictionController extends Controller
             $user = User::where('id', $prediction->userID)->first(); // Relevant User
             $match = Match::where('id', $prediction->match_id)->first(); // Relevant Match
 
-            $homeGoals = $match->homegoals; // Relevant Match Home Goals
+            $homeGoals = $match->homeGoals; // Relevant Match Home Goals
             $awayGoals = $match->awayGoals; // Relevant Match Away Goals
 
             if(!is_null($homeGoals)) {
@@ -80,15 +80,15 @@ class PredictionController extends Controller
                     $user->correctScores += 1;
                 }
                 //Correct Outcome - Home Win
-                else if($prediction->homeGoals > $prediction->awayGoals && $match->homegoals > $match->awayGoals) {
+                else if($prediction->homeGoals > $prediction->awayGoals && $match->homeGoals > $match->awayGoals) {
                     $user->correctOutcomes += 1;
                 } 
                 //Correct Outcome - Away Win
-                else if($prediction->homeGoals < $prediction->awayGoals && $match->homegoals < $match->awayGoals) {
+                else if($prediction->homeGoals < $prediction->awayGoals && $match->homeGoals < $match->awayGoals) {
                     $user->correctOutcomes += 1;
                 } 
                 //Correct Outcome - Draw
-                else if($prediction->homeGoals == $prediction->awayGoals && $match->homegoals == $match->awayGoals) {
+                else if($prediction->homeGoals == $prediction->awayGoals && $match->homeGoals == $match->awayGoals) {
                     $user->correctOutcomes += 1;
                 } 
                 $user->points = ($user->correctScores * 3) + $user->correctOutcomes;

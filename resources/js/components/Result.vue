@@ -89,10 +89,7 @@ import Spinner from '../components/Spinner.vue';
 export default {
     name: 'Result',
     mounted() {
-        console.log('Match Mounted');
-        // console.log(this.match);
-        // console.log(this.predictions);
-        // console.log(this.users);
+        // console.log('Match Mounted');
         this.getPredictions();
     },
     props: {

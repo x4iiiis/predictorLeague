@@ -104,7 +104,7 @@
 
     export default {
         mounted() {
-            console.log('Fixtures Component mounted.')
+            // console.log('Fixtures Component mounted.')
             this.getMatches()
         },
         data() {
@@ -159,7 +159,7 @@
                 axios
                     .post('/api/prediction', { match: this.matches, userID: this.user.id })
                     .then((response) => {
-                        console.log('Predictions received');
+                        // console.log('Predictions received');
                         
                         this.submitted = true;
                         this.ready = false;

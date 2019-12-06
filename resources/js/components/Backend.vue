@@ -174,7 +174,7 @@
 
     export default {
         mounted() {
-            console.log('Fixtures Component mounted.')
+            // console.log('Backend Component mounted.')
             this.getTeams();
         },
         data() {
@@ -233,7 +233,7 @@
                         kickoff: this.match.kickoff
                     })
                     .then(response => {
-                        console.log('Match Created');
+                        // console.log('Match Created');
                         this.ready = false;
                         this.getUnresultedMatches();
                     })
@@ -247,7 +247,7 @@
                         matches: this.matches,
                     })
                     .then(response => {
-                        console.log('Scores Recieved');
+                        // console.log('Scores Recieved');
                         console.log(response);
                         this.ready = false;
                         this.updateTable();
@@ -266,7 +266,7 @@
                         match: match,
                     })
                     .then(response => {
-                        console.log('Scores Reset');
+                        // console.log('Scores Reset');
                         console.log(response);
                         this.ready = false;
                         this.updateTable();
@@ -280,7 +280,7 @@
                 axios
                     .get('/updatetable')
                     .then(res => {
-                        console.log('League Table Updated');
+                        // console.log('League Table Updated');
                     })
                     .catch(err => {
                         console.log(err.response);
@@ -290,7 +290,7 @@
                 axios
                     .get('/unlockpredictions')
                     .then(res => {
-                        console.log('Predictions unlocked!');
+                        // console.log('Predictions unlocked!');
                         this.locked = false;
                         this.unlocked = true;
                     })
@@ -302,7 +302,7 @@
                 axios
                     .get('/lockpredictions')
                     .then(res => {
-                        console.log('Predictions locked!');
+                        // console.log('Predictions locked!');
                         this.unlocked = false;
                         this.locked = true;
                     })

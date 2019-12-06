@@ -31,7 +31,7 @@
 
     export default {
         mounted() {
-            console.log('Results Component mounted.')
+            // console.log('Results Component mounted.')
             this.countResultedMatches()
             this.getMatches()
         },

@@ -2025,7 +2025,7 @@ __webpack_require__.r(__webpack_exports__);
 
 /* harmony default export */ __webpack_exports__["default"] = ({
   mounted: function mounted() {
-    console.log('Fixtures Component mounted.');
+    // console.log('Backend Component mounted.')
     this.getTeams();
   },
   data: function data() {
@@ -2082,7 +2082,7 @@ __webpack_require__.r(__webpack_exports__);
         awayTeam: this.match.awayTeam,
         kickoff: this.match.kickoff
       }).then(function (response) {
-        console.log('Match Created');
+        // console.log('Match Created');
         _this4.ready = false;
 
         _this4.getUnresultedMatches();
@@ -2096,7 +2096,7 @@ __webpack_require__.r(__webpack_exports__);
       axios.post('/match/submitscores', {
         matches: this.matches
       }).then(function (response) {
-        console.log('Scores Recieved');
+        // console.log('Scores Recieved');
         console.log(response);
         _this5.ready = false;
 
@@ -2115,7 +2115,7 @@ __webpack_require__.r(__webpack_exports__);
       axios.post('/match/resetmatch', {
         match: match
       }).then(function (response) {
-        console.log('Scores Reset');
+        // console.log('Scores Reset');
         console.log(response);
         _this6.ready = false;
 
@@ -2127,8 +2127,7 @@ __webpack_require__.r(__webpack_exports__);
       });
     },
     updateTable: function updateTable() {
-      axios.get('/updatetable').then(function (res) {
-        console.log('League Table Updated');
+      axios.get('/updatetable').then(function (res) {// console.log('League Table Updated');
       })["catch"](function (err) {
         console.log(err.response);
       });
@@ -2137,7 +2136,7 @@ __webpack_require__.r(__webpack_exports__);
       var _this7 = this;
 
       axios.get('/unlockpredictions').then(function (res) {
-        console.log('Predictions unlocked!');
+        // console.log('Predictions unlocked!');
         _this7.locked = false;
         _this7.unlocked = true;
       })["catch"](function (err) {
@@ -2148,7 +2147,7 @@ __webpack_require__.r(__webpack_exports__);
       var _this8 = this;
 
       axios.get('/lockpredictions').then(function (res) {
-        console.log('Predictions locked!');
+        // console.log('Predictions locked!');
         _this8.unlocked = false;
         _this8.locked = true;
       })["catch"](function (err) {
@@ -2310,7 +2309,7 @@ __webpack_require__.r(__webpack_exports__);
 
 /* harmony default export */ __webpack_exports__["default"] = ({
   mounted: function mounted() {
-    console.log('Fixtures Component mounted.');
+    // console.log('Fixtures Component mounted.')
     this.getMatches();
   },
   data: function data() {
@@ -2364,7 +2363,7 @@ __webpack_require__.r(__webpack_exports__);
         match: this.matches,
         userID: this.user.id
       }).then(function (response) {
-        console.log('Predictions received');
+        // console.log('Predictions received');
         _this3.submitted = true;
         _this3.ready = false;
         var self = _this3;
@@ -2430,7 +2429,7 @@ __webpack_require__.r(__webpack_exports__);
 
 /* harmony default export */ __webpack_exports__["default"] = ({
   mounted: function mounted() {
-    console.log('League Table Component mounted.');
+    // console.log('League Table Component mounted.')
     var self = this;
     setTimeout(function () {
       self.getUsers();
@@ -2607,10 +2606,7 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony default export */ __webpack_exports__["default"] = ({
   name: 'Result',
   mounted: function mounted() {
-    console.log('Match Mounted'); // console.log(this.match);
-    // console.log(this.predictions);
-    // console.log(this.users);
-
+    // console.log('Match Mounted');
     this.getPredictions();
   },
   props: {
@@ -2701,7 +2697,7 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
 
 /* harmony default export */ __webpack_exports__["default"] = ({
   mounted: function mounted() {
-    console.log('Results Component mounted.');
+    // console.log('Results Component mounted.')
     this.countResultedMatches();
     this.getMatches();
   },
@@ -2801,9 +2797,24 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 /* harmony default export */ __webpack_exports__["default"] = ({
-  mounted: function mounted() {
-    console.log('Rules Component mounted.');
+  mounted: function mounted() {// console.log('Rules Component mounted.')
   }
 });
 
@@ -46070,13 +46081,41 @@ var staticRenderFns = [
         _vm._v(" "),
         _c("div", { staticClass: "card-body" }, [
           _c("ul", [
-            _c("li", [_c("p", [_vm._v("Correct Score: 3pts")])]),
+            _c("li", [_c("p", [_vm._v("Correct score: 3 points")])]),
             _vm._v(" "),
-            _c("li", [_c("p", [_vm._v("Wrong Score w/Correct Outcome: 1pt")])]),
+            _c("li", [
+              _c("p", [_vm._v("Wrong score, correct outcome: 1 point")])
+            ]),
             _vm._v(" "),
             _c("hr"),
             _vm._v(" "),
-            _c("li", [_c("p", [_vm._v("Cup games are based on 90 minutes")])])
+            _c("li", [
+              _c("p", [
+                _vm._v(
+                  "Cup / playoff matches are initially based on 90 minutes"
+                )
+              ])
+            ]),
+            _vm._v(" "),
+            _c("ul", [
+              _c("li", [
+                _c("p", [
+                  _vm._v(
+                    "\n                                If you pick a winner in your initial score prediction and the\n                                match goes to extra time and / or penalties, 1 point will be awarded\n                                if your winner wins the overall tie.\n                            "
+                  )
+                ])
+              ]),
+              _vm._v(" "),
+              _c("li", [
+                _c("p", [
+                  _vm._v(
+                    "\n                                When predicting a draw in a match that is to be played to conclusion, you will be \n                                prompted to select an overall tie winner; For which a bonus point will be awarded\n                                on success "
+                  ),
+                  _c("b", [_vm._v("if the match goes beyond 90 minutes")]),
+                  _vm._v(".\n                            ")
+                ])
+              ])
+            ])
           ])
         ])
       ])

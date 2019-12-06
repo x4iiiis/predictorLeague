@@ -36,7 +36,7 @@
 
     export default {
         mounted() {
-            console.log('League Table Component mounted.')
+            // console.log('League Table Component mounted.')
             
             var self = this;
             setTimeout( function() {

@@ -2702,24 +2702,33 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
 /* harmony default export */ __webpack_exports__["default"] = ({
   mounted: function mounted() {
     console.log('Results Component mounted.');
+    this.countResultedMatches();
     this.getMatches();
   },
   data: function data() {
     return {
       users: [],
       matches: [],
+      totalResultedMatches: 0,
       ready: false,
       counter: 0
     };
   },
   methods: {
-    getMatches: function getMatches() {
+    countResultedMatches: function countResultedMatches() {
       var _this = this;
 
+      axios.get('/countresultedmatches').then(function (res) {
+        _this.totalResultedMatches = res.data[1];
+      });
+    },
+    getMatches: function getMatches() {
+      var _this2 = this;
+
       axios.get('/getresultedmatches/' + this.counter++).then(function (res) {
-        _this.users = res.data[1];
-        _this.matches = res.data[3];
-        _this.ready = true;
+        _this2.users = res.data[1];
+        _this2.matches = res.data[3];
+        _this2.ready = true;
       })["catch"](function (err) {
         console.log(err.response);
       });
@@ -2728,7 +2737,7 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
       var _getMoreMatches = _asyncToGenerator(
       /*#__PURE__*/
       _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee() {
-        var _this2 = this;
+        var _this3 = this;
 
         return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee$(_context) {
           while (1) {
@@ -2736,7 +2745,7 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
               case 0:
                 _context.next = 2;
                 return axios.get('/getresultedmatches/' + this.counter++).then(function (res) {
-                  _this2.matches = [].concat(_toConsumableArray(_this2.matches), _toConsumableArray(res.data[3]));
+                  _this3.matches = [].concat(_toConsumableArray(_this3.matches), _toConsumableArray(res.data[3]));
                 })["catch"](function (err) {
                   console.log(err.response);
                 });
@@ -46007,13 +46016,15 @@ var render = function() {
               )
             }),
             _vm._v(" "),
-            _c("observer", {
-              on: {
-                intersect: function($event) {
-                  return _vm.getMoreMatches()
-                }
-              }
-            })
+            _vm.matches.length + 1 < _vm.totalResultedMatches
+              ? _c("observer", {
+                  on: {
+                    intersect: function($event) {
+                      return _vm.getMoreMatches()
+                    }
+                  }
+                })
+              : _vm._e()
           ],
           2
         )

@@ -59,6 +59,22 @@ class MatchController extends Controller
         return redirect('/login');
     }
 
+    public function countResultedMatches() {
+        if(Auth::user()) {
+            $resultedTotal = sizeof(
+                                Match::orderBy('kickoff', 'desc')
+                                    ->where('kickoff', '<', date('Y-m-d H:i:s'))
+                                    ->where('homeGoals', '>=', 0)
+                                    ->get()
+                                ) + 1;
+
+            return [
+                'totalResultedMatches', $resultedTotal
+            ];
+        }
+        return redirect('/login');
+    }
+
     //For lazy loading results
     public function moreResultedMatches($counter) {
         if(Auth::user()) {

@@ -36,6 +36,7 @@ Route::get('/getusers', 'LeagueTableController@index');
 route::get('/getupcomingmatches', 'MatchController@upcomingMatches');
 route::get('/getresultedmatches', 'MatchController@resultedMatches');
 route::get('/getresultedmatches/{counter}', 'MatchController@moreResultedMatches');
+route::get('/countresultedmatches', 'MatchController@countResultedMatches');
 route::get('/getpredictions/{matchid}', 'MatchController@getMatchPredictions');
 route::get('/getunresultedmatches', 'MatchController@unresultedMatches');
 route::get('/getunresultedmatchesbackend', 'MatchController@unresultedMatchesBackend');

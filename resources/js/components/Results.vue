@@ -9,7 +9,7 @@
                             <Result :match="match" :users="users"></Result>
                             
                         </div>
-                        <observer v-on:intersect="getMoreMatches()"></observer>
+                        <observer v-if="matches.length + 1 < totalResultedMatches" v-on:intersect="getMoreMatches()"></observer>
                     </div>
                     <div v-else class="card-body">
                         <div class="row">
@@ -32,17 +32,26 @@
     export default {
         mounted() {
             console.log('Results Component mounted.')
+            this.countResultedMatches()
             this.getMatches()
         },
         data() {
             return {
                 users: [],
                 matches: [],
+                totalResultedMatches: 0,
                 ready: false,
                 counter: 0
             }
         },
         methods: {
+            countResultedMatches() {
+                axios
+                    .get('/countresultedmatches')
+                    .then(res => {
+                        this.totalResultedMatches = res.data[1];
+                    })
+            },
             getMatches() {
                 axios
                     .get('/getresultedmatches/' + this.counter++)

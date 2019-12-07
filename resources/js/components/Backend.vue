@@ -76,29 +76,38 @@
                 <div v-else class="card-body">
 
                     <form action="match/addscores" method="post" @submit.prevent="onSubmitScores">
-                        <div v-for="(match, index) in matches" :key="match.id" class="row py-2">
-                            <div class="col-12 text-center mb-2">
-                                <hr>
-                                <small>
-                                    {{match.kickoff.split(' ')[0]}}
-                                    {{match.kickoff.split(' ')[1]}}
-                                    {{match.kickoff.split(' ')[2]}}
-                                    {{match.kickoff.split(' ')[3]}}
-                                </small>
-                                <h6>{{match.kickoff.split(' ')[4]}}</h6>
-                                <div class="col-9 mx-auto">
-                                    <hr> 
+                        <div v-for="(match, index) in matches" :key="match.id">
+                            <div class="row py-2">
+                                <div class="col-12 text-center mb-2">
+                                    <hr>
+                                    <small>
+                                        {{match.kickoff.split(' ')[0]}}
+                                        {{match.kickoff.split(' ')[1]}}
+                                        {{match.kickoff.split(' ')[2]}}
+                                        {{match.kickoff.split(' ')[3]}}
+                                    </small>
+                                    <h6>{{match.kickoff.split(' ')[4]}}</h6>
+                                    <div class="col-9 mx-auto">
+                                        <hr> 
+                                    </div>
                                 </div>
+                                <div class="col-3 mx-auto">
+                                    <img :src="match.homeEmblem" :alt="match.homeTeam">
+                                </div>
+                                <div class="form-group col-6 my-auto mx-auto text-center">
+                                    <input class="col-5" :name="'home' + match.id" v-model="match.homegoals" type="number"></input>
+                                    <input class="col-5" :name="'away' + match.id" v-model="match.awayGoals" type="number"></input>
+                                </div>
+                                <div class="col-3 mx-auto">
+                                    <img :src="match.awayEmblem" :alt="match.awayTeam">
+                                </div>
+
                             </div>
-                            <div class="col-3 mx-auto">
-                                <img :src="match.homeEmblem" :alt="match.homeTeam">
-                            </div>
-                            <div class="form-group col-6 my-auto mx-auto text-center">
-                                <input class="col-5" :name="'home' + match.id" v-model="match.homeGoals" type="number"></input>
-                                <input class="col-5" :name="'away' + match.id" v-model="match.awayGoals" type="number"></input>
-                            </div>
-                            <div class="col-3 mx-auto">
-                                <img :src="match.awayEmblem" :alt="match.awayTeam">
+                            <div class="row">
+                                <div class="col-8 mx-auto">
+                                    <hr>
+                                    <a class="btn-xs btn-warning col-4 mx-auto text-white" v-on:click="cancelMatch(match)">P-P / A-A</a>
+                                </div>
                             </div>
                         </div>
 
@@ -147,7 +156,7 @@
                                 <img :src="match.homeEmblem" :alt="match.homeTeam">
                             </div>
                             <div class="form-group col-6 my-auto mx-auto text-center">
-                                <h1 style="display: inline;">{{ match.homeGoals }} - </h1>
+                                <h1 style="display: inline;">{{ match.homegoals }} - </h1>
                                 <h1 style="display: inline;">{{ match.awayGoals }}</h1>
                             </div>
                             <div class="col-3 mx-auto">
@@ -174,7 +183,7 @@
 
     export default {
         mounted() {
-            // console.log('Backend Component mounted.')
+            console.log('Fixtures Component mounted.')
             this.getTeams();
         },
         data() {
@@ -233,7 +242,7 @@
                         kickoff: this.match.kickoff
                     })
                     .then(response => {
-                        // console.log('Match Created');
+                        console.log('Match Created');
                         this.ready = false;
                         this.getUnresultedMatches();
                     })
@@ -247,7 +256,7 @@
                         matches: this.matches,
                     })
                     .then(response => {
-                        // console.log('Scores Recieved');
+                        console.log('Scores Recieved');
                         console.log(response);
                         this.ready = false;
                         this.updateTable();
@@ -258,7 +267,7 @@
                     })
             },
             resetScores(match) {
-                match.homeGoals = null;
+                match.homegoals = null;
                 match.awayGoals = null;
 
                 axios
@@ -266,7 +275,7 @@
                         match: match,
                     })
                     .then(response => {
-                        // console.log('Scores Reset');
+                        console.log('Scores Reset');
                         console.log(response);
                         this.ready = false;
                         this.updateTable();
@@ -276,11 +285,29 @@
                         console.log(err.response);
                     })
             },
+            cancelMatch(match) {
+                if(confirm("Are you sure you want to cancel " + match.homeTeam + " vs " + match.awayTeam + "?")){
+
+                    axios
+                        .post('/match/cancelmatch', {
+                            match: match,
+                        })
+                        .then(response => {
+                            console.log(match.homeTeam + " vs " + match.awayTeam + " cancelled");
+                            console.log(response);
+                            this.ready = false;
+                            this.getUnresultedMatches();
+                        })
+                        .catch(err => {
+                            console.log(err.response);
+                        })
+                }
+            },
             updateTable() {
                 axios
                     .get('/updatetable')
                     .then(res => {
-                        // console.log('League Table Updated');
+                        console.log('League Table Updated');
                     })
                     .catch(err => {
                         console.log(err.response);
@@ -290,7 +317,7 @@
                 axios
                     .get('/unlockpredictions')
                     .then(res => {
-                        // console.log('Predictions unlocked!');
+                        console.log('Predictions unlocked!');
                         this.locked = false;
                         this.unlocked = true;
                     })
@@ -302,7 +329,7 @@
                 axios
                     .get('/lockpredictions')
                     .then(res => {
-                        // console.log('Predictions locked!');
+                        console.log('Predictions locked!');
                         this.unlocked = false;
                         this.locked = true;
                     })

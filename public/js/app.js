@@ -2022,10 +2022,19 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
 
 /* harmony default export */ __webpack_exports__["default"] = ({
   mounted: function mounted() {
-    // console.log('Backend Component mounted.')
+    console.log('Fixtures Component mounted.');
     this.getTeams();
   },
   data: function data() {
@@ -2082,7 +2091,7 @@ __webpack_require__.r(__webpack_exports__);
         awayTeam: this.match.awayTeam,
         kickoff: this.match.kickoff
       }).then(function (response) {
-        // console.log('Match Created');
+        console.log('Match Created');
         _this4.ready = false;
 
         _this4.getUnresultedMatches();
@@ -2096,7 +2105,7 @@ __webpack_require__.r(__webpack_exports__);
       axios.post('/match/submitscores', {
         matches: this.matches
       }).then(function (response) {
-        // console.log('Scores Recieved');
+        console.log('Scores Recieved');
         console.log(response);
         _this5.ready = false;
 
@@ -2110,12 +2119,12 @@ __webpack_require__.r(__webpack_exports__);
     resetScores: function resetScores(match) {
       var _this6 = this;
 
-      match.homeGoals = null;
+      match.homegoals = null;
       match.awayGoals = null;
       axios.post('/match/resetmatch', {
         match: match
       }).then(function (response) {
-        // console.log('Scores Reset');
+        console.log('Scores Reset');
         console.log(response);
         _this6.ready = false;
 
@@ -2126,30 +2135,48 @@ __webpack_require__.r(__webpack_exports__);
         console.log(err.response);
       });
     },
+    cancelMatch: function cancelMatch(match) {
+      var _this7 = this;
+
+      if (confirm("Are you sure you want to cancel " + match.homeTeam + " vs " + match.awayTeam + "?")) {
+        axios.post('/match/cancelmatch', {
+          match: match
+        }).then(function (response) {
+          console.log(match.homeTeam + " vs " + match.awayTeam + " cancelled");
+          console.log(response);
+          _this7.ready = false;
+
+          _this7.getUnresultedMatches();
+        })["catch"](function (err) {
+          console.log(err.response);
+        });
+      }
+    },
     updateTable: function updateTable() {
-      axios.get('/updatetable').then(function (res) {// console.log('League Table Updated');
+      axios.get('/updatetable').then(function (res) {
+        console.log('League Table Updated');
       })["catch"](function (err) {
         console.log(err.response);
       });
     },
     unlock: function unlock() {
-      var _this7 = this;
+      var _this8 = this;
 
       axios.get('/unlockpredictions').then(function (res) {
-        // console.log('Predictions unlocked!');
-        _this7.locked = false;
-        _this7.unlocked = true;
+        console.log('Predictions unlocked!');
+        _this8.locked = false;
+        _this8.unlocked = true;
       })["catch"](function (err) {
         console.log(err);
       });
     },
     lock: function lock() {
-      var _this8 = this;
+      var _this9 = this;
 
       axios.get('/lockpredictions').then(function (res) {
-        // console.log('Predictions locked!');
-        _this8.unlocked = false;
-        _this8.locked = true;
+        console.log('Predictions locked!');
+        _this9.unlocked = false;
+        _this9.locked = true;
       })["catch"](function (err) {
         console.log(err);
       });
@@ -45175,10 +45202,8 @@ var render = function() {
                     },
                     [
                       _vm._l(_vm.matches, function(match, index) {
-                        return _c(
-                          "div",
-                          { key: match.id, staticClass: "row py-2" },
-                          [
+                        return _c("div", { key: match.id }, [
+                          _c("div", { staticClass: "row py-2" }, [
                             _c(
                               "div",
                               { staticClass: "col-12 text-center mb-2" },
@@ -45187,15 +45212,15 @@ var render = function() {
                                 _vm._v(" "),
                                 _c("small", [
                                   _vm._v(
-                                    "\n                                " +
+                                    "\n                                    " +
                                       _vm._s(match.kickoff.split(" ")[0]) +
-                                      "\n                                " +
+                                      "\n                                    " +
                                       _vm._s(match.kickoff.split(" ")[1]) +
-                                      "\n                                " +
+                                      "\n                                    " +
                                       _vm._s(match.kickoff.split(" ")[2]) +
-                                      "\n                                " +
+                                      "\n                                    " +
                                       _vm._s(match.kickoff.split(" ")[3]) +
-                                      "\n                            "
+                                      "\n                                "
                                   )
                                 ]),
                                 _vm._v(" "),
@@ -45228,8 +45253,8 @@ var render = function() {
                                     {
                                       name: "model",
                                       rawName: "v-model",
-                                      value: match.homeGoals,
-                                      expression: "match.homeGoals"
+                                      value: match.homegoals,
+                                      expression: "match.homegoals"
                                     }
                                   ],
                                   staticClass: "col-5",
@@ -45237,7 +45262,7 @@ var render = function() {
                                     name: "home" + match.id,
                                     type: "number"
                                   },
-                                  domProps: { value: match.homeGoals },
+                                  domProps: { value: match.homegoals },
                                   on: {
                                     input: function($event) {
                                       if ($event.target.composing) {
@@ -45245,7 +45270,7 @@ var render = function() {
                                       }
                                       _vm.$set(
                                         match,
-                                        "homeGoals",
+                                        "homegoals",
                                         $event.target.value
                                       )
                                     }
@@ -45291,8 +45316,28 @@ var render = function() {
                                 }
                               })
                             ])
-                          ]
-                        )
+                          ]),
+                          _vm._v(" "),
+                          _c("div", { staticClass: "row" }, [
+                            _c("div", { staticClass: "col-8 mx-auto" }, [
+                              _c("hr"),
+                              _vm._v(" "),
+                              _c(
+                                "a",
+                                {
+                                  staticClass:
+                                    "btn-xs btn-warning col-4 mx-auto text-white",
+                                  on: {
+                                    click: function($event) {
+                                      return _vm.cancelMatch(match)
+                                    }
+                                  }
+                                },
+                                [_vm._v("P-P / A-A")]
+                              )
+                            ])
+                          ])
+                        ])
                       }),
                       _vm._v(" "),
                       _vm._m(1)
@@ -45390,7 +45435,7 @@ var render = function() {
                             },
                             [
                               _c("h1", { staticStyle: { display: "inline" } }, [
-                                _vm._v(_vm._s(match.homeGoals) + " - ")
+                                _vm._v(_vm._s(match.homegoals) + " - ")
                               ]),
                               _vm._v(" "),
                               _c("h1", { staticStyle: { display: "inline" } }, [

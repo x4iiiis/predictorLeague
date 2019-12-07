@@ -271,6 +271,11 @@ class MatchController extends Controller
         $relevantMatch->save();
     }
 
+    public function cancelMatch(Request $request) {
+        $relevantMatch = Match::where('id', $request->match['id'])->first();
+        $relevantMatch->delete();
+    }
+
     /**
      * Display the specified resource.
      *

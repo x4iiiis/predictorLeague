@@ -2418,6 +2418,52 @@ __webpack_require__.r(__webpack_exports__);
 
 /***/ }),
 
+/***/ "./node_modules/babel-loader/lib/index.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/Key.vue?vue&type=script&lang=js&":
+/*!**************************************************************************************************************************************************************!*\
+  !*** ./node_modules/babel-loader/lib??ref--4-0!./node_modules/vue-loader/lib??vue-loader-options!./resources/js/components/Key.vue?vue&type=script&lang=js& ***!
+  \**************************************************************************************************************************************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+/* harmony default export */ __webpack_exports__["default"] = ({
+  mounted: function mounted() {// console.log('Legend Component mounted.')
+  }
+});
+
+/***/ }),
+
 /***/ "./node_modules/babel-loader/lib/index.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/LeagueTable.vue?vue&type=script&lang=js&":
 /*!**********************************************************************************************************************************************************************!*\
   !*** ./node_modules/babel-loader/lib??ref--4-0!./node_modules/vue-loader/lib??vue-loader-options!./resources/js/components/LeagueTable.vue?vue&type=script&lang=js& ***!
@@ -2552,6 +2598,32 @@ function _arrayWithHoles(arr) { if (Array.isArray(arr)) return arr; }
 "use strict";
 __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _components_Spinner_vue__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../components/Spinner.vue */ "./resources/js/components/Spinner.vue");
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 //
 //
 //
@@ -2814,6 +2886,9 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
+//
+//
+//
 //
 //
 //
@@ -45855,6 +45930,95 @@ render._withStripped = true
 
 /***/ }),
 
+/***/ "./node_modules/vue-loader/lib/loaders/templateLoader.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/Key.vue?vue&type=template&id=35c02278&":
+/*!******************************************************************************************************************************************************************************************************!*\
+  !*** ./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/vue-loader/lib??vue-loader-options!./resources/js/components/Key.vue?vue&type=template&id=35c02278& ***!
+  \******************************************************************************************************************************************************************************************************/
+/*! exports provided: render, staticRenderFns */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "render", function() { return render; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "staticRenderFns", function() { return staticRenderFns; });
+var render = function() {
+  var _vm = this
+  var _h = _vm.$createElement
+  var _c = _vm._self._c || _h
+  return _vm._m(0)
+}
+var staticRenderFns = [
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("div", { staticClass: "mr-0 ml-auto my-2" }, [
+      _c("div", { staticClass: "card" }, [
+        _c("div", { staticClass: "card-header" }, [_vm._v("Legend")]),
+        _vm._v(" "),
+        _c("div", { staticClass: "card-body" }, [
+          _c(
+            "table",
+            {
+              staticClass: "table",
+              staticStyle: { "vertical-align": "middle" }
+            },
+            [
+              _c("th", [_vm._v("Legend")]),
+              _vm._v(" "),
+              _c("tr", [
+                _c("td", { staticClass: "text-center text-success" }, [
+                  _vm._v("Green Text")
+                ]),
+                _vm._v(" "),
+                _c("td", { staticClass: "pl-3" }, [_vm._v("Correct score")])
+              ]),
+              _vm._v(" "),
+              _c("tr", [
+                _c(
+                  "td",
+                  {
+                    staticClass: "text-center",
+                    staticStyle: { color: "#f6993f" }
+                  },
+                  [_vm._v("Orange Text")]
+                ),
+                _vm._v(" "),
+                _c("td", { staticClass: "pl-3" }, [
+                  _vm._v("Wrong score, correct outcome")
+                ])
+              ]),
+              _vm._v(" "),
+              _c("tr", [
+                _c("td", { staticClass: "text-center text-success" }, [
+                  _vm._v("*")
+                ]),
+                _vm._v(" "),
+                _c("td", { staticClass: "pl-3" }, [
+                  _vm._v("Correct outcome AET/Pens")
+                ])
+              ]),
+              _vm._v(" "),
+              _c("tr", [
+                _c("td", { staticClass: "text-center" }, [_vm._v("*")]),
+                _vm._v(" "),
+                _c("td", { staticClass: "pl-3" }, [
+                  _vm._v("Wrong outcome AET/Pens")
+                ])
+              ])
+            ]
+          )
+        ])
+      ])
+    ])
+  }
+]
+render._withStripped = true
+
+
+
+/***/ }),
+
 /***/ "./node_modules/vue-loader/lib/loaders/templateLoader.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/LeagueTable.vue?vue&type=template&id=53931b78&":
 /*!**************************************************************************************************************************************************************************************************************!*\
   !*** ./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/vue-loader/lib??vue-loader-options!./resources/js/components/LeagueTable.vue?vue&type=template&id=53931b78& ***!
@@ -46066,15 +46230,65 @@ var render = function() {
                         ])
                       ]),
                       _vm._v(" "),
-                      _c("td", [
-                        _c("small", { staticClass: "text-success" }, [
-                          _vm._v(
-                            _vm._s(prediction.homeGoals) +
-                              " - " +
-                              _vm._s(prediction.awayGoals)
-                          )
-                        ])
-                      ])
+                      prediction.winner == null
+                        ? _c("td", [
+                            _c("small", { staticClass: "text-success" }, [
+                              _vm._v(
+                                _vm._s(prediction.homeGoals) +
+                                  " - " +
+                                  _vm._s(prediction.awayGoals)
+                              )
+                            ])
+                          ])
+                        : _c("td", [
+                            _c("small", { staticClass: "text-success" }, [
+                              prediction.winner == _vm.match.homeTeam
+                                ? _c("span", [
+                                    prediction.winner == _vm.match.winner
+                                      ? _c(
+                                          "span",
+                                          { staticClass: "text-success" },
+                                          [_vm._v("*")]
+                                        )
+                                      : _c(
+                                          "span",
+                                          {
+                                            staticStyle: {
+                                              color: "black !important"
+                                            }
+                                          },
+                                          [_vm._v("*")]
+                                        )
+                                  ])
+                                : _vm._e(),
+                              _vm._v(
+                                "\n                                " +
+                                  _vm._s(prediction.homeGoals) +
+                                  " - " +
+                                  _vm._s(prediction.awayGoals) +
+                                  "\n                            "
+                              ),
+                              prediction.winner == _vm.match.awayTeam
+                                ? _c("span", [
+                                    prediction.winner == _vm.match.winner
+                                      ? _c(
+                                          "span",
+                                          { staticClass: "text-success" },
+                                          [_vm._v("*")]
+                                        )
+                                      : _c(
+                                          "span",
+                                          {
+                                            staticStyle: {
+                                              color: "black !important"
+                                            }
+                                          },
+                                          [_vm._v("*")]
+                                        )
+                                  ])
+                                : _vm._e()
+                            ])
+                          ])
                     ])
                   : (prediction.homeGoals > prediction.awayGoals &&
                       _vm.match.homeGoals > _vm.match.awayGoals) ||
@@ -46106,15 +46320,65 @@ var render = function() {
                         ])
                       ]),
                       _vm._v(" "),
-                      _c("td", [
-                        _c("small", [
-                          _vm._v(
-                            _vm._s(prediction.homeGoals) +
-                              " - " +
-                              _vm._s(prediction.awayGoals)
-                          )
-                        ])
-                      ])
+                      prediction.winner == null
+                        ? _c("td", [
+                            _c("small", [
+                              _vm._v(
+                                _vm._s(prediction.homeGoals) +
+                                  " - " +
+                                  _vm._s(prediction.awayGoals)
+                              )
+                            ])
+                          ])
+                        : _c("td", [
+                            _c("small", [
+                              prediction.winner == _vm.match.homeTeam
+                                ? _c("span", [
+                                    prediction.winner == _vm.match.winner
+                                      ? _c(
+                                          "span",
+                                          { staticClass: "text-success" },
+                                          [_vm._v("*")]
+                                        )
+                                      : _c(
+                                          "span",
+                                          {
+                                            staticStyle: {
+                                              color: "black !important"
+                                            }
+                                          },
+                                          [_vm._v("*")]
+                                        )
+                                  ])
+                                : _vm._e(),
+                              _vm._v(
+                                "\n                            " +
+                                  _vm._s(prediction.homeGoals) +
+                                  " - " +
+                                  _vm._s(prediction.awayGoals) +
+                                  "\n                            "
+                              ),
+                              prediction.winner == _vm.match.awayTeam
+                                ? _c("span", [
+                                    prediction.winner == _vm.match.winner
+                                      ? _c(
+                                          "span",
+                                          { staticClass: "text-success" },
+                                          [_vm._v("*")]
+                                        )
+                                      : _c(
+                                          "span",
+                                          {
+                                            staticStyle: {
+                                              color: "black !important"
+                                            }
+                                          },
+                                          [_vm._v("*")]
+                                        )
+                                  ])
+                                : _vm._e()
+                            ])
+                          ])
                     ])
               ])
             }),
@@ -46176,7 +46440,7 @@ var render = function() {
               )
             }),
             _vm._v(" "),
-            _vm.matches.length + 1 < _vm.totalResultedMatches
+            _vm.matches.length + 1 <= _vm.totalResultedMatches
               ? _c("observer", {
                   on: {
                     intersect: function($event) {
@@ -46262,6 +46526,12 @@ var staticRenderFns = [
                   ),
                   _c("b", [_vm._v("if the match goes beyond 90 minutes")])
                 ])
+              ]),
+              _vm._v(" "),
+              _c("em", [
+                _vm._v(
+                  "\n                            These points will be added to your Correct Outcome tally\n                        "
+                )
               ])
             ])
           ])
@@ -58473,6 +58743,7 @@ window.Vue = __webpack_require__(/*! vue */ "./node_modules/vue/dist/vue.common.
 Vue.component('example-component', __webpack_require__(/*! ./components/ExampleComponent.vue */ "./resources/js/components/ExampleComponent.vue")["default"]);
 Vue.component('league-table', __webpack_require__(/*! ./components/LeagueTable.vue */ "./resources/js/components/LeagueTable.vue")["default"]);
 Vue.component('rules', __webpack_require__(/*! ./components/Rules.vue */ "./resources/js/components/Rules.vue")["default"]);
+Vue.component('key', __webpack_require__(/*! ./components/Key.vue */ "./resources/js/components/Key.vue")["default"]);
 Vue.component('fixtures', __webpack_require__(/*! ./components/Fixtures.vue */ "./resources/js/components/Fixtures.vue")["default"]);
 Vue.component('backend', __webpack_require__(/*! ./components/Backend.vue */ "./resources/js/components/Backend.vue")["default"]);
 Vue.component('results', __webpack_require__(/*! ./components/Results.vue */ "./resources/js/components/Results.vue")["default"]);
@@ -58749,6 +59020,75 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "render", function() { return _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_Fixtures_vue_vue_type_template_id_ad0cf016___WEBPACK_IMPORTED_MODULE_0__["render"]; });
 
 /* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "staticRenderFns", function() { return _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_Fixtures_vue_vue_type_template_id_ad0cf016___WEBPACK_IMPORTED_MODULE_0__["staticRenderFns"]; });
+
+
+
+/***/ }),
+
+/***/ "./resources/js/components/Key.vue":
+/*!*****************************************!*\
+  !*** ./resources/js/components/Key.vue ***!
+  \*****************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _Key_vue_vue_type_template_id_35c02278___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./Key.vue?vue&type=template&id=35c02278& */ "./resources/js/components/Key.vue?vue&type=template&id=35c02278&");
+/* harmony import */ var _Key_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./Key.vue?vue&type=script&lang=js& */ "./resources/js/components/Key.vue?vue&type=script&lang=js&");
+/* empty/unused harmony star reexport *//* harmony import */ var _node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../../../node_modules/vue-loader/lib/runtime/componentNormalizer.js */ "./node_modules/vue-loader/lib/runtime/componentNormalizer.js");
+
+
+
+
+
+/* normalize component */
+
+var component = Object(_node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_2__["default"])(
+  _Key_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__["default"],
+  _Key_vue_vue_type_template_id_35c02278___WEBPACK_IMPORTED_MODULE_0__["render"],
+  _Key_vue_vue_type_template_id_35c02278___WEBPACK_IMPORTED_MODULE_0__["staticRenderFns"],
+  false,
+  null,
+  null,
+  null
+  
+)
+
+/* hot reload */
+if (false) { var api; }
+component.options.__file = "resources/js/components/Key.vue"
+/* harmony default export */ __webpack_exports__["default"] = (component.exports);
+
+/***/ }),
+
+/***/ "./resources/js/components/Key.vue?vue&type=script&lang=js&":
+/*!******************************************************************!*\
+  !*** ./resources/js/components/Key.vue?vue&type=script&lang=js& ***!
+  \******************************************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _node_modules_babel_loader_lib_index_js_ref_4_0_node_modules_vue_loader_lib_index_js_vue_loader_options_Key_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../node_modules/babel-loader/lib??ref--4-0!../../../node_modules/vue-loader/lib??vue-loader-options!./Key.vue?vue&type=script&lang=js& */ "./node_modules/babel-loader/lib/index.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/Key.vue?vue&type=script&lang=js&");
+/* empty/unused harmony star reexport */ /* harmony default export */ __webpack_exports__["default"] = (_node_modules_babel_loader_lib_index_js_ref_4_0_node_modules_vue_loader_lib_index_js_vue_loader_options_Key_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_0__["default"]); 
+
+/***/ }),
+
+/***/ "./resources/js/components/Key.vue?vue&type=template&id=35c02278&":
+/*!************************************************************************!*\
+  !*** ./resources/js/components/Key.vue?vue&type=template&id=35c02278& ***!
+  \************************************************************************/
+/*! exports provided: render, staticRenderFns */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_Key_vue_vue_type_template_id_35c02278___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!../../../node_modules/vue-loader/lib??vue-loader-options!./Key.vue?vue&type=template&id=35c02278& */ "./node_modules/vue-loader/lib/loaders/templateLoader.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/Key.vue?vue&type=template&id=35c02278&");
+/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "render", function() { return _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_Key_vue_vue_type_template_id_35c02278___WEBPACK_IMPORTED_MODULE_0__["render"]; });
+
+/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "staticRenderFns", function() { return _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_Key_vue_vue_type_template_id_35c02278___WEBPACK_IMPORTED_MODULE_0__["staticRenderFns"]; });
 
 
 

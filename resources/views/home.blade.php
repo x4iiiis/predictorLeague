@@ -10,6 +10,8 @@
             <League-Table></League-Table>
             <!-- Rules Vue Component -->
             <Rules></Rules>
+            <!-- Key Vue Component -->
+            <Key></Key>
         </div>
 
 

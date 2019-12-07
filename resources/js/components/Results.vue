@@ -9,7 +9,7 @@
                             <Result :match="match" :users="users"></Result>
                             
                         </div>
-                        <observer v-if="matches.length + 1 < totalResultedMatches" v-on:intersect="getMoreMatches()"></observer>
+                        <observer v-if="matches.length + 1 <= totalResultedMatches" v-on:intersect="getMoreMatches()"></observer>
                     </div>
                     <div v-else class="card-body">
                         <div class="row">

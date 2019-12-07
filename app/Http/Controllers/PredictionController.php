@@ -109,10 +109,14 @@ class PredictionController extends Controller
                     }
                     //90 Minute Winner Picked - Home
                     else if($prediction->homeGoals > $prediction->awayGoals && $match->winner == $match->homeTeam) {
+                        $prediction->winner == $match->homeTeam;
+                        $prediction->save();
                         $user->correctOutcomes += 1;
                     }
                     //90 Minute Winner Picked - Away
                     else if($prediction->homeGoals < $prediction->awayGoals && $match->winner == $match->awayTeam) {
+                        $prediction->winner == $match->awayTeam;
+                        $prediction->save();
                         $user->correctOutcomes += 1;
                     }
                 }

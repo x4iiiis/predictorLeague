@@ -24,6 +24,9 @@
                                     on success <b>if the match goes beyond 90 minutes</b>
                                 </p>
                             </li>
+                            <em>
+                                These points will be added to your Correct Outcome tally
+                            </em>
                         </ul>
                     </ul>
                 </div>

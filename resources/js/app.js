@@ -22,6 +22,7 @@ window.Vue = require('vue');
 Vue.component('example-component', require('./components/ExampleComponent.vue').default);
 Vue.component('league-table', require('./components/LeagueTable.vue').default);
 Vue.component('rules', require('./components/Rules.vue').default);
+Vue.component('key', require('./components/Key.vue').default);
 Vue.component('fixtures', require('./components/Fixtures.vue').default);
 Vue.component('backend', require('./components/Backend.vue').default);
 Vue.component('results', require('./components/Results.vue').default);

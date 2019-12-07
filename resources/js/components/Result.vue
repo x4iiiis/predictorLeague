@@ -50,8 +50,21 @@
                     <td style="text-align:right">
                         <small class="text-success">{{ users[prediction.userID - 1].name }}</small>
                     </td>
-                    <td>
+                    <td v-if="prediction.winner == null">
                         <small class="text-success">{{ prediction.homeGoals }} - {{ prediction.awayGoals }}</small>
+                    </td>
+                    <td v-else>
+                        <small class="text-success">
+                            <span v-if="prediction.winner == match.homeTeam">
+                                <span v-if="prediction.winner == match.winner" class="text-success">*</span>
+                                <span v-else style="color:black !important">*</span>
+                            </span>
+                                {{ prediction.homeGoals }} - {{ prediction.awayGoals }}
+                            <span v-if="prediction.winner == match.awayTeam">
+                                <span v-if="prediction.winner == match.winner" class="text-success">*</span>
+                                <span v-else style="color:black !important">*</span>
+                            </span>
+                        </small>
                     </td>
                 </div>
                 <div v-else-if="(prediction.homeGoals > prediction.awayGoals && match.homeGoals > match.awayGoals) 
@@ -68,8 +81,21 @@
                     <td style="text-align:right">
                         <small>{{ users[prediction.userID - 1].name }}</small>
                     </td>
-                    <td>
+                    <td v-if="prediction.winner == null">
                         <small>{{ prediction.homeGoals }} - {{ prediction.awayGoals }}</small>
+                    </td>
+                    <td v-else>
+                        <small>
+                            <span v-if="prediction.winner == match.homeTeam">
+                                <span v-if="prediction.winner == match.winner" class="text-success">*</span>
+                                <span v-else style="color:black !important">*</span>
+                            </span>
+                            {{ prediction.homeGoals }} - {{ prediction.awayGoals }}
+                            <span v-if="prediction.winner == match.awayTeam">
+                                <span v-if="prediction.winner == match.winner" class="text-success">*</span>
+                                <span v-else style="color:black !important">*</span>
+                            </span>
+                        </small>
                     </td>
                 </div>
 

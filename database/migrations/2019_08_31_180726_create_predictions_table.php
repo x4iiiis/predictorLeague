@@ -18,7 +18,7 @@ class CreatePredictionsTable extends Migration
             $table->unsignedBigInteger('userID');
             $table->foreign('userID')->references('id')->on('users');
             $table->unsignedBigInteger('matchID');
-            $table->foreign('matchID')->references('id')->on('matches');
+            $table->foreign('matchID')->references('id')->on('matches')->onDelete('cascade');
             $table->integer('homeGoals');
             $table->integer('awayGoals');
             $table->string('winner')->nullable();

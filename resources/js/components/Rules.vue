@@ -14,14 +14,14 @@
                                 <p>
                                     If you pick a winner in your initial score prediction and the
                                     match goes to extra time and / or penalties, 1 point will be awarded
-                                    if your winner wins the overall tie.
+                                    if your winner wins the overall tie
                                 </p>
                             </li>
                             <li>
                                 <p>
                                     When predicting a draw in a match that is to be played to conclusion, you will be 
                                     prompted to select an overall tie winner; For which a bonus point will be awarded
-                                    on success <b>if the match goes beyond 90 minutes</b>.
+                                    on success <b>if the match goes beyond 90 minutes</b>
                                 </p>
                             </li>
                         </ul>

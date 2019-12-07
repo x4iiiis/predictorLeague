@@ -20,15 +20,50 @@
                                 <hr> 
                             </div>
                         </div>
-                        <div class="col-3 mx-auto">
+                        <div v-if="!(match.etp_available && match.homeGoals == match.awayGoals && match.homeGoals != null)" class="col-3 mx-auto">
+                            <img :src="match.homeEmblem" :alt="match.homeTeam">
+                        </div>
+                        <div v-else class="col-3 mx-auto" v-on:click="match.winner = match.homeTeam">
                             <img :src="match.homeEmblem" :alt="match.homeTeam">
                         </div>
                         <div class="form-group col-6 my-auto mx-auto text-center">
                             <input class="col-5" :name="'home' + match.id" v-model="match.homeGoals" required type="number"></input>
                             <input class="col-5" :name="'away' + match.id" v-model="match.awayGoals" required type="number"></input>
                         </div>
-                        <div class="col-3 mx-auto">
+                        <div v-if="!(match.etp_available && match.homeGoals == match.awayGoals && match.homeGoals != null)" class="col-3 mx-auto">
                             <img :src="match.awayEmblem" :alt="match.awayTeam">
+                        </div>
+                        <div v-else class="col-3 mx-auto" v-on:click="match.winner = match.awayTeam">
+                            <img :src="match.awayEmblem" :alt="match.awayTeam">
+                        </div>
+                        <!-- Cup / Playoff matches -->
+                        <div v-if="match.etp_available && match.homeGoals != null && match.homeGoals == match.awayGoals" class="col-10 text-justify mx-auto">
+                            <hr>
+                            <p><small>This match is to be played to a conclusion.</small><p>
+                            <p>
+                                <small>
+                                    Please click the crest of the team that you believe will win 
+                                    the tie after extra time and / or penalty kicks.
+                                </small>
+                            </p>
+
+                            <div v-if="match.winner != null" class="text-primary">
+                                <p>
+                                    <small>
+                                        You have selected
+                                    </small> 
+                                    <b>{{ match.winner }}</b> 
+                                    <small>
+                                        to win the tie in extra time or on penalties after a 
+                                        {{ match.homeGoals }} - {{ match.awayGoals }} 
+                                        draw in 90 minutes.
+                                    </small>
+                                </p>
+                            </div>
+                            <div v-else class="text-danger">
+                                <p>You haven't selected an overall tie winner</p>
+                            </div>
+                            
                         </div>
                     </div>
                     <!-- @endforeach -->

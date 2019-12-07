@@ -21,6 +21,7 @@ class CreatePredictionsTable extends Migration
             $table->foreign('matchID')->references('id')->on('matches');
             $table->integer('homeGoals');
             $table->integer('awayGoals');
+            $table->string('winner')->nullable();
             $table->timestamps();
         });
     }

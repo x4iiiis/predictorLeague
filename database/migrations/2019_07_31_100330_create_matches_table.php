@@ -27,6 +27,7 @@ class CreateMatchesTable extends Migration
             $table->integer('awayGoalsAET')->nullable();
             $table->integer('homeGoalsPens')->nullable();
             $table->integer('awayGoalsPens')->nullable();
+            $table->string('winner')->nullable();
 
             $table->timestamps();
         });

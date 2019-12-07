@@ -2306,6 +2306,41 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 
 /* harmony default export */ __webpack_exports__["default"] = ({
   mounted: function mounted() {
@@ -45474,14 +45509,38 @@ var render = function() {
                           _vm._m(0, true)
                         ]),
                         _vm._v(" "),
-                        _c("div", { staticClass: "col-3 mx-auto" }, [
-                          _c("img", {
-                            attrs: {
-                              src: match.homeEmblem,
-                              alt: match.homeTeam
-                            }
-                          })
-                        ]),
+                        !(
+                          match.etp_available &&
+                          match.homeGoals == match.awayGoals &&
+                          match.homeGoals != null
+                        )
+                          ? _c("div", { staticClass: "col-3 mx-auto" }, [
+                              _c("img", {
+                                attrs: {
+                                  src: match.homeEmblem,
+                                  alt: match.homeTeam
+                                }
+                              })
+                            ])
+                          : _c(
+                              "div",
+                              {
+                                staticClass: "col-3 mx-auto",
+                                on: {
+                                  click: function($event) {
+                                    match.winner = match.homeTeam
+                                  }
+                                }
+                              },
+                              [
+                                _c("img", {
+                                  attrs: {
+                                    src: match.homeEmblem,
+                                    alt: match.homeTeam
+                                  }
+                                })
+                              ]
+                            ),
                         _vm._v(" "),
                         _c(
                           "div",
@@ -45552,19 +45611,89 @@ var render = function() {
                           ]
                         ),
                         _vm._v(" "),
-                        _c("div", { staticClass: "col-3 mx-auto" }, [
-                          _c("img", {
-                            attrs: {
-                              src: match.awayEmblem,
-                              alt: match.awayTeam
-                            }
-                          })
-                        ])
+                        !(
+                          match.etp_available &&
+                          match.homeGoals == match.awayGoals &&
+                          match.homeGoals != null
+                        )
+                          ? _c("div", { staticClass: "col-3 mx-auto" }, [
+                              _c("img", {
+                                attrs: {
+                                  src: match.awayEmblem,
+                                  alt: match.awayTeam
+                                }
+                              })
+                            ])
+                          : _c(
+                              "div",
+                              {
+                                staticClass: "col-3 mx-auto",
+                                on: {
+                                  click: function($event) {
+                                    match.winner = match.awayTeam
+                                  }
+                                }
+                              },
+                              [
+                                _c("img", {
+                                  attrs: {
+                                    src: match.awayEmblem,
+                                    alt: match.awayTeam
+                                  }
+                                })
+                              ]
+                            ),
+                        _vm._v(" "),
+                        match.etp_available &&
+                        match.homeGoals != null &&
+                        match.homeGoals == match.awayGoals
+                          ? _c(
+                              "div",
+                              { staticClass: "col-10 text-justify mx-auto" },
+                              [
+                                _c("hr"),
+                                _vm._v(" "),
+                                _vm._m(1, true),
+                                _c("p"),
+                                _vm._m(2, true),
+                                _vm._v(" "),
+                                match.winner != null
+                                  ? _c("div", { staticClass: "text-primary" }, [
+                                      _c("p", [
+                                        _c("small", [
+                                          _vm._v(
+                                            "\n                                    You have selected\n                                "
+                                          )
+                                        ]),
+                                        _vm._v(" "),
+                                        _c("b", [_vm._v(_vm._s(match.winner))]),
+                                        _vm._v(" "),
+                                        _c("small", [
+                                          _vm._v(
+                                            "\n                                    to win the tie in extra time or on penalties after a \n                                    " +
+                                              _vm._s(match.homeGoals) +
+                                              " - " +
+                                              _vm._s(match.awayGoals) +
+                                              " \n                                    draw in 90 minutes.\n                                "
+                                          )
+                                        ])
+                                      ])
+                                    ])
+                                  : _c("div", { staticClass: "text-danger" }, [
+                                      _c("p", [
+                                        _vm._v(
+                                          "You haven't selected an overall tie winner"
+                                        )
+                                      ])
+                                    ])
+                              ]
+                            )
+                          : _vm._e()
                       ]
                     )
                   }),
                   _vm._v(" "),
-                  _vm._m(1)
+                  _vm._m(3)
                 ],
                 2
               )
@@ -45593,7 +45722,7 @@ var render = function() {
                     _vm._v(" "),
                     _c("h6", [_vm._v(_vm._s(match.kickoff.split(" ")[4]))]),
                     _vm._v(" "),
-                    _vm._m(2, true)
+                    _vm._m(4, true)
                   ]),
                   _vm._v(" "),
                   _c("div", { staticClass: "col-3 mx-auto" }, [
@@ -45654,7 +45783,7 @@ var render = function() {
     ? _c("div", { staticClass: "card" }, [
         _c("div", { staticClass: "card-header" }, [_vm._v("Upcoming Matches")]),
         _vm._v(" "),
-        _vm._m(3)
+        _vm._m(5)
       ])
     : _c("div", { staticClass: "card" }, [
         _c("div", { staticClass: "card-header" }, [_vm._v("Upcoming Matches")]),
@@ -45672,6 +45801,26 @@ var staticRenderFns = [
     var _h = _vm.$createElement
     var _c = _vm._self._c || _h
     return _c("div", { staticClass: "col-9 mx-auto" }, [_c("hr")])
+  },
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("p", [
+      _c("small", [_vm._v("This match is to be played to a conclusion.")])
+    ])
+  },
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("p", [
+      _c("small", [
+        _vm._v(
+          "\n                                Please click the crest of the team that you believe will win \n                                the tie after extra time and / or penalty kicks.\n                            "
+        )
+      ])
+    ])
   },
   function() {
     var _vm = this
@@ -46101,7 +46250,7 @@ var staticRenderFns = [
               _c("li", [
                 _c("p", [
                   _vm._v(
-                    "\n                                If you pick a winner in your initial score prediction and the\n                                match goes to extra time and / or penalties, 1 point will be awarded\n                                if your winner wins the overall tie.\n                            "
+                    "\n                                If you pick a winner in your initial score prediction and the\n                                match goes to extra time and / or penalties, 1 point will be awarded\n                                if your winner wins the overall tie\n                            "
                   )
                 ])
               ]),
@@ -46111,8 +46260,7 @@ var staticRenderFns = [
                   _vm._v(
                     "\n                                When predicting a draw in a match that is to be played to conclusion, you will be \n                                prompted to select an overall tie winner; For which a bonus point will be awarded\n                                on success "
                   ),
-                  _c("b", [_vm._v("if the match goes beyond 90 minutes")]),
-                  _vm._v(".\n                            ")
+                  _c("b", [_vm._v("if the match goes beyond 90 minutes")])
                 ])
               ])
             ])

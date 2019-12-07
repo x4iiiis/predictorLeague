@@ -44,7 +44,8 @@ class PredictionController extends Controller
                 'userID' => $request->userID,
                 'match_id' => $match['id'],
                 'homeGoals' => $match['homeGoals'],
-                'awayGoals' => $match['awayGoals']
+                'awayGoals' => $match['awayGoals'],
+                'winner' => $match['winner']
                 ]);   
         }
 
@@ -80,17 +81,42 @@ class PredictionController extends Controller
                     $user->correctScores += 1;
                 }
                 //Correct Outcome - Home Win
-                else if($prediction->homeGoals > $prediction->awayGoals && $match->homeGoals > $match->awayGoals) {
+                else if($prediction->homeGoals > $prediction->awayGoals && $homeGoals > $awayGoals) {
                     $user->correctOutcomes += 1;
                 } 
                 //Correct Outcome - Away Win
-                else if($prediction->homeGoals < $prediction->awayGoals && $match->homeGoals < $match->awayGoals) {
+                else if($prediction->homeGoals < $prediction->awayGoals && $homeGoals < $awayGoals) {
                     $user->correctOutcomes += 1;
                 } 
                 //Correct Outcome - Draw
-                else if($prediction->homeGoals == $prediction->awayGoals && $match->homeGoals == $match->awayGoals) {
+                else if($prediction->homeGoals == $prediction->awayGoals && $homeGoals == $awayGoals) {
                     $user->correctOutcomes += 1;
                 } 
+
+                //Cups / Playoffs
+                if($match->etp_available == 1 && $homeGoals == $awayGoals) {
+                    if($match->homeGoalsAET > $match->awayGoalsAET || $match->homeGoalsPens > $match->awayGoalsPens) {
+                        $match->winner = $match->homeTeam;
+                    }
+                    else if($match->homeGoalsAET < $match->awayGoalsAET || $match->homeGoalsPens < $match->awayGoalsPens) {
+                        $match->winner = $match->awayTeam;
+                    }
+                    $match->save();
+
+                    //ET / Pens Predicted
+                    if($prediction->homeGoals == $prediction->awayGoals && $prediction->winner == $match->winner && $prediction->winner != null) {
+                        $user->correctOutcomes += 1;
+                    }
+                    //90 Minute Winner Picked - Home
+                    else if($prediction->homeGoals > $prediction->awayGoals && $match->winner == $match->homeTeam) {
+                        $user->correctOutcomes += 1;
+                    }
+                    //90 Minute Winner Picked - Away
+                    else if($prediction->homeGoals < $prediction->awayGoals && $match->winner == $match->awayTeam) {
+                        $user->correctOutcomes += 1;
+                    }
+                }
+
                 $user->points = ($user->correctScores * 3) + $user->correctOutcomes;
                 $user->save();
             }

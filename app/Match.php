@@ -7,7 +7,18 @@ use Illuminate\Database\Eloquent\Model;
 class Match extends Model
 {
     protected $fillable = [
-        'homeTeam', 'awayTeam', 'homeEmblem', 'awayEmblem', 'kickoff', 'homeGoals', 'awayGoals'
+        'homeTeam', 
+        'awayTeam', 
+        'homeEmblem', 
+        'awayEmblem', 
+        'kickoff', 
+        'homeGoals', 
+        'awayGoals',
+        'etp_available',
+        'homeGoalsAET',
+        'awayGoalsAET',
+        'homeGoalsPens',
+        'awayGoalsPens'
     ];
 
     protected $casts = [

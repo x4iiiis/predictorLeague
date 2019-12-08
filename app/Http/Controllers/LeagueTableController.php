@@ -17,7 +17,9 @@ class LeagueTableController extends Controller
     {
         if(Auth::user()) {
             return [
-                'users', User::orderBy('points', 'desc')->get()
+                'users', User::orderBy('points', 'desc')
+                            ->orderBy('correctScores', 'desc')
+                            ->orderBy('correctOutcomes', 'desc')->get()
             ];
         }
     }

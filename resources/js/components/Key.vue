@@ -5,7 +5,7 @@
 
             <div class="card-body">
                 <table class="table" style="vertical-align:middle">
-                    <th>Legend</th>
+                    <!-- <th>Legend</th> -->
                     <tr>
                         <td class="text-center text-success">Green Text</td>
                         <td class="pl-3">Correct score</td>

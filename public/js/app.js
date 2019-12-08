@@ -46068,8 +46068,6 @@ var staticRenderFns = [
               staticStyle: { "vertical-align": "middle" }
             },
             [
-              _c("th", [_vm._v("Legend")]),
-              _vm._v(" "),
               _c("tr", [
                 _c("td", { staticClass: "text-center text-success" }, [
                   _vm._v("Green Text")

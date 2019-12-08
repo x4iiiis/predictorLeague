@@ -75,7 +75,7 @@ class MatchController extends Controller
                                 ->where('kickoff', '<', date('Y-m-d H:i:s'))
                                 ->where('homegoals', '>=', 0)
                                 ->find(range(
-                                    $resultedTotal - (($counter) * $limit) - 1,
+                                    $resultedTotal - (($counter) * $limit),
                                     $resultedTotal - ($counter * $limit) - $limit)
                                 );
             

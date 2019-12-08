@@ -48,8 +48,15 @@
                                 <label>Kickoff</label>
                                 <input class="form-control" type="datetime-local" id="kickoff" placeholder="dateTime" v-model="match.kickoff">
                             </div>
-                            <br />
-                            <button type="submit" class="mt-5 btn btn-primary">Submit</button>
+
+                            <div class="form-group mt-3">
+                                <hr class="col-8 mx-auto">
+                                <label>Extra Time and / or Penalties Available</label>
+                                <input class="form-control col-1 mx-auto text-center" type="checkbox" v-model="match.etp_available">
+                                <hr class="col-5 mx-auto">
+                            </div>
+
+                            <button type="submit" class="btn btn-primary">Submit</button>
                         </form>
 
                     </div>
@@ -239,7 +246,8 @@
                     .post('/match/store', { 
                         homeTeam: this.match.homeTeam,
                         awayTeam: this.match.awayTeam,
-                        kickoff: this.match.kickoff
+                        kickoff: this.match.kickoff,
+                        etp_available: this.match.etp_available
                     })
                     .then(response => {
                         console.log('Match Created');

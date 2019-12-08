@@ -243,7 +243,8 @@ class MatchController extends Controller
             'awayTeam' => $request->awayTeam,
             'kickoff' => $request->kickoff,
             'homeEmblem' => $homeEmblem->emblem,
-            'awayEmblem' => $awayEmblem->emblem
+            'awayEmblem' => $awayEmblem->emblem,
+            'etp_available' => $request->etp_available
         ]);
 
         return redirect('/backend');

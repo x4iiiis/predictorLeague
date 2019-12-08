@@ -2031,6 +2031,13 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
 
 /* harmony default export */ __webpack_exports__["default"] = ({
   mounted: function mounted() {
@@ -2089,7 +2096,8 @@ __webpack_require__.r(__webpack_exports__);
       axios.post('/match/store', {
         homeTeam: this.match.homeTeam,
         awayTeam: this.match.awayTeam,
-        kickoff: this.match.kickoff
+        kickoff: this.match.kickoff,
+        etp_available: this.match.etp_available
       }).then(function (response) {
         console.log('Match Created');
         _this4.ready = false;
@@ -45145,14 +45153,65 @@ var render = function() {
                   })
                 ]),
                 _vm._v(" "),
-                _c("br"),
+                _c("div", { staticClass: "form-group mt-3" }, [
+                  _c("hr", { staticClass: "col-8 mx-auto" }),
+                  _vm._v(" "),
+                  _c("label", [
+                    _vm._v("Extra Time and / or Penalties Available")
+                  ]),
+                  _vm._v(" "),
+                  _c("input", {
+                    directives: [
+                      {
+                        name: "model",
+                        rawName: "v-model",
+                        value: _vm.match.etp_available,
+                        expression: "match.etp_available"
+                      }
+                    ],
+                    staticClass: "form-control col-1 mx-auto text-center",
+                    attrs: { type: "checkbox" },
+                    domProps: {
+                      checked: Array.isArray(_vm.match.etp_available)
+                        ? _vm._i(_vm.match.etp_available, null) > -1
+                        : _vm.match.etp_available
+                    },
+                    on: {
+                      change: function($event) {
+                        var $$a = _vm.match.etp_available,
+                          $$el = $event.target,
+                          $$c = $$el.checked ? true : false
+                        if (Array.isArray($$a)) {
+                          var $$v = null,
+                            $$i = _vm._i($$a, $$v)
+                          if ($$el.checked) {
+                            $$i < 0 &&
+                              _vm.$set(
+                                _vm.match,
+                                "etp_available",
+                                $$a.concat([$$v])
+                              )
+                          } else {
+                            $$i > -1 &&
+                              _vm.$set(
+                                _vm.match,
+                                "etp_available",
+                                $$a.slice(0, $$i).concat($$a.slice($$i + 1))
+                              )
+                          }
+                        } else {
+                          _vm.$set(_vm.match, "etp_available", $$c)
+                        }
+                      }
+                    }
+                  }),
+                  _vm._v(" "),
+                  _c("hr", { staticClass: "col-5 mx-auto" })
+                ]),
                 _vm._v(" "),
                 _c(
                   "button",
-                  {
-                    staticClass: "mt-5 btn btn-primary",
-                    attrs: { type: "submit" }
-                  },
+                  { staticClass: "btn btn-primary", attrs: { type: "submit" } },
                   [_vm._v("Submit")]
                 )
               ]

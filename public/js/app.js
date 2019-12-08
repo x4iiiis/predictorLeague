@@ -46542,7 +46542,7 @@ var render = function() {
               )
             }),
             _vm._v(" "),
-            _vm.matches.length + 1 <= _vm.totalResultedMatches
+            _vm.matches.length + 1 < _vm.totalResultedMatches
               ? _c("observer", {
                   on: {
                     intersect: function($event) {

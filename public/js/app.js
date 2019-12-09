@@ -2127,7 +2127,7 @@ __webpack_require__.r(__webpack_exports__);
     resetScores: function resetScores(match) {
       var _this6 = this;
 
-      match.homegoals = null;
+      match.homeGoals = null;
       match.awayGoals = null;
       axios.post('/match/resetmatch', {
         match: match
@@ -45316,8 +45316,8 @@ var render = function() {
                                     {
                                       name: "model",
                                       rawName: "v-model",
-                                      value: match.homegoals,
-                                      expression: "match.homegoals"
+                                      value: match.homeGoals,
+                                      expression: "match.homeGoals"
                                     }
                                   ],
                                   staticClass: "col-5",
@@ -45325,7 +45325,7 @@ var render = function() {
                                     name: "home" + match.id,
                                     type: "number"
                                   },
-                                  domProps: { value: match.homegoals },
+                                  domProps: { value: match.homeGoals },
                                   on: {
                                     input: function($event) {
                                       if ($event.target.composing) {
@@ -45333,7 +45333,7 @@ var render = function() {
                                       }
                                       _vm.$set(
                                         match,
-                                        "homegoals",
+                                        "homeGoals",
                                         $event.target.value
                                       )
                                     }
@@ -45498,7 +45498,7 @@ var render = function() {
                             },
                             [
                               _c("h1", { staticStyle: { display: "inline" } }, [
-                                _vm._v(_vm._s(match.homegoals) + " - ")
+                                _vm._v(_vm._s(match.homeGoals) + " - ")
                               ]),
                               _vm._v(" "),
                               _c("h1", { staticStyle: { display: "inline" } }, [

@@ -96,7 +96,7 @@
                         <table>
                             <tr v-for="prediction in allPredictions[ index ]">
                                 <td style="text-align:right">
-                                    <small>{{ users[prediction.userID - 1].name }}</small>
+                                    <small>{{ users[prediction.user_id - 1].name }}</small>
                                 </td>
                                 <td>
                                     <small>{{ prediction.homeGoals }} - {{ prediction.awayGoals }}</small>
@@ -192,7 +192,7 @@
             },
             onSubmit() {
                 axios
-                    .post('/api/prediction', { match: this.matches, userID: this.user.id })
+                    .post('/api/prediction', { match: this.matches, user_id: this.user.id })
                     .then((response) => {
                         // console.log('Predictions received');
                         

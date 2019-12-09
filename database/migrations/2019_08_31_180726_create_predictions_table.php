@@ -15,10 +15,10 @@ class CreatePredictionsTable extends Migration
     {
         Schema::create('predictions', function (Blueprint $table) {
             $table->bigIncrements('id');
-            $table->unsignedBigInteger('userID');
-            $table->foreign('userID')->references('id')->on('users');
-            $table->unsignedBigInteger('matchID');
-            $table->foreign('matchID')->references('id')->on('matches')->onDelete('cascade');
+            $table->unsignedBigInteger('user_id');
+            $table->foreign('user_id')->references('id')->on('users');
+            $table->unsignedBigInteger('match_id');
+            $table->foreign('match_id')->references('id')->on('matches')->onDelete('cascade');
             $table->integer('homeGoals');
             $table->integer('awayGoals');
             $table->string('winner')->nullable();

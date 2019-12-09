@@ -48,7 +48,7 @@
             <tr v-for="prediction in this.predictions" :key="prediction.id">
                 <div v-if="prediction.homeGoals == match.homeGoals && prediction.awayGoals == match.awayGoals">
                     <td style="text-align:right">
-                        <small class="text-success">{{ users[prediction.userID - 1].name }}</small>
+                        <small class="text-success">{{ users[prediction.user_id - 1].name }}</small>
                     </td>
                     <td v-if="prediction.winner == null">
                         <small class="text-success">{{ prediction.homeGoals }} - {{ prediction.awayGoals }}</small>
@@ -71,7 +71,7 @@
                         || (prediction.homeGoals < prediction.awayGoals && match.homeGoals < match.awayGoals) 
                         || (prediction.homeGoals == prediction.awayGoals && match.homeGoals == match.awayGoals)">
                     <td style="text-align:right">
-                        <small style="color:#f6993f">{{ users[prediction.userID - 1].name }}</small>
+                        <small style="color:#f6993f">{{ users[prediction.user_id - 1].name }}</small>
                     </td>
                     <td>
                         <small style="color:#f6993f">{{ prediction.homeGoals }} - {{ prediction.awayGoals }}</small>
@@ -79,7 +79,7 @@
                 </div>
                 <div v-else>
                     <td style="text-align:right">
-                        <small>{{ users[prediction.userID - 1].name }}</small>
+                        <small>{{ users[prediction.user_id - 1].name }}</small>
                     </td>
                     <td v-if="prediction.winner == null">
                         <small>{{ prediction.homeGoals }} - {{ prediction.awayGoals }}</small>

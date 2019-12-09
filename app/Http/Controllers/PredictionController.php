@@ -41,7 +41,7 @@ class PredictionController extends Controller
         foreach($request->match as $match) {
 
             Prediction::create([
-                'userID' => $request->userID,
+                'user_id' => $request->user_id,
                 'match_id' => $match['id'],
                 'homeGoals' => $match['homeGoals'],
                 'awayGoals' => $match['awayGoals'],
@@ -49,7 +49,7 @@ class PredictionController extends Controller
                 ]);   
         }
 
-        $user = User::where('id', $request->userID)->first();
+        $user = User::where('id', $request->user_id)->first();
         $user->hasSubmitted = 1; 
         $user->save();
 
@@ -68,7 +68,7 @@ class PredictionController extends Controller
         }
 
         foreach($allPredictions as $prediction) {
-            $user = User::where('id', $prediction->userID)->first(); // Relevant User
+            $user = User::where('id', $prediction->user_id)->first(); // Relevant User
             $match = Match::where('id', $prediction->match_id)->first(); // Relevant Match
 
             $homeGoals = $match->homeGoals; // Relevant Match Home Goals

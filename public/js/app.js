@@ -2431,7 +2431,7 @@ __webpack_require__.r(__webpack_exports__);
 
       axios.post('/api/prediction', {
         match: this.matches,
-        userID: this.user.id
+        user_id: this.user.id
       }).then(function (response) {
         // console.log('Predictions received');
         _this3.submitted = true;
@@ -45925,7 +45925,7 @@ var render = function() {
                                 _c("small", [
                                   _vm._v(
                                     _vm._s(
-                                      _vm.users[prediction.userID - 1].name
+                                      _vm.users[prediction.user_id - 1].name
                                     )
                                   )
                                 ])
@@ -46328,7 +46328,7 @@ var render = function() {
                   ? _c("div", [
                       _c("td", { staticStyle: { "text-align": "right" } }, [
                         _c("small", { staticClass: "text-success" }, [
-                          _vm._v(_vm._s(_vm.users[prediction.userID - 1].name))
+                          _vm._v(_vm._s(_vm.users[prediction.user_id - 1].name))
                         ])
                       ]),
                       _vm._v(" "),
@@ -46401,7 +46401,7 @@ var render = function() {
                   ? _c("div", [
                       _c("td", { staticStyle: { "text-align": "right" } }, [
                         _c("small", { staticStyle: { color: "#f6993f" } }, [
-                          _vm._v(_vm._s(_vm.users[prediction.userID - 1].name))
+                          _vm._v(_vm._s(_vm.users[prediction.user_id - 1].name))
                         ])
                       ]),
                       _vm._v(" "),
@@ -46418,7 +46418,7 @@ var render = function() {
                   : _c("div", [
                       _c("td", { staticStyle: { "text-align": "right" } }, [
                         _c("small", [
-                          _vm._v(_vm._s(_vm.users[prediction.userID - 1].name))
+                          _vm._v(_vm._s(_vm.users[prediction.user_id - 1].name))
                         ])
                       ]),
                       _vm._v(" "),

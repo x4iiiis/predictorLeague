@@ -17,7 +17,7 @@ class PredictionsTableSeeder extends Seeder
         foreach (User::all() as $user) {
             foreach (Match::all() as $match) {
                 Prediction::create([
-                    'userID' => $user->id,
+                    'user_id' => $user->id,
                     'match_id' => $match->id,
                     'homeGoals' => rand(0,9),
                     'awayGoals' => rand(0,9),

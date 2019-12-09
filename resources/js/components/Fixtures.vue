@@ -41,7 +41,7 @@
             <div v-else class="card-body">
                 
                 <div v-for="(match, index) in matches" :key="match.id" class="row py-2">
-                    <div v-if="allPredictions[index]">
+                    <div v-if="allPredictions[index].length != 0">
                         <div class="col-12 text-center mb-2">
                             <hr>
                             <small>

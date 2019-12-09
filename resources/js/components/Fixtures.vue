@@ -41,38 +41,36 @@
             <div v-else class="card-body">
                 
                 <div v-for="(match, index) in matches" :key="match.id" class="row py-2">
-                    <div v-if="allPredictions[index].length != 0">
-                        <div class="col-12 text-center mb-2">
-                            <hr>
-                            <small>
-                                {{match.kickoff.split(' ')[0]}}
-                                {{match.kickoff.split(' ')[1]}}
-                                {{match.kickoff.split(' ')[2]}}
-                                {{match.kickoff.split(' ')[3]}}
-                            </small>
-                            <h6>{{match.kickoff.split(' ')[4]}}</h6>
-                            <div class="col-9 mx-auto">
-                                <hr> 
-                            </div>
+                    <div class="col-12 text-center mb-2">
+                        <hr>
+                        <small>
+                            {{match.kickoff.split(' ')[0]}}
+                            {{match.kickoff.split(' ')[1]}}
+                            {{match.kickoff.split(' ')[2]}}
+                            {{match.kickoff.split(' ')[3]}}
+                        </small>
+                        <h6>{{match.kickoff.split(' ')[4]}}</h6>
+                        <div class="col-9 mx-auto">
+                            <hr> 
                         </div>
-                        <div class="col-3 mx-auto">
-                            <img :src="match.homeEmblem" :alt="match.homeTeam">
-                        </div>
-                        <div class="col-6 mx-auto my-auto text-center">
-                            <table>
-                                <tr v-for="prediction in allPredictions[ index ]">
-                                    <td style="text-align:right">
-                                        <small>{{ users[prediction.userID - 1].name }}</small>
-                                    </td>
-                                    <td>
-                                        <small>{{ prediction.homeGoals }} - {{ prediction.awayGoals }}</small>
-                                    </td>
-                                </tr>
-                            </table>
-                        </div>
-                        <div class="col-3 mx-auto">
-                            <img :src="match.awayEmblem" :alt="match.awayTeam">
-                        </div>
+                    </div>
+                    <div class="col-3 mx-auto">
+                        <img :src="match.homeEmblem" :alt="match.homeTeam">
+                    </div>
+                    <div class="col-6 mx-auto my-auto text-center">
+                        <table>
+                            <tr v-for="prediction in allPredictions[ index ]">
+                                <td style="text-align:right">
+                                    <small>{{ users[prediction.userID - 1].name }}</small>
+                                </td>
+                                <td>
+                                    <small>{{ prediction.homeGoals }} - {{ prediction.awayGoals }}</small>
+                                </td>
+                            </tr>
+                        </table>
+                    </div>
+                    <div class="col-3 mx-auto">
+                        <img :src="match.awayEmblem" :alt="match.awayTeam">
                     </div>
                 </div>
                     

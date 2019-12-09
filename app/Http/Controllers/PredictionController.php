@@ -41,14 +41,15 @@ class PredictionController extends Controller
         foreach($request->match as $match) {
 
             Prediction::create([
-                'userID' => $request->userID,
+                'user_id' => $request->user_id,
                 'match_id' => $match['id'],
-                'homeGoals' => $match['homegoals'],
-                'awayGoals' => $match['awayGoals']
+                'homeGoals' => $match['homeGoals'],
+                'awayGoals' => $match['awayGoals'],
+                'winner' => $match['winner']
                 ]);   
         }
 
-        $user = User::where('id', $request->userID)->first();
+        $user = User::where('id', $request->user_id)->first();
         $user->hasSubmitted = 1; 
         $user->save();
 
@@ -67,10 +68,10 @@ class PredictionController extends Controller
         }
 
         foreach($allPredictions as $prediction) {
-            $user = User::where('id', $prediction->userID)->first(); // Relevant User
+            $user = User::where('id', $prediction->user_id)->first(); // Relevant User
             $match = Match::where('id', $prediction->match_id)->first(); // Relevant Match
 
-            $homeGoals = $match->homegoals; // Relevant Match Home Goals
+            $homeGoals = $match->homeGoals; // Relevant Match Home Goals
             $awayGoals = $match->awayGoals; // Relevant Match Away Goals
 
             if(!is_null($homeGoals)) {
@@ -80,17 +81,46 @@ class PredictionController extends Controller
                     $user->correctScores += 1;
                 }
                 //Correct Outcome - Home Win
-                else if($prediction->homeGoals > $prediction->awayGoals && $match->homegoals > $match->awayGoals) {
+                else if($prediction->homeGoals > $prediction->awayGoals && $homeGoals > $awayGoals) {
                     $user->correctOutcomes += 1;
                 } 
                 //Correct Outcome - Away Win
-                else if($prediction->homeGoals < $prediction->awayGoals && $match->homegoals < $match->awayGoals) {
+                else if($prediction->homeGoals < $prediction->awayGoals && $homeGoals < $awayGoals) {
                     $user->correctOutcomes += 1;
                 } 
                 //Correct Outcome - Draw
-                else if($prediction->homeGoals == $prediction->awayGoals && $match->homegoals == $match->awayGoals) {
+                else if($prediction->homeGoals == $prediction->awayGoals && $homeGoals == $awayGoals) {
                     $user->correctOutcomes += 1;
                 } 
+
+                //Cups / Playoffs
+                if($match->etp_available == 1 && $homeGoals == $awayGoals) {
+                    if($match->homeGoalsAET > $match->awayGoalsAET || $match->homeGoalsPens > $match->awayGoalsPens) {
+                        $match->winner = $match->homeTeam;
+                    }
+                    else if($match->homeGoalsAET < $match->awayGoalsAET || $match->homeGoalsPens < $match->awayGoalsPens) {
+                        $match->winner = $match->awayTeam;
+                    }
+                    $match->save();
+
+                    //ET / Pens Predicted
+                    if($prediction->homeGoals == $prediction->awayGoals && $prediction->winner == $match->winner && $prediction->winner != null) {
+                        $user->correctOutcomes += 1;
+                    }
+                    //90 Minute Winner Picked - Home
+                    else if($prediction->homeGoals > $prediction->awayGoals && $match->winner == $match->homeTeam) {
+                        $prediction->winner == $match->homeTeam;
+                        $prediction->save();
+                        $user->correctOutcomes += 1;
+                    }
+                    //90 Minute Winner Picked - Away
+                    else if($prediction->homeGoals < $prediction->awayGoals && $match->winner == $match->awayTeam) {
+                        $prediction->winner == $match->awayTeam;
+                        $prediction->save();
+                        $user->correctOutcomes += 1;
+                    }
+                }
+
                 $user->points = ($user->correctScores * 3) + $user->correctOutcomes;
                 $user->save();
             }

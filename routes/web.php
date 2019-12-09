@@ -25,6 +25,7 @@ Route::post('/match/store', 'MatchController@store')->name('match.store');
 Route::post('/prediction/store', 'PredictionController@store')->name('prediction.store');
 Route::post('/match/submitscores', 'MatchController@updateScores')->name('match.scores');
 Route::post('/match/resetmatch', 'MatchController@resetMatch')->name('match.reset');
+Route::post('/match/cancelmatch', 'MatchController@cancelMatch')->name('match.cancel');
 
 
 Route::get('/updatetable', 'PredictionController@updateScores')->name('update.scores');
@@ -36,7 +37,8 @@ Route::get('/getusers', 'LeagueTableController@index');
 route::get('/getupcomingmatches', 'MatchController@upcomingMatches');
 route::get('/getresultedmatches', 'MatchController@resultedMatches');
 route::get('/getresultedmatches/{counter}', 'MatchController@moreResultedMatches');
-route::get('/getpredictions/{matchid}', 'MatchController@getMatchPredictions');
+route::get('/countresultedmatches', 'MatchController@countResultedMatches');
+route::get('/getpredictions/{match_id}', 'MatchController@getMatchPredictions');
 route::get('/getunresultedmatches', 'MatchController@unresultedMatches');
 route::get('/getunresultedmatchesbackend', 'MatchController@unresultedMatchesBackend');
 route::get('/getresultedmatchesbackend', 'MatchController@resultedMatchesBackend');

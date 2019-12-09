@@ -1,6 +1,10 @@
 <?php
 
+/** @var \Illuminate\Database\Eloquent\Factory $factory */
 use Illuminate\Database\Seeder;
+use Faker\Generator as Faker;
+use App\Match;
+use App\Team;
 
 class MatchTableSeeder extends Seeder
 {
@@ -9,35 +13,39 @@ class MatchTableSeeder extends Seeder
      *
      * @return void
      */
-    public function run()
+    public function run(Faker $faker)
     {
-        DB::table('matches')->insert([
-            'homeTeam' => 'Dundee',
-            'awayTeam' => 'Motherwell',
-            'kickoff' => '2019-09-03 15:00:00',
-            'homeEmblem' => 'img/clubEmblems/Dundee.png',
-            'awayEmblem' => 'img/clubEmblems/Motherwell.png'
-        ]);
-        DB::table('matches')->insert([
-            'homeTeam' => 'Kilmarnock',
-            'awayTeam' => 'Hamliton',
-            'kickoff' => '2019-09-03 15:00:00',
-            'homeEmblem' => 'img/clubEmblems/Kilmarnock.png',
-            'awayEmblem' => 'img/clubEmblems/Hamilton.png'
-        ]);
-        DB::table('matches')->insert([
-            'homeTeam' => 'Celtic',
-            'awayTeam' => 'Aberdeen',
-            'kickoff' => '2019-09-03 15:00:00',
-            'homeEmblem' => 'img/clubEmblems/Celtic.png',
-            'awayEmblem' => 'img/clubEmblems/Aberdeen.png'
-        ]);
-        DB::table('matches')->insert([
-            'homeTeam' => 'Hearts',
-            'awayTeam' => 'Hibernian',
-            'kickoff' => '2019-09-03 15:00:00',
-            'homeEmblem' => 'img/clubEmblems/HeartOfMidlothian.png',
-            'awayEmblem' => 'img/clubEmblems/Hibernian.png'
-        ]);
+        //factory(Match::class, Team::count())->create();
+
+        for ($i = 0; $i < Team::count() / 2 ; $i++) {
+            $team1= Team::inRandomOrder()->first();
+            $team2= Team::inRandomOrder()->first();
+            
+            Match::create([
+                'homeTeam' => $team1->name,
+                'homeEmblem' => $team1->emblem,
+                'awayTeam' => $team2->name,
+                'awayEmblem' => $team2->emblem,
+                'kickoff' => $faker->dateTimeBetween(1572217729, 'now'),
+                'homeGoals' => $faker->randomDigit,
+                'awayGoals' => $faker->randomDigit,
+            ]);
+            
+        }
+            
+        for ($i = 0; $i < Team::count() * rand(2,3); $i++) {
+            $team1= Team::inRandomOrder()->first();
+            $team2= Team::inRandomOrder()->first();
+                
+            Match::create([
+                'homeTeam' => $team1->name,
+                'homeEmblem' => $team1->emblem,
+                'awayTeam' => $team2->name,
+                'awayEmblem' => $team2->emblem,
+                'kickoff' => $faker->dateTimeBetween('now', 1890515329),
+            ]);
+        }
+
     }
 }
+    

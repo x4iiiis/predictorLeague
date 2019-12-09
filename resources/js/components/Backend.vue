@@ -48,8 +48,15 @@
                                 <label>Kickoff</label>
                                 <input class="form-control" type="datetime-local" id="kickoff" placeholder="dateTime" v-model="match.kickoff">
                             </div>
-                            <br />
-                            <button type="submit" class="mt-5 btn btn-primary">Submit</button>
+
+                            <div class="form-group mt-3">
+                                <hr class="col-8 mx-auto">
+                                <label>Extra Time and / or Penalties Available</label>
+                                <input class="form-control col-1 mx-auto text-center" type="checkbox" v-model="match.etp_available">
+                                <hr class="col-5 mx-auto">
+                            </div>
+
+                            <button type="submit" class="btn btn-primary">Submit</button>
                         </form>
 
                     </div>
@@ -76,29 +83,38 @@
                 <div v-else class="card-body">
 
                     <form action="match/addscores" method="post" @submit.prevent="onSubmitScores">
-                        <div v-for="(match, index) in matches" :key="match.id" class="row py-2">
-                            <div class="col-12 text-center mb-2">
-                                <hr>
-                                <small>
-                                    {{match.kickoff.split(' ')[0]}}
-                                    {{match.kickoff.split(' ')[1]}}
-                                    {{match.kickoff.split(' ')[2]}}
-                                    {{match.kickoff.split(' ')[3]}}
-                                </small>
-                                <h6>{{match.kickoff.split(' ')[4]}}</h6>
-                                <div class="col-9 mx-auto">
-                                    <hr> 
+                        <div v-for="(match, index) in matches" :key="match.id">
+                            <div class="row py-2">
+                                <div class="col-12 text-center mb-2">
+                                    <hr>
+                                    <small>
+                                        {{match.kickoff.split(' ')[0]}}
+                                        {{match.kickoff.split(' ')[1]}}
+                                        {{match.kickoff.split(' ')[2]}}
+                                        {{match.kickoff.split(' ')[3]}}
+                                    </small>
+                                    <h6>{{match.kickoff.split(' ')[4]}}</h6>
+                                    <div class="col-9 mx-auto">
+                                        <hr> 
+                                    </div>
                                 </div>
+                                <div class="col-3 mx-auto">
+                                    <img :src="match.homeEmblem" :alt="match.homeTeam">
+                                </div>
+                                <div class="form-group col-6 my-auto mx-auto text-center">
+                                    <input class="col-5" :name="'home' + match.id" v-model="match.homegoals" type="number"></input>
+                                    <input class="col-5" :name="'away' + match.id" v-model="match.awayGoals" type="number"></input>
+                                </div>
+                                <div class="col-3 mx-auto">
+                                    <img :src="match.awayEmblem" :alt="match.awayTeam">
+                                </div>
+
                             </div>
-                            <div class="col-3 mx-auto">
-                                <img :src="match.homeEmblem" :alt="match.homeTeam">
-                            </div>
-                            <div class="form-group col-6 my-auto mx-auto text-center">
-                                <input class="col-5" :name="'home' + match.id" v-model="match.homegoals" type="number"></input>
-                                <input class="col-5" :name="'away' + match.id" v-model="match.awayGoals" type="number"></input>
-                            </div>
-                            <div class="col-3 mx-auto">
-                                <img :src="match.awayEmblem" :alt="match.awayTeam">
+                            <div class="row">
+                                <div class="col-8 mx-auto">
+                                    <hr>
+                                    <a class="btn-xs btn-warning col-4 mx-auto text-white" v-on:click="cancelMatch(match)">P-P / A-A</a>
+                                </div>
                             </div>
                         </div>
 
@@ -230,7 +246,8 @@
                     .post('/match/store', { 
                         homeTeam: this.match.homeTeam,
                         awayTeam: this.match.awayTeam,
-                        kickoff: this.match.kickoff
+                        kickoff: this.match.kickoff,
+                        etp_available: this.match.etp_available
                     })
                     .then(response => {
                         console.log('Match Created');
@@ -275,6 +292,24 @@
                     .catch(err => {
                         console.log(err.response);
                     })
+            },
+            cancelMatch(match) {
+                if(confirm("Are you sure you want to cancel " + match.homeTeam + " vs " + match.awayTeam + "?")){
+
+                    axios
+                        .post('/match/cancelmatch', {
+                            match: match,
+                        })
+                        .then(response => {
+                            console.log(match.homeTeam + " vs " + match.awayTeam + " cancelled");
+                            console.log(response);
+                            this.ready = false;
+                            this.getUnresultedMatches();
+                        })
+                        .catch(err => {
+                            console.log(err.response);
+                        })
+                }
             },
             updateTable() {
                 axios

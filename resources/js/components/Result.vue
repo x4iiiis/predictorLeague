@@ -20,24 +20,58 @@
         <img :src="this.match.homeEmblem" :alt="this.match.homeTeam">
     </div>
     <div class="col-6 mx-auto my-auto text-center">
-        <h1 style="display: inline;">{{ this.match.homegoals }} - </h1>
+        <h1 style="display: inline;">{{ this.match.homeGoals }} - </h1>
         <h1 style="display: inline;">{{ this.match.awayGoals }}</h1>
+
+        <div v-if="this.match.etp_available">
+            <div v-if="this.match.homeGoalsAET">
+                <br />
+                <b class="text-center">AET</b>
+
+                <br />
+                <h4 style="display: inline;">1 - </h4>
+                <h4 style="display: inline;">1</h4>
+
+                <div v-if="this.match.homeGoalsPens">
+                    <br />
+                    <b class="text-center">Penalties</b>
+
+                    <br />
+                    <h4 style="display: inline;">10 - </h4>
+                    <h4 style="display: inline;">9</h4>
+                </div>
+            </div>
+        </div>
+
 
             <table>
             <tr v-for="prediction in this.predictions" :key="prediction.id">
-                <div v-if="prediction.homeGoals == match.homegoals && prediction.awayGoals == match.awayGoals">
+                <div v-if="prediction.homeGoals == match.homeGoals && prediction.awayGoals == match.awayGoals">
                     <td style="text-align:right">
-                        <small class="text-success">{{ users[prediction.userID - 1].name }}</small>
+                        <small class="text-success">{{ users[prediction.user_id - 1].name }}</small>
                     </td>
-                    <td>
+                    <td v-if="prediction.winner == null">
                         <small class="text-success">{{ prediction.homeGoals }} - {{ prediction.awayGoals }}</small>
                     </td>
+                    <td v-else>
+                        <small class="text-success">
+                            <span v-if="prediction.winner == match.homeTeam">
+                                <span v-if="prediction.winner == match.winner" class="text-success">*</span>
+                                <span v-else style="color:black !important">*</span>
+                            </span>
+                                {{ prediction.homeGoals }} - {{ prediction.awayGoals }}
+                            <span v-if="prediction.winner == match.awayTeam">
+                                <span v-if="prediction.winner == match.winner" class="text-success">*</span>
+                                <span v-else style="color:black !important">*</span>
+                            </span>
+                        </small>
+                    </td>
                 </div>
-                <div v-else-if="(prediction.homeGoals > prediction.awayGoals && match.homegoals > match.awayGoals) 
-                        || (prediction.homeGoals < prediction.awayGoals && match.homegoals < match.awayGoals) 
-                        || (prediction.homeGoals == prediction.awayGoals && match.homegoals == match.awayGoals)">
+                <div v-else-if="(prediction.homeGoals > prediction.awayGoals && match.homeGoals > match.awayGoals) 
+                        || (prediction.homeGoals < prediction.awayGoals && match.homeGoals < match.awayGoals) 
+                        || (prediction.homeGoals == prediction.awayGoals && match.homeGoals == match.awayGoals)">
                     <td style="text-align:right">
-                        <small style="color:#f6993f">{{ users[prediction.userID - 1].name }}</small>
+                        <small style="color:#f6993f">{{ users[prediction.user_id - 1].name }}</small>
                     </td>
                     <td>
                         <small style="color:#f6993f">{{ prediction.homeGoals }} - {{ prediction.awayGoals }}</small>
@@ -45,10 +79,23 @@
                 </div>
                 <div v-else>
                     <td style="text-align:right">
-                        <small>{{ users[prediction.userID - 1].name }}</small>
+                        <small>{{ users[prediction.user_id - 1].name }}</small>
                     </td>
-                    <td>
+                    <td v-if="prediction.winner == null">
                         <small>{{ prediction.homeGoals }} - {{ prediction.awayGoals }}</small>
+                    </td>
+                    <td v-else>
+                        <small>
+                            <span v-if="prediction.winner == match.homeTeam">
+                                <span v-if="prediction.winner == match.winner" class="text-success">*</span>
+                                <span v-else style="color:black !important">*</span>
+                            </span>
+                            {{ prediction.homeGoals }} - {{ prediction.awayGoals }}
+                            <span v-if="prediction.winner == match.awayTeam">
+                                <span v-if="prediction.winner == match.winner" class="text-success">*</span>
+                                <span v-else style="color:black !important">*</span>
+                            </span>
+                        </small>
                     </td>
                 </div>
 
@@ -68,10 +115,7 @@ import Spinner from '../components/Spinner.vue';
 export default {
     name: 'Result',
     mounted() {
-        console.log('Match Mounted');
-        // console.log(this.match);
-        // console.log(this.predictions);
-        // console.log(this.users);
+        // console.log('Match Mounted');
         this.getPredictions();
     },
     props: {

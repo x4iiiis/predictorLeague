@@ -2380,23 +2380,6 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
 
 /* harmony default export */ __webpack_exports__["default"] = ({
   mounted: function mounted() {
@@ -45988,57 +45971,7 @@ var render = function() {
                           })
                         ])
                       ])
-                    : _vm._e(),
-                  _vm._v(" "),
-                  _c("div", { staticClass: "col-3 mx-auto" }, [
-                    _c("img", {
-                      attrs: { src: match.homeEmblem, alt: match.homeTeam }
-                    })
-                  ]),
-                  _vm._v(" "),
-                  _c(
-                    "div",
-                    { staticClass: "col-6 mx-auto my-auto text-center" },
-                    [
-                      _c(
-                        "table",
-                        _vm._l(_vm.allPredictions[index], function(prediction) {
-                          return _c("tr", [
-                            _c(
-                              "td",
-                              { staticStyle: { "text-align": "right" } },
-                              [
-                                _c("small", [
-                                  _vm._v(
-                                    _vm._s(
-                                      _vm.users[prediction.user_id - 1].name
-                                    )
-                                  )
-                                ])
-                              ]
-                            ),
-                            _vm._v(" "),
-                            _c("td", [
-                              _c("small", [
-                                _vm._v(
-                                  _vm._s(prediction.homeGoals) +
-                                    " - " +
-                                    _vm._s(prediction.awayGoals)
-                                )
-                              ])
-                            ])
-                          ])
-                        }),
-                        0
-                      )
-                    ]
-                  ),
-                  _vm._v(" "),
-                  _c("div", { staticClass: "col-3 mx-auto" }, [
-                    _c("img", {
-                      attrs: { src: match.awayEmblem, alt: match.awayTeam }
-                    })
-                  ])
+                    : _vm._e()
                 ])
               }),
               0

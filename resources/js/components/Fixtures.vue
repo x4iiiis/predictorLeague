@@ -110,24 +110,7 @@
                             <img :src="match.awayEmblem" :alt="match.awayTeam">
                         </div>
                     </div>
-                    <div class="col-3 mx-auto">
-                        <img :src="match.homeEmblem" :alt="match.homeTeam">
-                    </div>
-                    <div class="col-6 mx-auto my-auto text-center">
-                        <table>
-                            <tr v-for="prediction in allPredictions[ index ]">
-                                <td style="text-align:right">
-                                    <small>{{ users[prediction.user_id - 1].name }}</small>
-                                </td>
-                                <td>
-                                    <small>{{ prediction.homeGoals }} - {{ prediction.awayGoals }}</small>
-                                </td>
-                            </tr>
-                        </table>
-                    </div>
-                    <div class="col-3 mx-auto">
-                        <img :src="match.awayEmblem" :alt="match.awayTeam">
-                    </div>
+                    
                 </div>
                     
             </div>

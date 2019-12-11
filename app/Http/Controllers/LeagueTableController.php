@@ -24,6 +24,14 @@ class LeagueTableController extends Controller
         }
     }
 
+    public function whoAmI() {
+        if(Auth::user()) {
+            return [
+                'user', Auth::user()
+            ];
+        }
+    }
+
     /**
      * Show the form for creating a new resource.
      *

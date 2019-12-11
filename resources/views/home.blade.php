@@ -4,8 +4,11 @@
 <div class="container">
     <div class="row justify-content-center">
         
-
+        
         <div class="col-md-7">
+            <!-- Announcement Vue Commponent -->
+            <Announcement></Announcement>
+            
             <!-- League Table Vue Component -->
             <League-Table></League-Table>
             <!-- Rules Vue Component -->

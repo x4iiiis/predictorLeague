@@ -19,6 +19,6 @@ class UsersTableSeeder extends Seeder
         ]);
         $developer->assignRole('Developer');
 
-        // factory(User::class, 9)->create();
+        factory(User::class, 9)->create();
     }
 }

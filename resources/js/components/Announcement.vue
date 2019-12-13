@@ -30,7 +30,7 @@
 
                         <p>
                             Here's some screenshots from development to <i>hopefully</i> explain the new
-                            additions. Of course, these won't matter until the Scottish Cup games in January,
+                            additions. Of course, these won't matter until the cup games in January,
                             but I'm chucking it in now 'cause fuck it!
                         </p>
 
@@ -95,7 +95,7 @@
             setGreeting() {
                 console.log('sup');
                 switch(this.user.name.split(" ")[0]){
-                    case "x4iiiis":
+                    case "Ryan":
                         return "Awryt shagger, how ye dain?";
                     case "Cheree": 
                         return "Awryt Cheree doll, how ye dain?";
@@ -108,7 +108,7 @@
                     case "Stuart": 
                         return "Hiya Gayboy!xx";
                     case "Chris": 
-                        return "Dear Hearts Bastard,";
+                        return "Dear Hearts bastard,";
                     default:
                         return "Heeey good lookin',"
                 }

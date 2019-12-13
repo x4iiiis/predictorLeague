@@ -15,8 +15,8 @@ class DatabaseSeeder extends Seeder
             CreateSitePermissions::class,
             UsersTableSeeder::class,
             TeamsTableSeeder::class,
-            // MatchTableSeeder::class,
-            // PredictionsTableSeeder::class,
+            MatchTableSeeder::class,
+            PredictionsTableSeeder::class,
         ]);
     }
 }

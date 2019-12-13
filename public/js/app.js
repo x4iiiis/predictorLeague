@@ -1978,7 +1978,7 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
       console.log('sup');
 
       switch (this.user.name.split(" ")[0]) {
-        case "x4iiiis":
+        case "Ryan":
           return "Awryt shagger, how ye dain?";
 
         case "Cheree":
@@ -1997,7 +1997,7 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
           return "Hiya Gayboy!xx";
 
         case "Chris":
-          return "Dear Hearts Bastard,";
+          return "Dear Hearts bastard,";
 
         default:
           return "Heeey good lookin',";
@@ -45267,7 +45267,7 @@ var staticRenderFns = [
       ),
       _c("i", [_vm._v("hopefully")]),
       _vm._v(
-        " explain the new\n                        additions. Of course, these won't matter until the Scottish Cup games in January,\n                        but I'm chucking it in now 'cause fuck it!\n                    "
+        " explain the new\n                        additions. Of course, these won't matter until the cup games in January,\n                        but I'm chucking it in now 'cause fuck it!\n                    "
       )
     ])
   },

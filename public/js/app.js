@@ -46459,7 +46459,7 @@ var staticRenderFns = [
                 ]),
                 _vm._v(" "),
                 _c("td", { staticClass: "pl-3" }, [
-                  _vm._v("Correct outcome AET/Pens")
+                  _vm._v("Correct outcome AET / Pens")
                 ])
               ]),
               _vm._v(" "),
@@ -46467,7 +46467,7 @@ var staticRenderFns = [
                 _c("td", { staticClass: "text-center" }, [_vm._v("*")]),
                 _vm._v(" "),
                 _c("td", { staticClass: "pl-3" }, [
-                  _vm._v("Wrong outcome AET/Pens")
+                  _vm._v("Wrong outcome AET / Pens")
                 ])
               ])
             ]

@@ -16,11 +16,11 @@
                     </tr>
                     <tr>
                         <td class="text-center text-success">*</td>
-                        <td class="pl-3">Correct outcome AET/Pens</td>
+                        <td class="pl-3">Correct outcome AET / Pens</td>
                     </tr>
                     <tr>
                         <td class="text-center">*</td>
-                        <td class="pl-3">Wrong outcome AET/Pens</td>
+                        <td class="pl-3">Wrong outcome AET / Pens</td>
                     </tr>
                 </table>
             </div>

@@ -119,7 +119,7 @@
                         </div>
 
                         <div class="text-center">
-                            <button type="submit" class="btn btn-lg btn-primary mx-auto">Submit</button>
+                            <button type="submit" class="btn btn-lg btn-primary mx-auto mt-3">Submit</button>
                         </div>
                     </form>
                 </div>

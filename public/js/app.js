@@ -45885,7 +45885,7 @@ var staticRenderFns = [
       _c(
         "button",
         {
-          staticClass: "btn btn-lg btn-primary mx-auto",
+          staticClass: "btn btn-lg btn-primary mx-auto mt-3",
           attrs: { type: "submit" }
         },
         [_vm._v("Submit")]

@@ -306,6 +306,28 @@ class MatchController extends Controller
         }
     }
 
+    public function reverseFixture(Request $request)
+    {
+        if(Auth::user()) {
+            $relevantMatch = Match::where('id', $request->id)->first();
+            
+            $newAwayTeam = $relevantMatch['homeTeam'];
+            $newAwayEmblem = $relevantMatch['homeEmblem'];
+            $newHomeTeam = $relevantMatch['awayTeam'];
+            $newHomeEmblem = $relevantMatch['awayEmblem'];
+
+            $relevantMatch['homeTeam'] = $newHomeTeam;
+            $relevantMatch['homeEmblem'] = $newHomeEmblem;
+            $relevantMatch['awayTeam'] = $newAwayTeam;
+            $relevantMatch['awayEmblem'] = $newAwayEmblem;
+
+            $relevantMatch->save();
+        }
+        else {
+            return redirect('login');
+        }
+    }
+
     public function resetMatch(Request $request) {
         if(Auth::user()) {
             $relevantMatch = Match::where('id', $request->match['id'])->first();

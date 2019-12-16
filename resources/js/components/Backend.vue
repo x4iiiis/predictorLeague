@@ -135,7 +135,7 @@
                                         <a class="dropdown-item" v-on:click="cancelMatch(match)">P - P / A - A</a>
                                         <a class="dropdown-item" data-toggle="modal" :data-target="'#kickoff-' + match.id">Edit Kickoff</a>
                                         <a class="dropdown-item" data-toggle="modal" :data-target="'#ETP-' + match.id">Alter ET&P</a>
-                                        <a class="dropdown-item" href="#">Reverse Fixture</a>
+                                        <a class="dropdown-item" v-on:click="reverseFixture(match)">Reverse Fixture</a>
                                         </div>
                                     </div>
 
@@ -412,6 +412,22 @@
                         .catch(err => {
                             console.log(err.response);
                         })
+                }
+            },
+            reverseFixture(match) {
+                if(confirm("Are you sure you want to switch sides for " + match.homeTeam + " vs " + match.awayTeam + "?")) {
+                    axios.post('match/reversefixture', {
+                        id: match.id,
+                    })
+                    .then(response => {
+                        console.log(match.homeTeam + " vs " + match.awayTeam + " reversed");
+                        console.log(response);
+                        this.ready = false;
+                        this.getUnresultedMatches();
+                    })
+                    .catch(err => {
+                        console.log(err.response);
+                    })
                 }
             },
             updateTable() {

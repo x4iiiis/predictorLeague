@@ -2430,6 +2430,23 @@ __webpack_require__.r(__webpack_exports__);
         });
       }
     },
+    reverseFixture: function reverseFixture(match) {
+      var _this10 = this;
+
+      if (confirm("Are you sure you want to switch sides for " + match.homeTeam + " vs " + match.awayTeam + "?")) {
+        axios.post('match/reversefixture', {
+          id: match.id
+        }).then(function (response) {
+          console.log(match.homeTeam + " vs " + match.awayTeam + " reversed");
+          console.log(response);
+          _this10.ready = false;
+
+          _this10.getUnresultedMatches();
+        })["catch"](function (err) {
+          console.log(err.response);
+        });
+      }
+    },
     updateTable: function updateTable() {
       axios.get('/updatetable').then(function (res) {
         console.log('League Table Updated');
@@ -2438,23 +2455,23 @@ __webpack_require__.r(__webpack_exports__);
       });
     },
     unlock: function unlock() {
-      var _this10 = this;
+      var _this11 = this;
 
       axios.get('/unlockpredictions').then(function (res) {
         console.log('Predictions unlocked!');
-        _this10.locked = false;
-        _this10.unlocked = true;
+        _this11.locked = false;
+        _this11.unlocked = true;
       })["catch"](function (err) {
         console.log(err);
       });
     },
     lock: function lock() {
-      var _this11 = this;
+      var _this12 = this;
 
       axios.get('/lockpredictions').then(function (res) {
         console.log('Predictions locked!');
-        _this11.unlocked = false;
-        _this11.locked = true;
+        _this12.unlocked = false;
+        _this12.locked = true;
       })["catch"](function (err) {
         console.log(err);
       });
@@ -46028,7 +46045,11 @@ var render = function() {
                                     "a",
                                     {
                                       staticClass: "dropdown-item",
-                                      attrs: { href: "#" }
+                                      on: {
+                                        click: function($event) {
+                                          return _vm.reverseFixture(match)
+                                        }
+                                      }
                                     },
                                     [_vm._v("Reverse Fixture")]
                                   )

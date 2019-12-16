@@ -26,6 +26,7 @@ Route::post('/prediction/store', 'PredictionController@store')->name('prediction
 Route::post('/match/submitscores', 'MatchController@updateScores')->name('match.scores');
 Route::post('/match/resetmatch', 'MatchController@resetMatch')->name('match.reset');
 Route::post('/match/cancelmatch', 'MatchController@cancelMatch')->name('match.cancel');
+Route::post('/match/updatekickoff', 'MatchController@updateKickoff')->name('match.kickoff');
 
 
 Route::get('/updatetable', 'PredictionController@updateScores')->name('update.scores');

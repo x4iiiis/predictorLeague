@@ -2230,6 +2230,28 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 
 /* harmony default export */ __webpack_exports__["default"] = ({
   mounted: function mounted() {
@@ -2336,8 +2358,24 @@ __webpack_require__.r(__webpack_exports__);
         console.log(err.response);
       });
     },
-    cancelMatch: function cancelMatch(match) {
+    onEditKickoff: function onEditKickoff(match) {
       var _this7 = this;
+
+      axios.post('/match/updatekickoff', {
+        id: match.id,
+        kickoff: match.kickoff
+      }).then(function (response) {
+        console.log('Kickoff Updated');
+        console.log(response);
+        _this7.ready = false;
+
+        _this7.getUnresultedMatches();
+      })["catch"](function (err) {
+        console.log(err.response);
+      });
+    },
+    cancelMatch: function cancelMatch(match) {
+      var _this8 = this;
 
       if (confirm("Are you sure you want to cancel " + match.homeTeam + " vs " + match.awayTeam + "?")) {
         axios.post('/match/cancelmatch', {
@@ -2345,9 +2383,9 @@ __webpack_require__.r(__webpack_exports__);
         }).then(function (response) {
           console.log(match.homeTeam + " vs " + match.awayTeam + " cancelled");
           console.log(response);
-          _this7.ready = false;
+          _this8.ready = false;
 
-          _this7.getUnresultedMatches();
+          _this8.getUnresultedMatches();
         })["catch"](function (err) {
           console.log(err.response);
         });
@@ -2361,23 +2399,23 @@ __webpack_require__.r(__webpack_exports__);
       });
     },
     unlock: function unlock() {
-      var _this8 = this;
+      var _this9 = this;
 
       axios.get('/unlockpredictions').then(function (res) {
         console.log('Predictions unlocked!');
-        _this8.locked = false;
-        _this8.unlocked = true;
+        _this9.locked = false;
+        _this9.unlocked = true;
       })["catch"](function (err) {
         console.log(err);
       });
     },
     lock: function lock() {
-      var _this9 = this;
+      var _this10 = this;
 
       axios.get('/lockpredictions').then(function (res) {
         console.log('Predictions locked!');
-        _this9.unlocked = false;
-        _this9.locked = true;
+        _this10.unlocked = false;
+        _this10.locked = true;
       })["catch"](function (err) {
         console.log(err);
       });
@@ -45927,9 +45965,12 @@ var render = function() {
                                     "a",
                                     {
                                       staticClass: "dropdown-item",
-                                      attrs: { href: "#" }
+                                      attrs: {
+                                        "data-toggle": "modal",
+                                        "data-target": "#kickoff-" + match.id
+                                      }
                                     },
-                                    [_vm._v("Change Date / Time")]
+                                    [_vm._v("Edit Kickoff")]
                                   ),
                                   _vm._v(" "),
                                   _c(
@@ -45950,13 +45991,129 @@ var render = function() {
                                     [_vm._v("Reverse Fixture")]
                                   )
                                 ])
-                              ])
+                              ]),
+                              _vm._v(" "),
+                              _c(
+                                "div",
+                                {
+                                  staticClass: "modal fade",
+                                  attrs: {
+                                    id: "kickoff-" + match.id,
+                                    tabindex: "-1",
+                                    role: "dialog"
+                                  }
+                                },
+                                [
+                                  _c(
+                                    "div",
+                                    {
+                                      staticClass: "modal-dialog modal-sm",
+                                      attrs: { role: "document" }
+                                    },
+                                    [
+                                      _c(
+                                        "div",
+                                        { staticClass: "modal-content" },
+                                        [
+                                          _c(
+                                            "div",
+                                            { staticClass: "modal-body" },
+                                            [
+                                              _vm._m(1, true),
+                                              _vm._v(" "),
+                                              _c(
+                                                "form",
+                                                {
+                                                  attrs: {
+                                                    action: "match/editkickoff",
+                                                    method: "post"
+                                                  },
+                                                  on: {
+                                                    submit: function($event) {
+                                                      $event.preventDefault()
+                                                      return _vm.onEditKickoff(
+                                                        match
+                                                      )
+                                                    }
+                                                  }
+                                                },
+                                                [
+                                                  _c("input", {
+                                                    directives: [
+                                                      {
+                                                        name: "model",
+                                                        rawName: "v-model",
+                                                        value: match.kickoff,
+                                                        expression:
+                                                          "match.kickoff"
+                                                      }
+                                                    ],
+                                                    staticClass: "form-control",
+                                                    attrs: {
+                                                      type: "datetime-local",
+                                                      id: "kickoff",
+                                                      placeholder: "dateTime"
+                                                    },
+                                                    domProps: {
+                                                      value: match.kickoff
+                                                    },
+                                                    on: {
+                                                      input: function($event) {
+                                                        if (
+                                                          $event.target
+                                                            .composing
+                                                        ) {
+                                                          return
+                                                        }
+                                                        _vm.$set(
+                                                          match,
+                                                          "kickoff",
+                                                          $event.target.value
+                                                        )
+                                                      }
+                                                    }
+                                                  }),
+                                                  _vm._v(" "),
+                                                  _c(
+                                                    "div",
+                                                    {
+                                                      staticClass: "text-center"
+                                                    },
+                                                    [
+                                                      _c(
+                                                        "button",
+                                                        {
+                                                          staticClass:
+                                                            "btn btn-lg btn-primary mx-auto mt-3",
+                                                          attrs: {
+                                                            type: "submit",
+                                                            "data-toggle":
+                                                              "modal",
+                                                            "data-target":
+                                                              "#kickoff-" +
+                                                              match.id
+                                                          }
+                                                        },
+                                                        [_vm._v("Submit")]
+                                                      )
+                                                    ]
+                                                  )
+                                                ]
+                                              )
+                                            ]
+                                          )
+                                        ]
+                                      )
+                                    ]
+                                  )
+                                ]
+                              )
                             ])
                           ])
                         ])
                       }),
                       _vm._v(" "),
-                      _vm._m(1)
+                      _vm._m(2)
                     ],
                     2
                   )
@@ -46030,7 +46187,7 @@ var render = function() {
                                 _vm._v(_vm._s(match.kickoff.split(" ")[4]))
                               ]),
                               _vm._v(" "),
-                              _vm._m(2, true)
+                              _vm._m(3, true)
                             ]
                           ),
                           _vm._v(" "),
@@ -46069,7 +46226,7 @@ var render = function() {
                             })
                           ]),
                           _vm._v(" "),
-                          _vm._m(3, true)
+                          _vm._m(4, true)
                         ]
                       )
                     ])
@@ -46088,6 +46245,23 @@ var staticRenderFns = [
     return _c("span", { attrs: { "data-toggle": "dropdown" } }, [
       _c("i", { staticClass: "fa fa-edit" })
     ])
+  },
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c(
+      "button",
+      {
+        staticClass: "close",
+        attrs: {
+          type: "button",
+          "data-dismiss": "modal",
+          "aria-label": "Close"
+        }
+      },
+      [_c("span", { attrs: { "aria-hidden": "true" } }, [_vm._v("×")])]
+    )
   },
   function() {
     var _vm = this

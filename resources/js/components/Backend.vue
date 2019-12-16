@@ -133,9 +133,31 @@
                                         <span data-toggle="dropdown"><i class="fa fa-edit"></i></span>
                                         <div class="dropdown-menu">
                                         <a class="dropdown-item" v-on:click="cancelMatch(match)">P - P / A - A</a>
-                                        <a class="dropdown-item" href="#">Change Date / Time</a>
+                                        <a class="dropdown-item" data-toggle="modal" :data-target="'#kickoff-' + match.id">Edit Kickoff</a>
                                         <a class="dropdown-item" href="#">Alter ET&P</a>
                                         <a class="dropdown-item" href="#">Reverse Fixture</a>
+                                        </div>
+                                    </div>
+
+                                    <div class="modal fade" :id="'kickoff-' + match.id" tabindex="-1" role="dialog">
+                                        <div class="modal-dialog modal-sm" role="document">
+                                            <div class="modal-content">
+
+                                                <div class="modal-body">
+                                                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                                        <span aria-hidden="true">&times;</span>
+                                                    </button>
+
+                                                    <form action="match/editkickoff" method="post" @submit.prevent="onEditKickoff(match)">
+                                                        <input class="form-control" type="datetime-local" id="kickoff" placeholder="dateTime" v-model="match.kickoff">
+
+                                                        <div class="text-center">
+                                                            <button type="submit" class="btn btn-lg btn-primary mx-auto mt-3" data-toggle="modal" :data-target="'#kickoff-' + match.id">Submit</button>
+                                                        </div>
+                                                    </form>
+                                                </div>
+
+                                            </div>
                                         </div>
                                     </div>
                                     
@@ -314,6 +336,22 @@
                         this.ready = false;
                         this.updateTable();
                         this.getResultedMatches();
+                    })
+                    .catch(err => {
+                        console.log(err.response);
+                    })
+            },
+            onEditKickoff(match) {
+                axios
+                    .post('/match/updatekickoff', {
+                        id: match.id,
+                        kickoff: match.kickoff
+                    })
+                    .then(response => {
+                        console.log('Kickoff Updated');
+                        console.log(response);
+                        this.ready=false;
+                        this.getUnresultedMatches();
                     })
                     .catch(err => {
                         console.log(err.response);

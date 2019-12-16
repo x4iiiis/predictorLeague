@@ -232,56 +232,89 @@ class MatchController extends Controller
      */
     public function store(Request $request)
     {
-        $request->validate([
-            'homeTeam' => 'required|max:32',
-            'awayTeam' => 'required|max:32',
-            'kickoff' => 'required|date'
-        ]);
+        if(Auth::user()) {
+            $request->validate([
+                'homeTeam' => 'required|max:32',
+                'awayTeam' => 'required|max:32',
+                'kickoff' => 'required|date'
+            ]);
 
-        $homeEmblem = Team::where('name', $request->homeTeam)->first();
-        $awayEmblem = Team::where('name', $request->awayTeam)->first();
+            $homeEmblem = Team::where('name', $request->homeTeam)->first();
+            $awayEmblem = Team::where('name', $request->awayTeam)->first();
 
-        $newMatch = Match::create([
-            'homeTeam' => $request->homeTeam,
-            'awayTeam' => $request->awayTeam,
-            'kickoff' => $request->kickoff,
-            'homeEmblem' => $homeEmblem->emblem,
-            'awayEmblem' => $awayEmblem->emblem,
-            'etp_available' => $request->etp_available
-        ]);
+            $newMatch = Match::create([
+                'homeTeam' => $request->homeTeam,
+                'awayTeam' => $request->awayTeam,
+                'kickoff' => $request->kickoff,
+                'homeEmblem' => $homeEmblem->emblem,
+                'awayEmblem' => $awayEmblem->emblem,
+                'etp_available' => $request->etp_available
+            ]);
 
-        return redirect('/backend');
+            return redirect('/backend');
+        }
+        return redirect('login');
     }
 
     public function updateScores(Request $request)
     {
-        foreach($request->matches as $match) {
+        if(Auth::user()) {
+            foreach($request->matches as $match) {
 
-            if($match['homeGoals'] != null) {
+                if($match['homeGoals'] != null) {
 
-                $relevantMatch = Match::where('id', $match['id'])->first();
-                $relevantMatch->homeGoals = $match['homeGoals'];
-                $relevantMatch->awayGoals = $match['awayGoals'];
-                $relevantMatch->homeGoalsAET = $match['homeGoalsAET'];
-                $relevantMatch->awayGoalsAET = $match['awayGoalsAET'];
-                $relevantMatch->homeGoalsPens = $match['homeGoalsPens'];
-                $relevantMatch->awayGoalsPens = $match['awayGoalsPens'];
-                $relevantMatch->save();
+                    $relevantMatch = Match::where('id', $match['id'])->first();
+                    $relevantMatch->homeGoals = $match['homeGoals'];
+                    $relevantMatch->awayGoals = $match['awayGoals'];
+                    $relevantMatch->homeGoalsAET = $match['homeGoalsAET'];
+                    $relevantMatch->awayGoalsAET = $match['awayGoalsAET'];
+                    $relevantMatch->homeGoalsPens = $match['homeGoalsPens'];
+                    $relevantMatch->awayGoalsPens = $match['awayGoalsPens'];
+                    $relevantMatch->save();
+                }
             }
+            return 'Scores Updated';
         }
-        return 'Scores Updated';
+        else {
+            return redirect('login');
+        }
+    }
+
+    public function updateKickoff(Request $request)
+    {
+        if(Auth::user()) {
+
+            // dd($request->match['kickoff']);
+
+            $relevantMatch = Match::where('id', $request->id)->first();
+            $relevantMatch->kickoff = date('Y-m-d', strtotime($request->kickoff));
+            $relevantMatch->save();
+        }
+        else {
+            return redirect('login');
+        }
     }
 
     public function resetMatch(Request $request) {
-        $relevantMatch = Match::where('id', $request->match['id'])->first();
-        $relevantMatch->homeGoals = null;
-        $relevantMatch->awayGoals = null;
-        $relevantMatch->save();
+        if(Auth::user()) {
+            $relevantMatch = Match::where('id', $request->match['id'])->first();
+            $relevantMatch->homeGoals = null;
+            $relevantMatch->awayGoals = null;
+            $relevantMatch->save();
+        }
+        else {
+            return redirect('login');
+        }
     }
 
     public function cancelMatch(Request $request) {
-        $relevantMatch = Match::where('id', $request->match['id'])->first();
-        $relevantMatch->delete();
+        if(Auth::user()) {
+            $relevantMatch = Match::where('id', $request->match['id'])->first();
+            $relevantMatch->delete();
+        }
+        else {
+            return redirect('login');
+        }
     }
 
     /**

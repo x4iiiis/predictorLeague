@@ -134,7 +134,7 @@
                                         <div class="dropdown-menu">
                                         <a class="dropdown-item" v-on:click="cancelMatch(match)">P - P / A - A</a>
                                         <a class="dropdown-item" data-toggle="modal" :data-target="'#kickoff-' + match.id">Edit Kickoff</a>
-                                        <a class="dropdown-item" href="#">Alter ET&P</a>
+                                        <a class="dropdown-item" data-toggle="modal" :data-target="'#ETP-' + match.id">Alter ET&P</a>
                                         <a class="dropdown-item" href="#">Reverse Fixture</a>
                                         </div>
                                     </div>
@@ -153,6 +153,29 @@
 
                                                         <div class="text-center">
                                                             <button type="submit" class="btn btn-lg btn-primary mx-auto mt-3" data-toggle="modal" :data-target="'#kickoff-' + match.id">Submit</button>
+                                                        </div>
+                                                    </form>
+                                                </div>
+
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <div class="modal fade" :id="'ETP-' + match.id" tabindex="-1" role="dialog">
+                                        <div class="modal-dialog modal-sm" role="document">
+                                            <div class="modal-content">
+
+                                                <div class="modal-body">
+                                                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                                        <span aria-hidden="true">&times;</span>
+                                                    </button>
+
+                                                    <form action="match/editETP" method="post" @submit.prevent="onEditETP(match)">
+                                                        <label>Extra Time and / or Penalties Available</label>
+                                                        <input class="form-control col-1 mx-auto text-center" type="checkbox" v-model="match.etp_available">
+                                
+                                                        <div class="text-center">
+                                                            <button type="submit" class="btn btn-lg btn-primary mx-auto mt-3" data-toggle="modal" :data-target="'#ETP-' + match.id">Submit</button>
                                                         </div>
                                                     </form>
                                                 </div>
@@ -349,6 +372,22 @@
                     })
                     .then(response => {
                         console.log('Kickoff Updated');
+                        console.log(response);
+                        this.ready=false;
+                        this.getUnresultedMatches();
+                    })
+                    .catch(err => {
+                        console.log(err.response);
+                    })
+            },
+            onEditETP(match) {
+                axios
+                    .post('match/updateetp', {
+                        id: match.id,
+                        etp_available: match.etp_available
+                    })
+                    .then(response => {
+                        console.log('ET & Pens Availability Updated');
                         console.log(response);
                         this.ready=false;
                         this.getUnresultedMatches();

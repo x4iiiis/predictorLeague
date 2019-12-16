@@ -284,10 +284,21 @@ class MatchController extends Controller
     {
         if(Auth::user()) {
 
-            // dd($request->match['kickoff']);
-
             $relevantMatch = Match::where('id', $request->id)->first();
             $relevantMatch->kickoff = date('Y-m-d', strtotime($request->kickoff));
+            $relevantMatch->save();
+        }
+        else {
+            return redirect('login');
+        }
+    }
+
+    public function updateETP(Request $request)
+    {
+        if(Auth::user()) {
+
+            $relevantMatch = Match::where('id', $request->id)->first();
+            $relevantMatch->etp_available = $request->etp_available;
             $relevantMatch->save();
         }
         else {

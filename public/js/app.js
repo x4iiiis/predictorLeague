@@ -2252,6 +2252,29 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 
 /* harmony default export */ __webpack_exports__["default"] = ({
   mounted: function mounted() {
@@ -2374,8 +2397,24 @@ __webpack_require__.r(__webpack_exports__);
         console.log(err.response);
       });
     },
-    cancelMatch: function cancelMatch(match) {
+    onEditETP: function onEditETP(match) {
       var _this8 = this;
+
+      axios.post('match/updateetp', {
+        id: match.id,
+        etp_available: match.etp_available
+      }).then(function (response) {
+        console.log('ET & Pens Availability Updated');
+        console.log(response);
+        _this8.ready = false;
+
+        _this8.getUnresultedMatches();
+      })["catch"](function (err) {
+        console.log(err.response);
+      });
+    },
+    cancelMatch: function cancelMatch(match) {
+      var _this9 = this;
 
       if (confirm("Are you sure you want to cancel " + match.homeTeam + " vs " + match.awayTeam + "?")) {
         axios.post('/match/cancelmatch', {
@@ -2383,9 +2422,9 @@ __webpack_require__.r(__webpack_exports__);
         }).then(function (response) {
           console.log(match.homeTeam + " vs " + match.awayTeam + " cancelled");
           console.log(response);
-          _this8.ready = false;
+          _this9.ready = false;
 
-          _this8.getUnresultedMatches();
+          _this9.getUnresultedMatches();
         })["catch"](function (err) {
           console.log(err.response);
         });
@@ -2399,23 +2438,23 @@ __webpack_require__.r(__webpack_exports__);
       });
     },
     unlock: function unlock() {
-      var _this9 = this;
+      var _this10 = this;
 
       axios.get('/unlockpredictions').then(function (res) {
         console.log('Predictions unlocked!');
-        _this9.locked = false;
-        _this9.unlocked = true;
+        _this10.locked = false;
+        _this10.unlocked = true;
       })["catch"](function (err) {
         console.log(err);
       });
     },
     lock: function lock() {
-      var _this10 = this;
+      var _this11 = this;
 
       axios.get('/lockpredictions').then(function (res) {
         console.log('Predictions locked!');
-        _this10.unlocked = false;
-        _this10.locked = true;
+        _this11.unlocked = false;
+        _this11.locked = true;
       })["catch"](function (err) {
         console.log(err);
       });
@@ -45977,7 +46016,10 @@ var render = function() {
                                     "a",
                                     {
                                       staticClass: "dropdown-item",
-                                      attrs: { href: "#" }
+                                      attrs: {
+                                        "data-toggle": "modal",
+                                        "data-target": "#ETP-" + match.id
+                                      }
                                     },
                                     [_vm._v("Alter ET&P")]
                                   ),
@@ -46107,13 +46149,172 @@ var render = function() {
                                     ]
                                   )
                                 ]
+                              ),
+                              _vm._v(" "),
+                              _c(
+                                "div",
+                                {
+                                  staticClass: "modal fade",
+                                  attrs: {
+                                    id: "ETP-" + match.id,
+                                    tabindex: "-1",
+                                    role: "dialog"
+                                  }
+                                },
+                                [
+                                  _c(
+                                    "div",
+                                    {
+                                      staticClass: "modal-dialog modal-sm",
+                                      attrs: { role: "document" }
+                                    },
+                                    [
+                                      _c(
+                                        "div",
+                                        { staticClass: "modal-content" },
+                                        [
+                                          _c(
+                                            "div",
+                                            { staticClass: "modal-body" },
+                                            [
+                                              _vm._m(2, true),
+                                              _vm._v(" "),
+                                              _c(
+                                                "form",
+                                                {
+                                                  attrs: {
+                                                    action: "match/editETP",
+                                                    method: "post"
+                                                  },
+                                                  on: {
+                                                    submit: function($event) {
+                                                      $event.preventDefault()
+                                                      return _vm.onEditETP(
+                                                        match
+                                                      )
+                                                    }
+                                                  }
+                                                },
+                                                [
+                                                  _c("label", [
+                                                    _vm._v(
+                                                      "Extra Time and / or Penalties Available"
+                                                    )
+                                                  ]),
+                                                  _vm._v(" "),
+                                                  _c("input", {
+                                                    directives: [
+                                                      {
+                                                        name: "model",
+                                                        rawName: "v-model",
+                                                        value:
+                                                          match.etp_available,
+                                                        expression:
+                                                          "match.etp_available"
+                                                      }
+                                                    ],
+                                                    staticClass:
+                                                      "form-control col-1 mx-auto text-center",
+                                                    attrs: { type: "checkbox" },
+                                                    domProps: {
+                                                      checked: Array.isArray(
+                                                        match.etp_available
+                                                      )
+                                                        ? _vm._i(
+                                                            match.etp_available,
+                                                            null
+                                                          ) > -1
+                                                        : match.etp_available
+                                                    },
+                                                    on: {
+                                                      change: function($event) {
+                                                        var $$a =
+                                                            match.etp_available,
+                                                          $$el = $event.target,
+                                                          $$c = $$el.checked
+                                                            ? true
+                                                            : false
+                                                        if (
+                                                          Array.isArray($$a)
+                                                        ) {
+                                                          var $$v = null,
+                                                            $$i = _vm._i(
+                                                              $$a,
+                                                              $$v
+                                                            )
+                                                          if ($$el.checked) {
+                                                            $$i < 0 &&
+                                                              _vm.$set(
+                                                                match,
+                                                                "etp_available",
+                                                                $$a.concat([
+                                                                  $$v
+                                                                ])
+                                                              )
+                                                          } else {
+                                                            $$i > -1 &&
+                                                              _vm.$set(
+                                                                match,
+                                                                "etp_available",
+                                                                $$a
+                                                                  .slice(0, $$i)
+                                                                  .concat(
+                                                                    $$a.slice(
+                                                                      $$i + 1
+                                                                    )
+                                                                  )
+                                                              )
+                                                          }
+                                                        } else {
+                                                          _vm.$set(
+                                                            match,
+                                                            "etp_available",
+                                                            $$c
+                                                          )
+                                                        }
+                                                      }
+                                                    }
+                                                  }),
+                                                  _vm._v(" "),
+                                                  _c(
+                                                    "div",
+                                                    {
+                                                      staticClass: "text-center"
+                                                    },
+                                                    [
+                                                      _c(
+                                                        "button",
+                                                        {
+                                                          staticClass:
+                                                            "btn btn-lg btn-primary mx-auto mt-3",
+                                                          attrs: {
+                                                            type: "submit",
+                                                            "data-toggle":
+                                                              "modal",
+                                                            "data-target":
+                                                              "#ETP-" + match.id
+                                                          }
+                                                        },
+                                                        [_vm._v("Submit")]
+                                                      )
+                                                    ]
+                                                  )
+                                                ]
+                                              )
+                                            ]
+                                          )
+                                        ]
+                                      )
+                                    ]
+                                  )
+                                ]
                               )
                             ])
                           ])
                         ])
                       }),
                       _vm._v(" "),
-                      _vm._m(2)
+                      _vm._m(3)
                     ],
                     2
                   )
@@ -46187,7 +46388,7 @@ var render = function() {
                                 _vm._v(_vm._s(match.kickoff.split(" ")[4]))
                               ]),
                               _vm._v(" "),
-                              _vm._m(3, true)
+                              _vm._m(4, true)
                             ]
                           ),
                           _vm._v(" "),
@@ -46226,7 +46427,7 @@ var render = function() {
                             })
                           ]),
                           _vm._v(" "),
-                          _vm._m(4, true)
+                          _vm._m(5, true)
                         ]
                       )
                     ])
@@ -46245,6 +46446,23 @@ var staticRenderFns = [
     return _c("span", { attrs: { "data-toggle": "dropdown" } }, [
       _c("i", { staticClass: "fa fa-edit" })
     ])
+  },
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c(
+      "button",
+      {
+        staticClass: "close",
+        attrs: {
+          type: "button",
+          "data-dismiss": "modal",
+          "aria-label": "Close"
+        }
+      },
+      [_c("span", { attrs: { "aria-hidden": "true" } }, [_vm._v("×")])]
+    )
   },
   function() {
     var _vm = this

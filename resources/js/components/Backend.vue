@@ -96,6 +96,7 @@
                                     <h6>{{match.kickoff.split(' ')[4]}}</h6>
                                     <div class="col-9 mx-auto">
                                         <hr> 
+                                        <small v-if="match.etp_available"><em>Plays to conclusion</em></small>
                                     </div>
                                 </div>
                                 <div class="col-3 mx-auto">
@@ -104,6 +105,20 @@
                                 <div class="form-group col-6 my-auto mx-auto text-center">
                                     <input class="col-5" :name="'home' + match.id" v-model="match.homeGoals" type="number"></input>
                                     <input class="col-5" :name="'away' + match.id" v-model="match.awayGoals" type="number"></input>
+
+                                    <div v-if="match.etp_available && match.homeGoals == match.awayGoals && match.homeGoals != null">
+                                        <br />
+                                        <b class="text-center">AET</b>
+                                        <br />
+                                        <input class="col-5" :name="'homeAET' + match.id" v-model="match.homeGoalsAET" type="number"></input>
+                                        <input class="col-5" :name="'awayAET' + match.id" v-model="match.awayGoalsAET" type="number"></input>
+
+                                        <br />
+                                        <b class="text-center">Pens</b>
+                                        <br />
+                                        <input class="col-5" :name="'homePens' + match.id" v-model="match.homeGoalsPens" type="number"></input>
+                                        <input class="col-5" :name="'awayPens' + match.id" v-model="match.awayGoalsPens" type="number"></input>
+                                    </div>
                                 </div>
                                 <div class="col-3 mx-auto">
                                     <img :src="match.awayEmblem" :alt="match.awayTeam">
@@ -113,7 +128,17 @@
                             <div class="row">
                                 <div class="col-8 mx-auto">
                                     <hr>
-                                    <a class="btn-xs btn-warning col-4 mx-auto text-white" v-on:click="cancelMatch(match)">P-P / A-A</a>
+
+                                    <div class="btn-group dropup">
+                                        <span data-toggle="dropdown"><i class="fa fa-edit"></i></span>
+                                        <div class="dropdown-menu">
+                                        <a class="dropdown-item" v-on:click="cancelMatch(match)">P - P / A - A</a>
+                                        <a class="dropdown-item" href="#">Change Date / Time</a>
+                                        <a class="dropdown-item" href="#">Alter ET&P</a>
+                                        <a class="dropdown-item" href="#">Reverse Fixture</a>
+                                        </div>
+                                    </div>
+                                    
                                 </div>
                             </div>
                         </div>

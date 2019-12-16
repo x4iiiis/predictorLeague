@@ -191,6 +191,7 @@
     export default {
         mounted() {
             console.log('Fixtures Component mounted.')
+            this.match.etp_available = false;
             this.getTeams();
         },
         data() {

@@ -7,7 +7,7 @@
         
         <div class="col-md-7">
             <!-- Announcement Vue Commponent -->
-            <Announcement></Announcement>
+            <!-- <Announcement></Announcement> -->
             
             <!-- League Table Vue Component -->
             <League-Table></League-Table>

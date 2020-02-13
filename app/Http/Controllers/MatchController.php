@@ -166,40 +166,40 @@ class MatchController extends Controller
     {
         //return "Technical difficulties; Back soon. xoxo gossip girl";
 
-        // if(Auth::user()) {
-        //     $users = User::all();
-        //     $matches = Match::all()->where('kickoff', '>', date('Y-m-d H:i:s'));
-        //     $prevMatches = Match::orderBy('id', 'desc')
-        //                                 ->where('kickoff', '<', date('Y-m-d H:i:s'))
-        //                                 ->where('homeGoals', '>=', 0)
-        //                                 ->simplePaginate(5);
+        if(Auth::user()) {
+            $users = User::all();
+            $matches = Match::all()->where('kickoff', '>', date('Y-m-d H:i:s'));
+            $prevMatches = Match::orderBy('id', 'desc')
+                                        ->where('kickoff', '<', date('Y-m-d H:i:s'))
+                                        ->where('homeGoals', '>=', 0)
+                                        ->simplePaginate(5);
 
-        //     $predictions = []; 
+            $predictions = []; 
             
-        //     foreach(Match::all() as $match) {
-        //         //dd($prevMatch->id);
-        //         //dd(Prediction::all()->where('match_id', '==', $prevMatch->id));
-        //         array_push($predictions, Prediction::all()->where('match_id', '==', $match->id));
-        //     }
-        //     //dd($predictions);
+            foreach(Match::all() as $match) {
+                //dd($prevMatch->id);
+                //dd(Prediction::all()->where('match_id', '==', $prevMatch->id));
+                array_push($predictions, Prediction::all()->where('match_id', '==', $match->id));
+            }
+            //dd($predictions);
 
 
 
-        //     //$prevMatches = Match::whereNotNull('homeGoals')->get()->all();
-        //     //dd($prevMatches);
+            //$prevMatches = Match::whereNotNull('homeGoals')->get()->all();
+            //dd($prevMatches);
 
-        //     if(Auth::user()->hasSubmitted == 0) {
-        //         return view('home')->with('users',$users)
-        //                             ->with('matches',$matches)
-        //                             ->with('prevMatches',$prevMatches)
-        //                             ->with('predictions',$predictions);
-        //     }
+            if(Auth::user()->hasSubmitted == 0) {
+                return view('home')->with('users',$users)
+                                    ->with('matches',$matches)
+                                    ->with('prevMatches',$prevMatches)
+                                    ->with('predictions',$predictions);
+            }
 
-        //     return view('home')->with('users',$users)
-        //                         ->with('prevMatches',$prevMatches)
-        //                         ->with('predictions',$predictions);
-        // }
-        // return redirect('/login');
+            return view('home')->with('users',$users)
+                                ->with('prevMatches',$prevMatches)
+                                ->with('predictions',$predictions);
+        }
+        return redirect('/login');
     }
 
     /**

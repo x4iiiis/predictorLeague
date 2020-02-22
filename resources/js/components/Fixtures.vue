@@ -100,8 +100,19 @@
                                     <td style="text-align:right">
                                         <small>{{ users[prediction.user_id - 1].name }}</small>
                                     </td>
-                                    <td>
+                                    <td v-if="prediction.winner == null">
                                         <small>{{ prediction.homeGoals }} - {{ prediction.awayGoals }}</small>
+                                    </td>
+                                    <td v-else>
+                                        <small>
+                                            <span v-if="prediction.winner == match.homeTeam">
+                                                <span>*</span>
+                                            </span>
+                                                {{ prediction.homeGoals }} - {{ prediction.awayGoals }}
+                                            <span v-if="prediction.winner == match.awayTeam">
+                                                <span>*</span>
+                                            </span>
+                                        </small>
                                     </td>
                                 </tr>
                             </table>

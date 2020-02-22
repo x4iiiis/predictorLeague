@@ -41,7 +41,7 @@
                 matches: [],
                 totalResultedMatches: 0,
                 ready: false,
-                counter: -1
+                counter: -2 //This should probably be 0 or -1 but postponed fixtures are breaking things somehow
             }
         },
         methods: {

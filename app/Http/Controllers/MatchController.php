@@ -47,8 +47,7 @@ class MatchController extends Controller
 
         if(Auth::user()) {
 
-            $prevMatches = Match::orderBy('kickoff', 'desc')->where('kickoff', '<', date('Y-m-d H:i:s'))
-                                        ->where('homeGoals', '>=', 0)->get();
+            $prevMatches = Match::orderBy('kickoff', 'desc')->where('homeGoals', '>=', 0)->get();
             
 
             return [
@@ -61,12 +60,9 @@ class MatchController extends Controller
 
     public function countResultedMatches() {
         if(Auth::user()) {
-            $resultedTotal = sizeof(
-                                Match::orderBy('kickoff', 'desc')
-                                    ->where('kickoff', '<', date('Y-m-d H:i:s'))
-                                    ->where('homeGoals', '>=', 0)
-                                    ->get()
-                                ) + 1;
+            $resultedTotal = sizeof(Match::where('homeGoals', '>=', 0)->get());
+
+            dd($resultedTotal);
 
             return [
                 'totalResultedMatches', $resultedTotal
@@ -80,15 +76,9 @@ class MatchController extends Controller
         if(Auth::user()) {
 
             $limit = 10;
-            $resultedTotal = sizeof(
-                                Match::orderBy('kickoff', 'desc')
-                                    ->where('kickoff', '<', date('Y-m-d H:i:s'))
-                                    ->where('homeGoals', '>=', 0)
-                                    ->get()
-                                ) + 1;
+            $resultedTotal = sizeof(Match::where('homeGoals', '>=', 0)->get());
             //dd(Match::find($counter));
             $prevMatches = Match::orderBy('kickoff', 'desc')
-                                ->where('kickoff', '<', date('Y-m-d H:i:s'))
                                 ->where('homeGoals', '>=', 0)
                                 ->find(range(
                                     $resultedTotal - (($counter) * $limit) - 1,
@@ -170,9 +160,7 @@ class MatchController extends Controller
             $users = User::all();
             $matches = Match::all()->where('kickoff', '>', date('Y-m-d H:i:s'));
             $prevMatches = Match::orderBy('id', 'desc')
-                                        ->where('kickoff', '<', date('Y-m-d H:i:s'))
-                                        ->where('homeGoals', '>=', 0)
-                                        ->simplePaginate(5);
+                                        ->where('homeGoals', '>=', 0);
 
             $predictions = []; 
             

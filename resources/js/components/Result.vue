@@ -37,8 +37,8 @@
                     <b class="text-center">Penalties</b>
 
                     <br />
-                    <h4 style="display: inline;">10 - </h4>
-                    <h4 style="display: inline;">9</h4>
+                    <h4 style="display: inline;">{{ this.match.homeGoalsPens }} - </h4>
+                    <h4 style="display: inline;">{{ this.match.awayGoalsPens }}</h4>
                 </div>
             </div>
         </div>

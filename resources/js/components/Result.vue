@@ -46,6 +46,7 @@
 
             <table>
             <tr v-for="prediction in this.predictions" :key="prediction.id">
+
                 <div v-if="prediction.homeGoals == match.homeGoals && prediction.awayGoals == match.awayGoals">
                     <td style="text-align:right">
                         <small class="text-success">{{ users[prediction.user_id - 1].name }}</small>
@@ -67,16 +68,31 @@
                         </small>
                     </td>
                 </div>
+
                 <div v-else-if="(prediction.homeGoals > prediction.awayGoals && match.homeGoals > match.awayGoals) 
                         || (prediction.homeGoals < prediction.awayGoals && match.homeGoals < match.awayGoals) 
                         || (prediction.homeGoals == prediction.awayGoals && match.homeGoals == match.awayGoals)">
                     <td style="text-align:right">
                         <small style="color:#f6993f">{{ users[prediction.user_id - 1].name }}</small>
                     </td>
-                    <td>
+                    <td v-if="prediction.winner == null">
                         <small style="color:#f6993f">{{ prediction.homeGoals }} - {{ prediction.awayGoals }}</small>
                     </td>
+                    <td v-else>
+                        <small style="color:#f6993f">
+                            <span v-if="prediction.winner == match.homeTeam">
+                                <span v-if="prediction.winner == match.winner" class="text-success">*</span>
+                                <span v-else style="color:black !important">*</span>
+                            </span>
+                                {{ prediction.homeGoals }} - {{ prediction.awayGoals }}
+                            <span v-if="prediction.winner == match.awayTeam">
+                                <span v-if="prediction.winner == match.winner" class="text-success">*</span>
+                                <span v-else style="color:black !important">*</span>
+                            </span>
+                        </small>
+                    </td>
                 </div>
+
                 <div v-else>
                     <td style="text-align:right">
                         <small>{{ users[prediction.user_id - 1].name }}</small>

@@ -29,8 +29,8 @@
                 <b class="text-center">AET</b>
 
                 <br />
-                <h4 style="display: inline;">1 - </h4>
-                <h4 style="display: inline;">1</h4>
+                <h4 style="display: inline;">{{ this.match.homeGoalsAET }} - </h4>
+                <h4 style="display: inline;">{{ this.match.awayGoalsAET }}</h4>
 
                 <div v-if="this.match.homeGoalsPens">
                     <br />

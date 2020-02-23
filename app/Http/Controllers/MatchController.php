@@ -62,7 +62,7 @@ class MatchController extends Controller
         if(Auth::user()) {
             $resultedTotal = sizeof(Match::where('homeGoals', '>=', 0)->get());
 
-            dd($resultedTotal);
+            // dd($resultedTotal);
 
             return [
                 'totalResultedMatches', $resultedTotal

@@ -15,13 +15,11 @@ class LeagueTableController extends Controller
      */
     public function index()
     {
-        if(Auth::user()) {
-            return [
-                'users', User::orderBy('points', 'desc')
-                            ->orderBy('correctScores', 'desc')
-                            ->orderBy('correctOutcomes', 'desc')->get()
-            ];
-        }
+        return [
+            'users', User::orderBy('points', 'desc')
+                        ->orderBy('correctScores', 'desc')
+                        ->orderBy('correctOutcomes', 'desc')->get()
+        ];
     }
 
     public function whoAmI() {

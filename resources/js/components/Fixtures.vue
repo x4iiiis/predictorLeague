@@ -26,7 +26,7 @@
                         <div v-else class="col-3 mx-auto" v-on:click="match.winner = match.homeTeam">
                             <img :src="match.homeEmblem" :alt="match.homeTeam">
                         </div>
-                        <div class="form-group col-6 my-auto mx-auto text-center">
+                        <div v-if="user.name!='Guest'" class="form-group col-6 my-auto mx-auto text-center">
                             <input class="col-5" :name="'home' + match.id" v-model="match.homeGoals" required type="number"></input>
                             <input class="col-5" :name="'away' + match.id" v-model="match.awayGoals" required type="number"></input>
                         </div>
@@ -67,7 +67,7 @@
                         </div>
                     </div>
                     <!-- @endforeach -->
-                    <div class="text-center">
+                    <div v-if="user.name!='Guest'" class="text-center">
                         <button class="btn btn-lg btn-primary mx-auto">Submit</button>
                     </div>
                 </form>

@@ -24,10 +24,10 @@
 
         <div class="col-md-5">
             <!-- Fixtures Vue Component --> 
-            <Fixtures class="my-2" />
+            <!-- <Fixtures class="my-2" /> -->
 
             <!-- Results Vue Component -->
-            <Results />
+            <!-- <Results /> -->
         </div>
 
         <!-- <p>Down for some gentle TLC.</p>

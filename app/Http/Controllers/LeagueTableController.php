@@ -5,6 +5,8 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\User;
 use Auth;
+use Carbon\Carbon;
+use Illuminate\Support\Str;
 
 class LeagueTableController extends Controller
 {
@@ -15,6 +17,14 @@ class LeagueTableController extends Controller
      */
     public function index()
     {
+        $value = '17%2F06%2F2020';
+
+        $value = Str::replaceArray('.', ['-', '-'], $value);
+        $value = Str::replaceArray('%2F', ['-', '-'], $value);
+        $value = Carbon::parse($value)->format('Y-m-d');
+
+        return $value;
+
         return [
             'users', User::orderBy('points', 'desc')
                         ->orderBy('correctScores', 'desc')

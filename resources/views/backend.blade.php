@@ -4,7 +4,7 @@
 <div class="container">
 
     <!-- Backend Vue Component -->
-    <Backend></Backend>
+    <backend />
     
 </div>
 @endsection

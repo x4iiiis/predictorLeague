@@ -260,7 +260,7 @@ class MatchController extends Controller
         if(Auth::user()) {
 
             $relevantMatch = Match::where('id', $request->id)->first();
-            $relevantMatch->kickoff = date('Y-m-d', strtotime($request->kickoff));
+            $relevantMatch->kickoff = date('Y-m-d H:i:s', strtotime($request->kickoff));
             $relevantMatch->save();
         }
         else {

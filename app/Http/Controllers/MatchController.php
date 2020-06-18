@@ -22,7 +22,6 @@ class MatchController extends Controller
         if(Auth::user()) {
             if(Auth::user()->hasSubmitted == 0) {
                 return [
-                    'user', Auth::user(),
                     'matches', Match::all()->where('kickoff', '>', date('Y-m-d H:i:s'))
                 ];
             }
@@ -31,7 +30,6 @@ class MatchController extends Controller
                 // Would be ideal if this ran beyond kickoff so we could see what people were 
                 // waiting on, to add to the fun of it all 
                 return [
-                    'user', Auth::user(),
                     'matches', Match::all()->where('kickoff', '>', date('Y-m-d H:i:s')),
                     'previouslySubmitted', true
                 ];
@@ -40,7 +38,6 @@ class MatchController extends Controller
         // return redirect('/login');
 
         return [
-            'user', new User([ "name" => "Guest", "hasSubmitted" => 0 ]),
             'matches', Match::all()->where('kickoff', '>', date('Y-m-d H:i:s')),
         ];
     }
@@ -56,7 +53,6 @@ class MatchController extends Controller
             
 
             return [
-                'users', User::all(),
                 'matches', $prevMatches,
             ];
         }
@@ -92,7 +88,6 @@ class MatchController extends Controller
         // dd(Match::orderBy('id', 'desc')->where('homeGoals', '>=', 0)->first()->id);
         
         return [
-            'users', User::all(),
             'matches', $prevMatches,
         ];
     }
@@ -114,14 +109,14 @@ class MatchController extends Controller
         //     array_push($predictions, Prediction::all()->where('match_id', '==', $match->id));
         // }
         
-        foreach($unresultedMatches as $match) {
-            array_push($predictions, $match->predictions()->get());
-        }
-        
         if(Auth::user()) {
             if(Auth::user()->hasSubmitted == 1) {
+
+                foreach($unresultedMatches as $match) {
+                    array_push($predictions, $match->predictions()->get());
+                }
+        
                 return [
-                    'users', User::all(),
                     'matches', $unresultedMatches,
                     'predictions', $predictions,
                 ];
@@ -129,7 +124,6 @@ class MatchController extends Controller
         }
         // return redirect('/login');
         return [
-            'users', User::all(),
             'matches', $unresultedMatches,
         ];
     }

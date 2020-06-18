@@ -36,33 +36,16 @@
 
     export default {
         mounted() {
-            // console.log('League Table Component mounted.')
-            
-            var self = this;
-            setTimeout( function() {
-                self.getUsers();
-            }, 1000);
-            
+            this.ready = true;
         },
         data() {
             return {
-                users: [],
                 ready: false
             }
         },
-        methods: {
-            getUsers() {
-                axios
-                    .get('/getusers')
-                    .then(res => {
-                        this.users = res.data[1];
-                        this.ready = true;
-                    })
-                    .catch(err => {
-                        console.log(err.response);
-                    })
-            }
-        },
+        props: [
+            'users'
+        ],
         components: {
             Spinner
         }

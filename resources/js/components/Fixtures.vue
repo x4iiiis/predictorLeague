@@ -159,15 +159,12 @@
         },
         data() {
             return {
-                user: [],
                 matches: [],
                 predictions: {},
                 ready: false,
                 submitted: false,
                 previouslySubmitted: false,
 
-                //Everyone, for when previously submitted = true
-                users: [],
                 allPredictions: []
             }
         },
@@ -176,10 +173,9 @@
                 axios
                     .get('/getupcomingmatches')
                     .then(res => {
-                        this.user = res.data[1]
-                        this.matches = res.data[3];
+                        this.matches = res.data[1];
 
-                        if(res.data[5]) {
+                        if(res.data[3]) {
                             //Get everyone's predictions here
                             this.getUnresultedMatches()
                         }
@@ -195,9 +191,8 @@
                 axios
                     .get('/getunresultedmatches')
                     .then(res => {
-                        this.users = res.data[1];
-                        this.matches = res.data[3];
-                        this.allPredictions = res.data[5];
+                        this.matches = res.data[1];
+                        this.allPredictions = res.data[3];
                         this.previouslySubmitted = true;
                         this.ready = true;
                     })
@@ -226,6 +221,9 @@
                 
             }
         },
+        props: [
+            'users', 'user'
+        ],
     components: {
         Spinner
     }

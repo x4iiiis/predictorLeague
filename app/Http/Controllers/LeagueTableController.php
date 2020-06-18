@@ -17,13 +17,13 @@ class LeagueTableController extends Controller
      */
     public function index()
     {
-        $value = '17%2F06%2F2020';
+        // $value = '17%2F06%2F2020';
 
-        $value = Str::replaceArray('.', ['-', '-'], $value);
-        $value = Str::replaceArray('%2F', ['-', '-'], $value);
-        $value = Carbon::parse($value)->format('Y-m-d');
+        // $value = Str::replaceArray('.', ['-', '-'], $value);
+        // $value = Str::replaceArray('%2F', ['-', '-'], $value);
+        // $value = Carbon::parse($value)->format('Y-m-d');
 
-        return $value;
+        // return $value;
 
         return [
             'users', User::orderBy('points', 'desc')
@@ -36,6 +36,11 @@ class LeagueTableController extends Controller
         if(Auth::user()) {
             return [
                 'user', Auth::user()
+            ];
+        }
+        else {
+            return [
+                'user', new User([ "name" => "Guest", "hasSubmitted" => 0 ])
             ];
         }
     }

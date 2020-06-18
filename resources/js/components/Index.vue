@@ -12,7 +12,7 @@
             <!-- <Announcement></Announcement> -->
             
             <!-- League Table Vue Component -->
-            <League-Table />
+            <League-Table :users="users" />
 
             <!-- Rules Vue Component -->
             <Rules />
@@ -24,10 +24,10 @@
 
         <div class="col-md-5">
             <!-- Fixtures Vue Component --> 
-            <!-- <Fixtures class="my-2" /> -->
+            <Fixtures v-if="ready" class="my-2" :users="users" :user="user"/>
 
             <!-- Results Vue Component -->
-            <!-- <Results /> -->
+            <Results :users="users" />
         </div>
 
         <!-- <p>Down for some gentle TLC.</p>
@@ -47,6 +47,44 @@ import Fixtures from '../components/Fixtures';
 import Results from '../components/Results';
 
 export default {
+    async mounted() {
+        await this.userCheck();
+
+        var self = this;
+        setTimeout( function() {
+            self.getUsers();
+        }, 1000);
+    },
+    data() {
+        return {
+            user: [],
+            users: [],
+            ready: false
+        }
+    },
+    methods: {
+        userCheck() {
+            axios
+                .get('/whoami')
+                .then(res => {
+                    this.user = res.data[1];
+                })
+                .catch(err => {
+                    console.log(err.response);
+                })
+        },
+        getUsers() {
+            axios
+                .get('/getusers')
+                .then(res => {
+                    this.users = res.data[1];
+                    this.ready = true;
+                })
+                .catch(err => {
+                    console.log(err.response);
+                })
+        }
+    },
     components: {
         Login,
         Announcement,

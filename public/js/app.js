@@ -2276,14 +2276,11 @@ __webpack_require__.r(__webpack_exports__);
   },
   data: function data() {
     return {
-      user: [],
       matches: [],
       predictions: {},
       ready: false,
       submitted: false,
       previouslySubmitted: false,
-      //Everyone, for when previously submitted = true
-      users: [],
       allPredictions: []
     };
   },
@@ -2292,10 +2289,9 @@ __webpack_require__.r(__webpack_exports__);
       var _this = this;
 
       axios.get('/getupcomingmatches').then(function (res) {
-        _this.user = res.data[1];
-        _this.matches = res.data[3];
+        _this.matches = res.data[1];
 
-        if (res.data[5]) {
+        if (res.data[3]) {
           //Get everyone's predictions here
           _this.getUnresultedMatches();
         } else {
@@ -2309,9 +2305,8 @@ __webpack_require__.r(__webpack_exports__);
       var _this2 = this;
 
       axios.get('/getunresultedmatches').then(function (res) {
-        _this2.users = res.data[1];
-        _this2.matches = res.data[3];
-        _this2.allPredictions = res.data[5];
+        _this2.matches = res.data[1];
+        _this2.allPredictions = res.data[3];
         _this2.previouslySubmitted = true;
         _this2.ready = true;
       })["catch"](function (err) {
@@ -2338,6 +2333,7 @@ __webpack_require__.r(__webpack_exports__);
       });
     }
   },
+  props: ['users', 'user'],
   components: {
     Spinner: _components_Spinner_vue__WEBPACK_IMPORTED_MODULE_0__["default"]
   }
@@ -2354,13 +2350,21 @@ __webpack_require__.r(__webpack_exports__);
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
-/* harmony import */ var _components_Login__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../components/Login */ "./resources/js/components/Login.vue");
-/* harmony import */ var _components_Announcement__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../components/Announcement */ "./resources/js/components/Announcement.vue");
-/* harmony import */ var _components_LeagueTable__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../components/LeagueTable */ "./resources/js/components/LeagueTable.vue");
-/* harmony import */ var _components_Rules__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ../components/Rules */ "./resources/js/components/Rules.vue");
-/* harmony import */ var _components_Key__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ../components/Key */ "./resources/js/components/Key.vue");
-/* harmony import */ var _components_Fixtures__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ../components/Fixtures */ "./resources/js/components/Fixtures.vue");
-/* harmony import */ var _components_Results__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ../components/Results */ "./resources/js/components/Results.vue");
+/* harmony import */ var _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! @babel/runtime/regenerator */ "./node_modules/@babel/runtime/regenerator/index.js");
+/* harmony import */ var _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0__);
+/* harmony import */ var _components_Login__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../components/Login */ "./resources/js/components/Login.vue");
+/* harmony import */ var _components_Announcement__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../components/Announcement */ "./resources/js/components/Announcement.vue");
+/* harmony import */ var _components_LeagueTable__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ../components/LeagueTable */ "./resources/js/components/LeagueTable.vue");
+/* harmony import */ var _components_Rules__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ../components/Rules */ "./resources/js/components/Rules.vue");
+/* harmony import */ var _components_Key__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ../components/Key */ "./resources/js/components/Key.vue");
+/* harmony import */ var _components_Fixtures__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ../components/Fixtures */ "./resources/js/components/Fixtures.vue");
+/* harmony import */ var _components_Results__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! ../components/Results */ "./resources/js/components/Results.vue");
+
+
+function asyncGeneratorStep(gen, resolve, reject, _next, _throw, key, arg) { try { var info = gen[key](arg); var value = info.value; } catch (error) { reject(error); return; } if (info.done) { resolve(value); } else { Promise.resolve(value).then(_next, _throw); } }
+
+function _asyncToGenerator(fn) { return function () { var self = this, args = arguments; return new Promise(function (resolve, reject) { var gen = fn.apply(self, args); function _next(value) { asyncGeneratorStep(gen, resolve, reject, _next, _throw, "next", value); } function _throw(err) { asyncGeneratorStep(gen, resolve, reject, _next, _throw, "throw", err); } _next(undefined); }); }; }
+
 //
 //
 //
@@ -2408,14 +2412,70 @@ __webpack_require__.r(__webpack_exports__);
 
 
 /* harmony default export */ __webpack_exports__["default"] = ({
+  mounted: function mounted() {
+    var _this = this;
+
+    return _asyncToGenerator(
+    /*#__PURE__*/
+    _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee() {
+      var self;
+      return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee$(_context) {
+        while (1) {
+          switch (_context.prev = _context.next) {
+            case 0:
+              _context.next = 2;
+              return _this.userCheck();
+
+            case 2:
+              self = _this;
+              setTimeout(function () {
+                self.getUsers();
+              }, 1000);
+
+            case 4:
+            case "end":
+              return _context.stop();
+          }
+        }
+      }, _callee);
+    }))();
+  },
+  data: function data() {
+    return {
+      user: [],
+      users: [],
+      ready: false
+    };
+  },
+  methods: {
+    userCheck: function userCheck() {
+      var _this2 = this;
+
+      axios.get('/whoami').then(function (res) {
+        _this2.user = res.data[1];
+      })["catch"](function (err) {
+        console.log(err.response);
+      });
+    },
+    getUsers: function getUsers() {
+      var _this3 = this;
+
+      axios.get('/getusers').then(function (res) {
+        _this3.users = res.data[1];
+        _this3.ready = true;
+      })["catch"](function (err) {
+        console.log(err.response);
+      });
+    }
+  },
   components: {
-    Login: _components_Login__WEBPACK_IMPORTED_MODULE_0__["default"],
-    Announcement: _components_Announcement__WEBPACK_IMPORTED_MODULE_1__["default"],
-    LeagueTable: _components_LeagueTable__WEBPACK_IMPORTED_MODULE_2__["default"],
-    Rules: _components_Rules__WEBPACK_IMPORTED_MODULE_3__["default"],
-    Key: _components_Key__WEBPACK_IMPORTED_MODULE_4__["default"],
-    Fixtures: _components_Fixtures__WEBPACK_IMPORTED_MODULE_5__["default"],
-    Results: _components_Results__WEBPACK_IMPORTED_MODULE_6__["default"]
+    Login: _components_Login__WEBPACK_IMPORTED_MODULE_1__["default"],
+    Announcement: _components_Announcement__WEBPACK_IMPORTED_MODULE_2__["default"],
+    LeagueTable: _components_LeagueTable__WEBPACK_IMPORTED_MODULE_3__["default"],
+    Rules: _components_Rules__WEBPACK_IMPORTED_MODULE_4__["default"],
+    Key: _components_Key__WEBPACK_IMPORTED_MODULE_5__["default"],
+    Fixtures: _components_Fixtures__WEBPACK_IMPORTED_MODULE_6__["default"],
+    Results: _components_Results__WEBPACK_IMPORTED_MODULE_7__["default"]
   }
 });
 
@@ -2513,30 +2573,14 @@ __webpack_require__.r(__webpack_exports__);
 
 /* harmony default export */ __webpack_exports__["default"] = ({
   mounted: function mounted() {
-    // console.log('League Table Component mounted.')
-    var self = this;
-    setTimeout(function () {
-      self.getUsers();
-    }, 1000);
+    this.ready = true;
   },
   data: function data() {
     return {
-      users: [],
       ready: false
     };
   },
-  methods: {
-    getUsers: function getUsers() {
-      var _this = this;
-
-      axios.get('/getusers').then(function (res) {
-        _this.users = res.data[1];
-        _this.ready = true;
-      })["catch"](function (err) {
-        console.log(err.response);
-      });
-    }
-  },
+  props: ['users'],
   components: {
     Spinner: _components_Spinner_vue__WEBPACK_IMPORTED_MODULE_0__["default"]
   }
@@ -2912,7 +2956,6 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
   },
   data: function data() {
     return {
-      users: [],
       matches: [],
       totalResultedMatches: 0,
       ready: false,
@@ -2932,8 +2975,7 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
       var _this2 = this;
 
       axios.get('/getresultedmatches/' + this.counter++).then(function (res) {
-        _this2.users = res.data[1];
-        _this2.matches = res.data[3];
+        _this2.matches = res.data[1];
         _this2.ready = true;
       })["catch"](function (err) {
         console.log(err.response);
@@ -2951,7 +2993,7 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
               case 0:
                 _context.next = 2;
                 return axios.get('/getresultedmatches/' + _this3.counter++).then(function (res) {
-                  _this3.matches = [].concat(_toConsumableArray(_this3.matches), _toConsumableArray(res.data[3]));
+                  _this3.matches = [].concat(_toConsumableArray(_this3.matches), _toConsumableArray(res.data[1]));
                 })["catch"](function (err) {
                   console.log(err.response);
                 });
@@ -2965,6 +3007,7 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
       }))();
     }
   },
+  props: ['users'],
   components: {
     Spinner: _components_Spinner_vue__WEBPACK_IMPORTED_MODULE_1__["default"],
     Result: _components_Result_vue__WEBPACK_IMPORTED_MODULE_2__["default"],
@@ -45785,11 +45828,31 @@ var render = function() {
       _c(
         "div",
         { staticClass: "col-md-7" },
-        [_c("League-Table"), _vm._v(" "), _c("Rules"), _vm._v(" "), _c("Key")],
+        [
+          _c("League-Table", { attrs: { users: _vm.users } }),
+          _vm._v(" "),
+          _c("Rules"),
+          _vm._v(" "),
+          _c("Key")
+        ],
         1
       ),
       _vm._v(" "),
-      _c("div", { staticClass: "col-md-5" })
+      _c(
+        "div",
+        { staticClass: "col-md-5" },
+        [
+          _vm.ready
+            ? _c("Fixtures", {
+                staticClass: "my-2",
+                attrs: { users: _vm.users, user: _vm.user }
+              })
+            : _vm._e(),
+          _vm._v(" "),
+          _c("Results", { attrs: { users: _vm.users } })
+        ],
+        1
+      )
     ])
   ])
 }

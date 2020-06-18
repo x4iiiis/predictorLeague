@@ -37,7 +37,6 @@
         },
         data() {
             return {
-                users: [],
                 matches: [],
                 totalResultedMatches: 0,
                 ready: false,
@@ -56,8 +55,7 @@
                 axios
                     .get('/getresultedmatches/' + this.counter++)
                     .then(res => {
-                        this.users = res.data[1];
-                        this.matches = res.data[3];
+                        this.matches = res.data[1];
                         this.ready = true;
                     })
                     .catch(err => {
@@ -68,13 +66,16 @@
                 await axios
                     .get('/getresultedmatches/' + this.counter++)
                     .then(res => {
-                        this.matches = [...this.matches, ...res.data[3]];
+                        this.matches = [...this.matches, ...res.data[1]];
                     })
                     .catch(err => {
                         console.log(err.response);
                     })
             }
     },
+    props: [
+        'users'
+    ],
     components: {
         Spinner,
         Result,

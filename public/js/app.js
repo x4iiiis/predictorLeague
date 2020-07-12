@@ -2438,7 +2438,7 @@ __webpack_require__.r(__webpack_exports__);
         console.log(response);
         _this6.ready = false;
 
-        _this6.updateTable();
+        _this6.recalculateTable();
 
         _this6.getResultedMatches();
       })["catch"](function (err) {
@@ -2511,8 +2511,8 @@ __webpack_require__.r(__webpack_exports__);
         });
       }
     },
-    updateTable: function updateTable() {
-      axios.get('/updatetable').then(function (res) {
+    recalculateTable: function recalculateTable() {
+      axios.get('/recalculatetable').then(function (res) {
         console.log('League Table Updated');
       })["catch"](function (err) {
         console.log(err.response);

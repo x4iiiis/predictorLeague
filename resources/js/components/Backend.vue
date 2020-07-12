@@ -356,7 +356,7 @@
                         console.log('Scores Reset');
                         console.log(response);
                         this.ready = false;
-                        this.updateTable();
+                        this.recalculateTable();
                         this.getResultedMatches();
                     })
                     .catch(err => {
@@ -429,9 +429,9 @@
                     })
                 }
             },
-            updateTable() {
+            recalculateTable() {
                 axios
-                    .get('/updatetable')
+                    .get('/recalculatetable')
                     .then(res => {
                         console.log('League Table Updated');
                     })

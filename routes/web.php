@@ -27,7 +27,8 @@ Route::post('match/updateetp', 'MatchController@updateETP')->name('match.etp');
 Route::post('match/reversefixture', 'MatchController@reverseFixture')->name('match.reverse');
 
 
-Route::get('/updatetable', 'PredictionController@updateScores')->name('update.scores');
+// Route::get('/updatetable', 'PredictionController@updateScores')->name('update.scores');
+Route::get('/recalculatetable', 'PredictionController@recalculateScores')->name('recalculate.scores');
 Route::get('/lockpredictions', 'PredictionController@lock');
 Route::get('/unlockpredictions', 'PredictionController@unlock');
 

@@ -2421,8 +2421,6 @@ __webpack_require__.r(__webpack_exports__);
         console.log(response);
         _this5.ready = false;
 
-        _this5.updateTable();
-
         _this5.getUnresultedMatches();
       })["catch"](function (err) {
         console.log(err.response);

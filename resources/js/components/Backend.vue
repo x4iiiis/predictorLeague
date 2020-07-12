@@ -338,7 +338,6 @@
                         console.log('Scores Recieved');
                         console.log(response);
                         this.ready = false;
-                        this.updateTable();
                         this.getUnresultedMatches();
                     })
                     .catch(err => {

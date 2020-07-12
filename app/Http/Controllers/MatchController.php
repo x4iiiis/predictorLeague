@@ -223,6 +223,74 @@ class MatchController extends Controller
                     $relevantMatch->homeGoalsPens = $match['homeGoalsPens'];
                     $relevantMatch->awayGoalsPens = $match['awayGoalsPens'];
                     $relevantMatch->save();
+
+                    //Now loop through all of the predictions relating to this match, and update the
+                    //corresponding user's score.
+
+                    //Doing this here so that every time I push new results, I'm not fully calculating
+                    //their entire scores from all of their predictions. That's excrutiatingly taxing
+                    //and needless. If mistakes are made and scores need to be altered etc, I can use
+                    //the '/recalculatetable' endpoint
+
+                    $relevantPredictions = Prediction::where('match_id', $match['id'])->get();
+
+                    foreach($relevantPredictions as $prediction) {
+                        $user = User::where('id', $prediction->user_id)->first();
+
+                        $homeGoals = $relevantMatch->homeGoals; 
+                        $awayGoals = $relevantMatch->awayGoals;
+
+                        if(!is_null($homeGoals)) {
+
+                            //Correct Score
+                            if($prediction->homeGoals == $homeGoals && $prediction->awayGoals == $awayGoals) {
+                                $user->correctScores += 1;
+                            }
+                            //Correct Outcome - Home Win
+                            else if($prediction->homeGoals > $prediction->awayGoals && $homeGoals > $awayGoals) {
+                                $user->correctOutcomes += 1;
+                            } 
+                            //Correct Outcome - Away Win
+                            else if($prediction->homeGoals < $prediction->awayGoals && $homeGoals < $awayGoals) {
+                                $user->correctOutcomes += 1;
+                            } 
+                            //Correct Outcome - Draw
+                            else if($prediction->homeGoals == $prediction->awayGoals && $homeGoals == $awayGoals) {
+                                $user->correctOutcomes += 1;
+                            } 
+            
+                            //Cups / Playoffs
+                            if($relevantMatch->etp_available == 1 && $homeGoals == $awayGoals) {
+                                if($relevantMatch->homeGoalsAET > $relevantMatch->awayGoalsAET || $relevantMatch->homeGoalsPens > $relevantMatch->awayGoalsPens) {
+                                    $relevantMatch->winner = $relevantMatch->homeTeam;
+                                }
+                                else if($relevantMatch->homeGoalsAET < $relevantMatch->awayGoalsAET || $relevantMatch->homeGoalsPens < $relevantMatch->awayGoalsPens) {
+                                    $relevantMatch->winner = $relevantMatch->awayTeam;
+                                }
+                                $relevantMatch->save();
+            
+                                //ET / Pens Predicted
+                                if($prediction->homeGoals == $prediction->awayGoals && $prediction->winner == $relevantMatch->winner && $prediction->winner != null) {
+                                    $user->correctOutcomes += 1;
+                                }
+                                //90 Minute Winner Picked - Home
+                                else if($prediction->homeGoals > $prediction->awayGoals && $relevantMatch->winner == $relevantMatch->homeTeam) {
+                                    $prediction->winner == $relevantMatch->homeTeam;
+                                    $prediction->save();
+                                    $user->correctOutcomes += 1;
+                                }
+                                //90 Minute Winner Picked - Away
+                                else if($prediction->homeGoals < $prediction->awayGoals && $relevantMatch->winner == $relevantMatch->awayTeam) {
+                                    $prediction->winner == $relevantMatch->awayTeam;
+                                    $prediction->save();
+                                    $user->correctOutcomes += 1;
+                                }
+                            }
+            
+                            $user->points = ($user->correctScores * 3) + $user->correctOutcomes;
+                            $user->save();
+                        }
+                    }
                 }
             }
             return 'Scores Updated';

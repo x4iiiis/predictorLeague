@@ -2744,6 +2744,17 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 
 /* harmony default export */ __webpack_exports__["default"] = ({
   mounted: function mounted() {
@@ -2754,7 +2765,8 @@ __webpack_require__.r(__webpack_exports__);
     return {
       matches: [],
       predictions: {},
-      ready: false,
+      hasFixtures: false,
+      ready: true,
       submitted: false,
       previouslySubmitted: false,
       allPredictions: []
@@ -2771,7 +2783,7 @@ __webpack_require__.r(__webpack_exports__);
           //Get everyone's predictions here
           _this.getUnresultedMatches();
         } else {
-          _this.ready = true;
+          _this.hasFixtures = true;
         }
       })["catch"](function (err) {
         console.log(err.response);
@@ -2784,7 +2796,7 @@ __webpack_require__.r(__webpack_exports__);
         _this2.matches = res.data[1];
         _this2.allPredictions = res.data[3];
         _this2.previouslySubmitted = true;
-        _this2.ready = true;
+        _this2.hasFixtures = true;
       })["catch"](function (err) {
         console.log(err.response);
       });
@@ -2798,7 +2810,7 @@ __webpack_require__.r(__webpack_exports__);
       }).then(function (response) {
         // console.log('Predictions received');
         _this3.submitted = true;
-        _this3.ready = false;
+        _this3.hasFixtures = false;
         var self = _this3;
         setTimeout(function () {
           self.submitted = false;
@@ -3044,11 +3056,11 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
-//
-//
 
 /* harmony default export */ __webpack_exports__["default"] = ({
   mounted: function mounted() {
+    console.log('lengf m8', this.users.length);
+    console.log(this.users.length == 0);
     this.ready = true;
   },
   data: function data() {
@@ -3421,6 +3433,10 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
 //
 //
 //
+//
+//
+//
+//
 
 
 
@@ -3428,7 +3444,6 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
   mounted: function mounted() {
     // console.log('Results Component mounted.')
     this.countResultedMatches();
-    this.getMatches();
   },
   data: function data() {
     return {
@@ -3445,20 +3460,12 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
 
       axios.get('/countresultedmatches').then(function (res) {
         _this.totalResultedMatches = res.data[1];
-      });
-    },
-    getMatches: function getMatches() {
-      var _this2 = this;
 
-      axios.get('/getresultedmatches/' + this.counter++).then(function (res) {
-        _this2.matches = res.data[1];
-        _this2.ready = true;
-      })["catch"](function (err) {
-        console.log(err.response);
+        _this.getMoreMatches();
       });
     },
     getMoreMatches: function getMoreMatches() {
-      var _this3 = this;
+      var _this2 = this;
 
       return _asyncToGenerator(
       /*#__PURE__*/
@@ -3468,8 +3475,9 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
             switch (_context.prev = _context.next) {
               case 0:
                 _context.next = 2;
-                return axios.get('/getresultedmatches/' + _this3.counter++).then(function (res) {
-                  _this3.matches = [].concat(_toConsumableArray(_this3.matches), _toConsumableArray(res.data[1]));
+                return axios.get('/getresultedmatches/' + _this2.counter++).then(function (res) {
+                  _this2.matches = [].concat(_toConsumableArray(_this2.matches), _toConsumableArray(res.data[1]));
+                  _this2.ready = true;
                 })["catch"](function (err) {
                   console.log(err.response);
                 });
@@ -46985,363 +46993,404 @@ var render = function() {
         _vm._v(" "),
         !_vm.previouslySubmitted
           ? _c("div", { staticClass: "card-body" }, [
-              _c(
-                "form",
-                {
-                  attrs: { action: "prediction/store", method: "post" },
-                  on: {
-                    submit: function($event) {
-                      $event.preventDefault()
-                      return _vm.onSubmit($event)
-                    }
-                  }
-                },
-                [
-                  _vm._l(_vm.matches, function(match, index) {
-                    return _c(
-                      "div",
-                      { key: match.id, staticClass: "row py-2" },
-                      [
-                        _c("div", { staticClass: "col-12 text-center mb-2" }, [
-                          _c("hr"),
-                          _vm._v(" "),
-                          _c("small", [
-                            _vm._v(
-                              "\n                            " +
-                                _vm._s(match.kickoff.split(" ")[0]) +
-                                "\n                            " +
-                                _vm._s(match.kickoff.split(" ")[1]) +
-                                "\n                            " +
-                                _vm._s(match.kickoff.split(" ")[2]) +
-                                "\n                            " +
-                                _vm._s(match.kickoff.split(" ")[3]) +
-                                "\n                        "
-                            )
-                          ]),
-                          _vm._v(" "),
-                          _c("h6", [
-                            _vm._v(_vm._s(match.kickoff.split(" ")[4]))
-                          ]),
-                          _vm._v(" "),
-                          _vm._m(0, true)
-                        ]),
-                        _vm._v(" "),
-                        !(
-                          match.etp_available &&
-                          match.homeGoals == match.awayGoals &&
-                          match.homeGoals != null
-                        )
-                          ? _c("div", { staticClass: "col-3 mx-auto" }, [
-                              _c("img", {
-                                attrs: {
-                                  src: match.homeEmblem,
-                                  alt: match.homeTeam
-                                }
-                              })
-                            ])
-                          : _c(
+              _vm.hasFixtures
+                ? _c(
+                    "form",
+                    {
+                      attrs: { action: "prediction/store", method: "post" },
+                      on: {
+                        submit: function($event) {
+                          $event.preventDefault()
+                          return _vm.onSubmit($event)
+                        }
+                      }
+                    },
+                    [
+                      _vm._l(_vm.matches, function(match, index) {
+                        return _c(
+                          "div",
+                          { key: match.id, staticClass: "row py-2" },
+                          [
+                            _c(
                               "div",
-                              {
-                                staticClass: "col-3 mx-auto",
-                                on: {
-                                  click: function($event) {
-                                    match.winner = match.homeTeam
-                                  }
-                                }
-                              },
+                              { staticClass: "col-12 text-center mb-2" },
                               [
+                                _c("hr"),
+                                _vm._v(" "),
+                                _c("small", [
+                                  _vm._v(
+                                    "\n                            " +
+                                      _vm._s(match.kickoff.split(" ")[0]) +
+                                      "\n                            " +
+                                      _vm._s(match.kickoff.split(" ")[1]) +
+                                      "\n                            " +
+                                      _vm._s(match.kickoff.split(" ")[2]) +
+                                      "\n                            " +
+                                      _vm._s(match.kickoff.split(" ")[3]) +
+                                      "\n                        "
+                                  )
+                                ]),
+                                _vm._v(" "),
+                                _c("h6", [
+                                  _vm._v(_vm._s(match.kickoff.split(" ")[4]))
+                                ]),
+                                _vm._v(" "),
+                                _vm._m(0, true)
+                              ]
+                            ),
+                            _vm._v(" "),
+                            !(
+                              match.etp_available &&
+                              match.homeGoals == match.awayGoals &&
+                              match.homeGoals != null
+                            )
+                              ? _c("div", { staticClass: "col-3 mx-auto" }, [
+                                  _c("img", {
+                                    attrs: {
+                                      src: match.homeEmblem,
+                                      alt: match.homeTeam
+                                    }
+                                  })
+                                ])
+                              : _c(
+                                  "div",
+                                  {
+                                    staticClass: "col-3 mx-auto",
+                                    on: {
+                                      click: function($event) {
+                                        match.winner = match.homeTeam
+                                      }
+                                    }
+                                  },
+                                  [
+                                    _c("img", {
+                                      attrs: {
+                                        src: match.homeEmblem,
+                                        alt: match.homeTeam
+                                      }
+                                    })
+                                  ]
+                                ),
+                            _vm._v(" "),
+                            _vm.user.name != "Guest"
+                              ? _c(
+                                  "div",
+                                  {
+                                    staticClass:
+                                      "form-group col-6 my-auto mx-auto text-center"
+                                  },
+                                  [
+                                    _c("input", {
+                                      directives: [
+                                        {
+                                          name: "model",
+                                          rawName: "v-model",
+                                          value: match.homeGoals,
+                                          expression: "match.homeGoals"
+                                        }
+                                      ],
+                                      staticClass: "col-5",
+                                      attrs: {
+                                        name: "home" + match.id,
+                                        required: "",
+                                        type: "number"
+                                      },
+                                      domProps: { value: match.homeGoals },
+                                      on: {
+                                        input: function($event) {
+                                          if ($event.target.composing) {
+                                            return
+                                          }
+                                          _vm.$set(
+                                            match,
+                                            "homeGoals",
+                                            $event.target.value
+                                          )
+                                        }
+                                      }
+                                    }),
+                                    _vm._v(" "),
+                                    _c("input", {
+                                      directives: [
+                                        {
+                                          name: "model",
+                                          rawName: "v-model",
+                                          value: match.awayGoals,
+                                          expression: "match.awayGoals"
+                                        }
+                                      ],
+                                      staticClass: "col-5",
+                                      attrs: {
+                                        name: "away" + match.id,
+                                        required: "",
+                                        type: "number"
+                                      },
+                                      domProps: { value: match.awayGoals },
+                                      on: {
+                                        input: function($event) {
+                                          if ($event.target.composing) {
+                                            return
+                                          }
+                                          _vm.$set(
+                                            match,
+                                            "awayGoals",
+                                            $event.target.value
+                                          )
+                                        }
+                                      }
+                                    })
+                                  ]
+                                )
+                              : _vm._e(),
+                            _vm._v(" "),
+                            !(
+                              match.etp_available &&
+                              match.homeGoals == match.awayGoals &&
+                              match.homeGoals != null
+                            )
+                              ? _c("div", { staticClass: "col-3 mx-auto" }, [
+                                  _c("img", {
+                                    attrs: {
+                                      src: match.awayEmblem,
+                                      alt: match.awayTeam
+                                    }
+                                  })
+                                ])
+                              : _c(
+                                  "div",
+                                  {
+                                    staticClass: "col-3 mx-auto",
+                                    on: {
+                                      click: function($event) {
+                                        match.winner = match.awayTeam
+                                      }
+                                    }
+                                  },
+                                  [
+                                    _c("img", {
+                                      attrs: {
+                                        src: match.awayEmblem,
+                                        alt: match.awayTeam
+                                      }
+                                    })
+                                  ]
+                                ),
+                            _vm._v(" "),
+                            match.etp_available &&
+                            match.homeGoals != null &&
+                            match.homeGoals == match.awayGoals
+                              ? _c(
+                                  "div",
+                                  {
+                                    staticClass: "col-10 text-justify mx-auto"
+                                  },
+                                  [
+                                    _c("hr"),
+                                    _vm._v(" "),
+                                    _vm._m(1, true),
+                                    _c("p"),
+                                    _vm._m(2, true),
+                                    _vm._v(" "),
+                                    match.winner != null
+                                      ? _c(
+                                          "div",
+                                          { staticClass: "text-primary" },
+                                          [
+                                            _c("p", [
+                                              _c("small", [
+                                                _vm._v(
+                                                  "\n                                    You have selected\n                                "
+                                                )
+                                              ]),
+                                              _vm._v(" "),
+                                              _c("b", [
+                                                _vm._v(_vm._s(match.winner))
+                                              ]),
+                                              _vm._v(" "),
+                                              _c("small", [
+                                                _vm._v(
+                                                  "\n                                    to win the tie in extra time or on penalties after a \n                                    " +
+                                                    _vm._s(match.homeGoals) +
+                                                    " - " +
+                                                    _vm._s(match.awayGoals) +
+                                                    " \n                                    draw in 90 minutes.\n                                "
+                                                )
+                                              ])
+                                            ])
+                                          ]
+                                        )
+                                      : _c(
+                                          "div",
+                                          { staticClass: "text-danger" },
+                                          [
+                                            _c("p", [
+                                              _vm._v(
+                                                "You haven't selected an overall tie winner"
+                                              )
+                                            ])
+                                          ]
+                                        )
+                                  ]
+                                )
+                              : _vm._e()
+                          ]
+                        )
+                      }),
+                      _vm._v(" "),
+                      _vm.user.name != "Guest"
+                        ? _c("div", { staticClass: "text-center" }, [
+                            _c(
+                              "button",
+                              { staticClass: "btn btn-lg btn-primary mx-auto" },
+                              [_vm._v("Submit")]
+                            )
+                          ])
+                        : _vm._e()
+                    ],
+                    2
+                  )
+                : _c("div", { staticClass: "row" }, [
+                    _c("div", { staticClass: "mx-auto" }, [_c("Spinner")], 1)
+                  ])
+            ])
+          : _c("div", { staticClass: "card-body" }, [
+              _vm.hasFixtures
+                ? _c(
+                    "div",
+                    _vm._l(_vm.matches, function(match, index) {
+                      return _c("div", { key: match.id }, [
+                        _vm.allPredictions[index].length > 0
+                          ? _c("div", { staticClass: "row py-2" }, [
+                              _c(
+                                "div",
+                                { staticClass: "col-12 text-center mb-2" },
+                                [
+                                  _c("hr"),
+                                  _vm._v(" "),
+                                  _c("small", [
+                                    _vm._v(
+                                      "\n                                " +
+                                        _vm._s(match.kickoff.split(" ")[0]) +
+                                        "\n                                " +
+                                        _vm._s(match.kickoff.split(" ")[1]) +
+                                        "\n                                " +
+                                        _vm._s(match.kickoff.split(" ")[2]) +
+                                        "\n                                " +
+                                        _vm._s(match.kickoff.split(" ")[3]) +
+                                        "\n                            "
+                                    )
+                                  ]),
+                                  _vm._v(" "),
+                                  _c("h6", [
+                                    _vm._v(_vm._s(match.kickoff.split(" ")[4]))
+                                  ]),
+                                  _vm._v(" "),
+                                  _vm._m(3, true)
+                                ]
+                              ),
+                              _vm._v(" "),
+                              _c("div", { staticClass: "col-3 mx-auto" }, [
                                 _c("img", {
                                   attrs: {
                                     src: match.homeEmblem,
                                     alt: match.homeTeam
                                   }
                                 })
-                              ]
-                            ),
-                        _vm._v(" "),
-                        _vm.user.name != "Guest"
-                          ? _c(
-                              "div",
-                              {
-                                staticClass:
-                                  "form-group col-6 my-auto mx-auto text-center"
-                              },
-                              [
-                                _c("input", {
-                                  directives: [
-                                    {
-                                      name: "model",
-                                      rawName: "v-model",
-                                      value: match.homeGoals,
-                                      expression: "match.homeGoals"
-                                    }
-                                  ],
-                                  staticClass: "col-5",
-                                  attrs: {
-                                    name: "home" + match.id,
-                                    required: "",
-                                    type: "number"
-                                  },
-                                  domProps: { value: match.homeGoals },
-                                  on: {
-                                    input: function($event) {
-                                      if ($event.target.composing) {
-                                        return
-                                      }
-                                      _vm.$set(
-                                        match,
-                                        "homeGoals",
-                                        $event.target.value
-                                      )
-                                    }
-                                  }
-                                }),
-                                _vm._v(" "),
-                                _c("input", {
-                                  directives: [
-                                    {
-                                      name: "model",
-                                      rawName: "v-model",
-                                      value: match.awayGoals,
-                                      expression: "match.awayGoals"
-                                    }
-                                  ],
-                                  staticClass: "col-5",
-                                  attrs: {
-                                    name: "away" + match.id,
-                                    required: "",
-                                    type: "number"
-                                  },
-                                  domProps: { value: match.awayGoals },
-                                  on: {
-                                    input: function($event) {
-                                      if ($event.target.composing) {
-                                        return
-                                      }
-                                      _vm.$set(
-                                        match,
-                                        "awayGoals",
-                                        $event.target.value
-                                      )
-                                    }
-                                  }
-                                })
-                              ]
-                            )
-                          : _vm._e(),
-                        _vm._v(" "),
-                        !(
-                          match.etp_available &&
-                          match.homeGoals == match.awayGoals &&
-                          match.homeGoals != null
-                        )
-                          ? _c("div", { staticClass: "col-3 mx-auto" }, [
-                              _c("img", {
-                                attrs: {
-                                  src: match.awayEmblem,
-                                  alt: match.awayTeam
-                                }
-                              })
-                            ])
-                          : _c(
-                              "div",
-                              {
-                                staticClass: "col-3 mx-auto",
-                                on: {
-                                  click: function($event) {
-                                    match.winner = match.awayTeam
-                                  }
-                                }
-                              },
-                              [
+                              ]),
+                              _vm._v(" "),
+                              _c(
+                                "div",
+                                {
+                                  staticClass:
+                                    "col-6 mx-auto my-auto text-center"
+                                },
+                                [
+                                  _c(
+                                    "table",
+                                    _vm._l(_vm.allPredictions[index], function(
+                                      prediction
+                                    ) {
+                                      return _c("tr", [
+                                        _c(
+                                          "td",
+                                          {
+                                            staticStyle: {
+                                              "text-align": "right"
+                                            }
+                                          },
+                                          [
+                                            _c("small", [
+                                              _vm._v(
+                                                _vm._s(
+                                                  _vm.users[
+                                                    prediction.user_id - 1
+                                                  ].name
+                                                )
+                                              )
+                                            ])
+                                          ]
+                                        ),
+                                        _vm._v(" "),
+                                        prediction.winner == null
+                                          ? _c("td", [
+                                              _c("small", [
+                                                _vm._v(
+                                                  _vm._s(prediction.homeGoals) +
+                                                    " - " +
+                                                    _vm._s(prediction.awayGoals)
+                                                )
+                                              ])
+                                            ])
+                                          : _c("td", [
+                                              _c("small", [
+                                                prediction.winner ==
+                                                match.homeTeam
+                                                  ? _c("span", [
+                                                      _c("span", [_vm._v("*")])
+                                                    ])
+                                                  : _vm._e(),
+                                                _vm._v(
+                                                  "\n                                                " +
+                                                    _vm._s(
+                                                      prediction.homeGoals
+                                                    ) +
+                                                    " - " +
+                                                    _vm._s(
+                                                      prediction.awayGoals
+                                                    ) +
+                                                    "\n                                            "
+                                                ),
+                                                prediction.winner ==
+                                                match.awayTeam
+                                                  ? _c("span", [
+                                                      _c("span", [_vm._v("*")])
+                                                    ])
+                                                  : _vm._e()
+                                              ])
+                                            ])
+                                      ])
+                                    }),
+                                    0
+                                  )
+                                ]
+                              ),
+                              _vm._v(" "),
+                              _c("div", { staticClass: "col-3 mx-auto" }, [
                                 _c("img", {
                                   attrs: {
                                     src: match.awayEmblem,
                                     alt: match.awayTeam
                                   }
                                 })
-                              ]
-                            ),
-                        _vm._v(" "),
-                        match.etp_available &&
-                        match.homeGoals != null &&
-                        match.homeGoals == match.awayGoals
-                          ? _c(
-                              "div",
-                              { staticClass: "col-10 text-justify mx-auto" },
-                              [
-                                _c("hr"),
-                                _vm._v(" "),
-                                _vm._m(1, true),
-                                _c("p"),
-                                _vm._m(2, true),
-                                _vm._v(" "),
-                                match.winner != null
-                                  ? _c("div", { staticClass: "text-primary" }, [
-                                      _c("p", [
-                                        _c("small", [
-                                          _vm._v(
-                                            "\n                                    You have selected\n                                "
-                                          )
-                                        ]),
-                                        _vm._v(" "),
-                                        _c("b", [_vm._v(_vm._s(match.winner))]),
-                                        _vm._v(" "),
-                                        _c("small", [
-                                          _vm._v(
-                                            "\n                                    to win the tie in extra time or on penalties after a \n                                    " +
-                                              _vm._s(match.homeGoals) +
-                                              " - " +
-                                              _vm._s(match.awayGoals) +
-                                              " \n                                    draw in 90 minutes.\n                                "
-                                          )
-                                        ])
-                                      ])
-                                    ])
-                                  : _c("div", { staticClass: "text-danger" }, [
-                                      _c("p", [
-                                        _vm._v(
-                                          "You haven't selected an overall tie winner"
-                                        )
-                                      ])
-                                    ])
-                              ]
-                            )
+                              ])
+                            ])
                           : _vm._e()
-                      ]
-                    )
-                  }),
-                  _vm._v(" "),
-                  _vm.user.name != "Guest"
-                    ? _c("div", { staticClass: "text-center" }, [
-                        _c(
-                          "button",
-                          { staticClass: "btn btn-lg btn-primary mx-auto" },
-                          [_vm._v("Submit")]
-                        )
                       ])
-                    : _vm._e()
-                ],
-                2
-              )
+                    }),
+                    0
+                  )
+                : _vm._e()
             ])
-          : _c(
-              "div",
-              { staticClass: "card-body" },
-              _vm._l(_vm.matches, function(match, index) {
-                return _c("div", { key: match.id }, [
-                  _vm.allPredictions[index].length > 0
-                    ? _c("div", { staticClass: "row py-2" }, [
-                        _c("div", { staticClass: "col-12 text-center mb-2" }, [
-                          _c("hr"),
-                          _vm._v(" "),
-                          _c("small", [
-                            _vm._v(
-                              "\n                            " +
-                                _vm._s(match.kickoff.split(" ")[0]) +
-                                "\n                            " +
-                                _vm._s(match.kickoff.split(" ")[1]) +
-                                "\n                            " +
-                                _vm._s(match.kickoff.split(" ")[2]) +
-                                "\n                            " +
-                                _vm._s(match.kickoff.split(" ")[3]) +
-                                "\n                        "
-                            )
-                          ]),
-                          _vm._v(" "),
-                          _c("h6", [
-                            _vm._v(_vm._s(match.kickoff.split(" ")[4]))
-                          ]),
-                          _vm._v(" "),
-                          _vm._m(3, true)
-                        ]),
-                        _vm._v(" "),
-                        _c("div", { staticClass: "col-3 mx-auto" }, [
-                          _c("img", {
-                            attrs: {
-                              src: match.homeEmblem,
-                              alt: match.homeTeam
-                            }
-                          })
-                        ]),
-                        _vm._v(" "),
-                        _c(
-                          "div",
-                          { staticClass: "col-6 mx-auto my-auto text-center" },
-                          [
-                            _c(
-                              "table",
-                              _vm._l(_vm.allPredictions[index], function(
-                                prediction
-                              ) {
-                                return _c("tr", [
-                                  _c(
-                                    "td",
-                                    { staticStyle: { "text-align": "right" } },
-                                    [
-                                      _c("small", [
-                                        _vm._v(
-                                          _vm._s(
-                                            _vm.users[prediction.user_id - 1]
-                                              .name
-                                          )
-                                        )
-                                      ])
-                                    ]
-                                  ),
-                                  _vm._v(" "),
-                                  prediction.winner == null
-                                    ? _c("td", [
-                                        _c("small", [
-                                          _vm._v(
-                                            _vm._s(prediction.homeGoals) +
-                                              " - " +
-                                              _vm._s(prediction.awayGoals)
-                                          )
-                                        ])
-                                      ])
-                                    : _c("td", [
-                                        _c("small", [
-                                          prediction.winner == match.homeTeam
-                                            ? _c("span", [
-                                                _c("span", [_vm._v("*")])
-                                              ])
-                                            : _vm._e(),
-                                          _vm._v(
-                                            "\n                                            " +
-                                              _vm._s(prediction.homeGoals) +
-                                              " - " +
-                                              _vm._s(prediction.awayGoals) +
-                                              "\n                                        "
-                                          ),
-                                          prediction.winner == match.awayTeam
-                                            ? _c("span", [
-                                                _c("span", [_vm._v("*")])
-                                              ])
-                                            : _vm._e()
-                                        ])
-                                      ])
-                                ])
-                              }),
-                              0
-                            )
-                          ]
-                        ),
-                        _vm._v(" "),
-                        _c("div", { staticClass: "col-3 mx-auto" }, [
-                          _c("img", {
-                            attrs: {
-                              src: match.awayEmblem,
-                              alt: match.awayTeam
-                            }
-                          })
-                        ])
-                      ])
-                    : _vm._e()
-                ])
-              }),
-              0
-            )
       ])
     : _vm.submitted
     ? _c("div", { staticClass: "card" }, [
@@ -47445,12 +47494,10 @@ var render = function() {
         "div",
         { staticClass: "col-md-5" },
         [
-          _vm.ready
-            ? _c("Fixtures", {
-                staticClass: "my-2",
-                attrs: { users: _vm.users, user: _vm.user }
-              })
-            : _vm._e(),
+          _c("Fixtures", {
+            staticClass: "my-2",
+            attrs: { users: _vm.users, user: _vm.user }
+          }),
           _vm._v(" "),
           _c("Results", { attrs: { users: _vm.users } })
         ],
@@ -47571,38 +47618,42 @@ var render = function() {
   return _c("div", { staticClass: "card my-2" }, [
     _c("div", { staticClass: "card-header" }, [_vm._v("League Table")]),
     _vm._v(" "),
-    _vm.ready
-      ? _c("div", { staticClass: "card-body" }, [
-          _c(
-            "table",
-            { staticClass: "table table-hover", attrs: { id: "leagueTable" } },
-            [
-              _vm._m(0),
+    _c("div", { staticClass: "card-body" }, [
+      _c(
+        "table",
+        { staticClass: "table table-hover", attrs: { id: "leagueTable" } },
+        [
+          _vm._m(0),
+          _vm._v(" "),
+          !_vm.users.length > 0
+            ? _c("tr", { staticStyle: { "text-align": "center" } }, [
+                _c("td", [_c("Spinner")], 1),
+                _vm._v(" "),
+                _c("td", [_c("Spinner")], 1),
+                _vm._v(" "),
+                _c("td", [_c("Spinner")], 1),
+                _vm._v(" "),
+                _c("td", [_c("Spinner")], 1)
+              ])
+            : _vm._e(),
+          _vm._v(" "),
+          _vm._l(_vm.users, function(user) {
+            return _c("tr", { staticStyle: { "text-align": "center" } }, [
+              _c("td", [_vm._v(_vm._s(user.name))]),
               _vm._v(" "),
-              _vm._l(_vm.users, function(user) {
-                return _c("tr", { staticStyle: { "text-align": "center" } }, [
-                  _c("td", [_vm._v(_vm._s(user.name))]),
-                  _vm._v(" "),
-                  _c("td", [
-                    _vm._v(
-                      _vm._s(user.correctScores * 3 + user.correctOutcomes)
-                    )
-                  ]),
-                  _vm._v(" "),
-                  _c("td", [_vm._v(_vm._s(user.correctScores))]),
-                  _vm._v(" "),
-                  _c("td", [_vm._v(_vm._s(user.correctOutcomes))])
-                ])
-              })
-            ],
-            2
-          )
-        ])
-      : _c("div", { staticClass: "card-body" }, [
-          _c("div", { staticClass: "row" }, [
-            _c("div", { staticClass: "mx-auto" }, [_c("Spinner")], 1)
-          ])
-        ])
+              _c("td", [
+                _vm._v(_vm._s(user.correctScores * 3 + user.correctOutcomes))
+              ]),
+              _vm._v(" "),
+              _c("td", [_vm._v(_vm._s(user.correctScores))]),
+              _vm._v(" "),
+              _c("td", [_vm._v(_vm._s(user.correctOutcomes))])
+            ])
+          })
+        ],
+        2
+      )
+    ])
   ])
 }
 var staticRenderFns = [
@@ -48039,14 +48090,26 @@ var render = function() {
           "div",
           { staticClass: "card-body" },
           [
-            _vm._l(_vm.matches, function(match) {
-              return _c(
-                "div",
-                { key: match.id, staticClass: "row py-2" },
-                [_c("Result", { attrs: { match: match, users: _vm.users } })],
-                1
-              )
-            }),
+            _vm.matches.length > 0
+              ? _c(
+                  "div",
+                  _vm._l(_vm.matches, function(match) {
+                    return _c(
+                      "div",
+                      { key: match.id, staticClass: "row py-2" },
+                      [
+                        _c("Result", {
+                          attrs: { match: match, users: _vm.users }
+                        })
+                      ],
+                      1
+                    )
+                  }),
+                  0
+                )
+              : _c("div", { staticClass: "row" }, [
+                  _c("div", { staticClass: "mx-auto" }, [_c("Spinner")], 1)
+                ]),
             _vm._v(" "),
             _vm.matches.length + 1 < _vm.totalResultedMatches
               ? _c("observer", {
@@ -48058,7 +48121,7 @@ var render = function() {
                 })
               : _vm._e()
           ],
-          2
+          1
         )
       : _c("div", { staticClass: "card-body" }, [
           _c("div", { staticClass: "row" }, [

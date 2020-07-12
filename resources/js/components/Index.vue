@@ -24,7 +24,7 @@
 
         <div class="col-md-5">
             <!-- Fixtures Vue Component --> 
-            <Fixtures v-if="ready" class="my-2" :users="users" :user="user"/>
+            <Fixtures class="my-2" :users="users" :user="user"/>
 
             <!-- Results Vue Component -->
             <Results :users="users" />

@@ -151,30 +151,7 @@ class MatchController extends Controller
 
     public function index()
     {
-        $users = User::all();
-        $matches = Match::all()->where('kickoff', '>', date('Y-m-d H:i:s'));
-        $prevMatches = Match::orderBy('id', 'desc')
-        ->where('homeGoals', '>=', 0);
-        
-        $predictions = []; 
-        
-        foreach(Match::all() as $match) {
-            array_push($predictions, Prediction::all()->where('match_id', '==', $match->id));
-        }
-        
-        if(Auth::user()) {
-            if(Auth::user()->hasSubmitted == 0) {
-                return view('home')->with('users',$users)
-                                    ->with('matches',$matches)
-                                    ->with('prevMatches',$prevMatches)
-                                    ->with('predictions',$predictions);
-            }
-        }
-
-            return view('home')->with('users',$users)
-                                ->with('prevMatches',$prevMatches)
-                                ->with('predictions',$predictions);
-        // return redirect('/login');
+        return view('home');
     }
 
     /**

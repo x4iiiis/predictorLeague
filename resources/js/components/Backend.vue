@@ -68,26 +68,26 @@
                     <div class="card-body">
 
                         <table class="table table-hover" id="leagueTable">
-                <tr style="text-align:center">
-                    <th>ID</th>
-                    <th>Name</th>
-                    <th>Status</th>
-                    <th></th>
-                </tr>
-                
-                <tr v-if="!users.length > 0" style="text-align:center;">
-                    <td><Spinner /></td>
-                    <td><Spinner /></td>
-                    <td><Spinner /></td>
-                    <td></td>
-                </tr>
-                <tr v-for="user in users" style="text-align:center">
-                    <td>{{ user.id }}</td>
-                    <td>{{ user.name }}</td>
-                    <td>{{ user.hasSubmitted }}</td>
-                    <td><a class="btn btn-round btn-warning" @click="flipSubmissionStatus(user.id)">Flip</a></td>
-                </tr>
-            </table>
+                            <tr style="text-align:center">
+                                <th>ID</th>
+                                <th>Name</th>
+                                <th>Status</th>
+                                <th></th>
+                            </tr>
+                            
+                            <tr v-if="!users.length > 0" style="text-align:center;">
+                                <td><Spinner /></td>
+                                <td><Spinner /></td>
+                                <td><Spinner /></td>
+                                <td></td>
+                            </tr>
+                            <tr v-for="user in users" style="text-align:center">
+                                <td>{{ user.id }}</td>
+                                <td>{{ user.name }}</td>
+                                <td>{{ user.hasSubmitted }}</td>
+                                <td><a class="btn btn-round btn-warning" @click="flipSubmissionStatus(user.id)">Flip</a></td>
+                            </tr>
+                        </table>
                         
                         
                     </div>

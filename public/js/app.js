@@ -3070,8 +3070,28 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 /* harmony default export */ __webpack_exports__["default"] = ({
   mounted: function mounted() {// console.log('Legend Component mounted.')
+  },
+  data: function data() {
+    return {
+      show: false
+    };
+  },
+  methods: {
+    showOrHide: function showOrHide() {
+      this.show = !this.show;
+    }
   }
 });
 
@@ -3609,8 +3629,27 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
 /* harmony default export */ __webpack_exports__["default"] = ({
   mounted: function mounted() {// console.log('Rules Component mounted.')
+  },
+  data: function data() {
+    return {
+      show: false
+    };
+  },
+  methods: {
+    showOrHide: function showOrHide() {
+      this.show = !this.show;
+    }
   }
 });
 
@@ -3694,6 +3733,16 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 
 /* harmony default export */ __webpack_exports__["default"] = ({
   mounted: function mounted() {
@@ -3701,6 +3750,7 @@ __webpack_require__.r(__webpack_exports__);
   },
   data: function data() {
     return {
+      show: false,
       totalResultedMatches: 0
     };
   },
@@ -3713,6 +3763,9 @@ __webpack_require__.r(__webpack_exports__);
       })["catch"](function (err) {
         console.log(err.response);
       });
+    },
+    showOrHide: function showOrHide() {
+      this.show = !this.show;
     }
   },
   props: ['users'],
@@ -47785,70 +47838,98 @@ var render = function() {
   var _vm = this
   var _h = _vm.$createElement
   var _c = _vm._self._c || _h
-  return _vm._m(0)
+  return _c("div", { staticClass: "mr-0 ml-auto my-2" }, [
+    _c("div", { staticClass: "card" }, [
+      _c("div", { staticClass: "card-header" }, [
+        _c("div", { staticClass: "row" }, [
+          _c("div", { staticClass: "col-9" }, [
+            _vm._v("\n                    Legend\n                ")
+          ]),
+          _vm._v(" "),
+          _c("div", { staticClass: "col-3 text-right" }, [
+            !_vm.show
+              ? _c(
+                  "a",
+                  {
+                    staticClass: "btn-sm btn-round btn-warning mr-0 ml-auto",
+                    on: {
+                      click: function($event) {
+                        return _vm.showOrHide()
+                      }
+                    }
+                  },
+                  [_vm._v("Show")]
+                )
+              : _vm._e(),
+            _vm._v(" "),
+            _vm.show
+              ? _c(
+                  "a",
+                  {
+                    staticClass: "btn-sm btn-round btn-warning mr-0 ml-auto",
+                    on: {
+                      click: function($event) {
+                        return _vm.showOrHide()
+                      }
+                    }
+                  },
+                  [_vm._v("Hide")]
+                )
+              : _vm._e()
+          ])
+        ])
+      ]),
+      _vm._v(" "),
+      _vm.show ? _c("div", { staticClass: "card-body" }, [_vm._m(0)]) : _vm._e()
+    ])
+  ])
 }
 var staticRenderFns = [
   function() {
     var _vm = this
     var _h = _vm.$createElement
     var _c = _vm._self._c || _h
-    return _c("div", { staticClass: "mr-0 ml-auto my-2" }, [
-      _c("div", { staticClass: "card" }, [
-        _c("div", { staticClass: "card-header" }, [_vm._v("Legend")]),
+    return _c(
+      "table",
+      { staticClass: "table", staticStyle: { "vertical-align": "middle" } },
+      [
+        _c("tr", [
+          _c("td", { staticClass: "text-center text-success" }, [
+            _vm._v("Green Text")
+          ]),
+          _vm._v(" "),
+          _c("td", { staticClass: "pl-3" }, [_vm._v("Correct score")])
+        ]),
         _vm._v(" "),
-        _c("div", { staticClass: "card-body" }, [
+        _c("tr", [
           _c(
-            "table",
-            {
-              staticClass: "table",
-              staticStyle: { "vertical-align": "middle" }
-            },
-            [
-              _c("tr", [
-                _c("td", { staticClass: "text-center text-success" }, [
-                  _vm._v("Green Text")
-                ]),
-                _vm._v(" "),
-                _c("td", { staticClass: "pl-3" }, [_vm._v("Correct score")])
-              ]),
-              _vm._v(" "),
-              _c("tr", [
-                _c(
-                  "td",
-                  {
-                    staticClass: "text-center",
-                    staticStyle: { color: "#f6993f" }
-                  },
-                  [_vm._v("Orange Text")]
-                ),
-                _vm._v(" "),
-                _c("td", { staticClass: "pl-3" }, [
-                  _vm._v("Wrong score, correct outcome")
-                ])
-              ]),
-              _vm._v(" "),
-              _c("tr", [
-                _c("td", { staticClass: "text-center text-success" }, [
-                  _vm._v("*")
-                ]),
-                _vm._v(" "),
-                _c("td", { staticClass: "pl-3" }, [
-                  _vm._v("Correct outcome AET / Pens")
-                ])
-              ]),
-              _vm._v(" "),
-              _c("tr", [
-                _c("td", { staticClass: "text-center" }, [_vm._v("*")]),
-                _vm._v(" "),
-                _c("td", { staticClass: "pl-3" }, [
-                  _vm._v("Wrong outcome AET / Pens")
-                ])
-              ])
-            ]
-          )
+            "td",
+            { staticClass: "text-center", staticStyle: { color: "#f6993f" } },
+            [_vm._v("Orange Text")]
+          ),
+          _vm._v(" "),
+          _c("td", { staticClass: "pl-3" }, [
+            _vm._v("Wrong score, correct outcome")
+          ])
+        ]),
+        _vm._v(" "),
+        _c("tr", [
+          _c("td", { staticClass: "text-center text-success" }, [_vm._v("*")]),
+          _vm._v(" "),
+          _c("td", { staticClass: "pl-3" }, [
+            _vm._v("Correct outcome AET / Pens")
+          ])
+        ]),
+        _vm._v(" "),
+        _c("tr", [
+          _c("td", { staticClass: "text-center" }, [_vm._v("*")]),
+          _vm._v(" "),
+          _c("td", { staticClass: "pl-3" }, [
+            _vm._v("Wrong outcome AET / Pens")
+          ])
         ])
-      ])
-    ])
+      ]
+    )
   }
 ]
 render._withStripped = true
@@ -48409,60 +48490,92 @@ var render = function() {
   var _vm = this
   var _h = _vm.$createElement
   var _c = _vm._self._c || _h
-  return _vm._m(0)
+  return _c("div", { staticClass: "mr-0 ml-auto my-2" }, [
+    _c("div", { staticClass: "card" }, [
+      _c("div", { staticClass: "card-header" }, [
+        _c("div", { staticClass: "row" }, [
+          _c("div", { staticClass: "col-9" }, [
+            _vm._v("\n                    Rules \n                ")
+          ]),
+          _vm._v(" "),
+          _c("div", { staticClass: "col-3 text-right" }, [
+            !_vm.show
+              ? _c(
+                  "a",
+                  {
+                    staticClass: "btn-sm btn-round btn-warning mr-0 ml-auto",
+                    on: {
+                      click: function($event) {
+                        return _vm.showOrHide()
+                      }
+                    }
+                  },
+                  [_vm._v("Show")]
+                )
+              : _vm._e(),
+            _vm._v(" "),
+            _vm.show
+              ? _c(
+                  "a",
+                  {
+                    staticClass: "btn-sm btn-round btn-warning mr-0 ml-auto",
+                    on: {
+                      click: function($event) {
+                        return _vm.showOrHide()
+                      }
+                    }
+                  },
+                  [_vm._v("Hide")]
+                )
+              : _vm._e()
+          ])
+        ])
+      ]),
+      _vm._v(" "),
+      _vm.show ? _c("div", { staticClass: "card-body" }, [_vm._m(0)]) : _vm._e()
+    ])
+  ])
 }
 var staticRenderFns = [
   function() {
     var _vm = this
     var _h = _vm.$createElement
     var _c = _vm._self._c || _h
-    return _c("div", { staticClass: "mr-0 ml-auto my-2" }, [
-      _c("div", { staticClass: "card" }, [
-        _c("div", { staticClass: "card-header" }, [_vm._v("Rules")]),
-        _vm._v(" "),
-        _c("div", { staticClass: "card-body" }, [
-          _c("ul", [
-            _c("li", [_c("p", [_vm._v("Correct score: 3 points")])]),
-            _vm._v(" "),
-            _c("li", [
-              _c("p", [_vm._v("Wrong score, correct outcome: 1 point")])
-            ]),
-            _vm._v(" "),
-            _c("hr"),
-            _vm._v(" "),
-            _c("li", [
-              _c("p", [
-                _vm._v(
-                  "Cup / playoff matches are initially based on 90 minutes"
-                )
-              ])
-            ]),
-            _vm._v(" "),
-            _c("ul", [
-              _c("li", [
-                _c("p", [
-                  _vm._v(
-                    "\n                                If you pick a winner in your initial score prediction and the\n                                match goes to extra time and / or penalties, 1 point will be awarded\n                                if your winner wins the overall tie\n                            "
-                  )
-                ])
-              ]),
-              _vm._v(" "),
-              _c("li", [
-                _c("p", [
-                  _vm._v(
-                    "\n                                When predicting a draw in a match that is to be played to conclusion, you will be \n                                prompted to select an overall tie winner; For which a bonus point will be awarded\n                                on success "
-                  ),
-                  _c("b", [_vm._v("if the match goes beyond 90 minutes")])
-                ])
-              ]),
-              _vm._v(" "),
-              _c("em", [
-                _vm._v(
-                  "\n                            These points will be added to your Correct Outcome tally\n                        "
-                )
-              ])
-            ])
+    return _c("ul", [
+      _c("li", [_c("p", [_vm._v("Correct score: 3 points")])]),
+      _vm._v(" "),
+      _c("li", [_c("p", [_vm._v("Wrong score, correct outcome: 1 point")])]),
+      _vm._v(" "),
+      _c("hr"),
+      _vm._v(" "),
+      _c("li", [
+        _c("p", [
+          _vm._v("Cup / playoff matches are initially based on 90 minutes")
+        ])
+      ]),
+      _vm._v(" "),
+      _c("ul", [
+        _c("li", [
+          _c("p", [
+            _vm._v(
+              "\n                            If you pick a winner in your initial score prediction and the\n                            match goes to extra time and / or penalties, 1 point will be awarded\n                            if your winner wins the overall tie\n                        "
+            )
           ])
+        ]),
+        _vm._v(" "),
+        _c("li", [
+          _c("p", [
+            _vm._v(
+              "\n                            When predicting a draw in a match that is to be played to conclusion, you will be \n                            prompted to select an overall tie winner; For which a bonus point will be awarded\n                            on success "
+            ),
+            _c("b", [_vm._v("if the match goes beyond 90 minutes")])
+          ])
+        ]),
+        _vm._v(" "),
+        _c("em", [
+          _vm._v(
+            "\n                        These points will be added to your Correct Outcome tally\n                    "
+          )
         ])
       ])
     ])
@@ -48523,68 +48636,108 @@ var render = function() {
   var _h = _vm.$createElement
   var _c = _vm._self._c || _h
   return _c("div", { staticClass: "card my-2" }, [
-    _c("div", { staticClass: "card-header" }, [_vm._v("Stats Panel")]),
-    _vm._v(" "),
-    _c("div", { staticClass: "card-body" }, [
-      _c("p", { staticClass: "text-right" }, [
-        _c("small", [
-          _vm._v(
-            "There are " +
-              _vm._s(_vm.totalResultedMatches) +
-              " resulted matches so far"
-          )
-        ])
-      ]),
-      _vm._v(" "),
-      _c(
-        "table",
-        { staticClass: "table table-hover" },
-        [
-          _vm._m(0),
-          _vm._v(" "),
-          !_vm.users.length > 0
-            ? _c("tr", { staticStyle: { "text-align": "center" } }, [
-                _c("td", [_c("Spinner")], 1),
-                _vm._v(" "),
-                _c("td", [_c("Spinner")], 1),
-                _vm._v(" "),
-                _c("td", [_c("Spinner")], 1),
-                _vm._v(" "),
-                _c("td", [_c("Spinner")], 1)
-              ])
+    _c("div", { staticClass: "card-header" }, [
+      _c("div", { staticClass: "row" }, [
+        _c("div", { staticClass: "col-9" }, [
+          _vm._v("\n                Statistics\n            ")
+        ]),
+        _vm._v(" "),
+        _c("div", { staticClass: "col-3 text-right" }, [
+          !_vm.show
+            ? _c(
+                "a",
+                {
+                  staticClass: "btn-sm btn-round btn-warning mr-0 ml-auto",
+                  on: {
+                    click: function($event) {
+                      return _vm.showOrHide()
+                    }
+                  }
+                },
+                [_vm._v("Show")]
+              )
             : _vm._e(),
           _vm._v(" "),
-          _vm._l(_vm.users, function(user) {
-            return _c("tr", { staticStyle: { "text-align": "center" } }, [
-              _c("td", [_vm._v(_vm._s(user.name))]),
-              _vm._v(" "),
-              _c("td", [_vm._v(_vm._s(user.totalPredictions))]),
-              _vm._v(" "),
-              _c("td", [
-                _vm._v(
-                  _vm._s(
-                    parseFloat(
-                      (user.correctScores / user.totalPredictions) * 100
-                    ).toFixed(2)
-                  )
-                )
-              ]),
-              _vm._v(" "),
-              _c("td", [
-                _vm._v(
-                  _vm._s(
-                    parseFloat(
-                      (user.correctOutcomes / user.totalPredictions) * 100
-                    ).toFixed(2)
-                  )
-                )
-              ])
+          _vm.show
+            ? _c(
+                "a",
+                {
+                  staticClass: "btn-sm btn-round btn-warning mr-0 ml-auto",
+                  on: {
+                    click: function($event) {
+                      return _vm.showOrHide()
+                    }
+                  }
+                },
+                [_vm._v("Hide")]
+              )
+            : _vm._e()
+        ])
+      ])
+    ]),
+    _vm._v(" "),
+    _vm.show
+      ? _c("div", { staticClass: "card-body" }, [
+          _c("p", { staticClass: "text-right" }, [
+            _c("small", [
+              _vm._v(
+                "There are " +
+                  _vm._s(_vm.totalResultedMatches) +
+                  " resulted matches so far"
+              )
             ])
-          })
-        ],
-        2
-      )
-    ])
+          ]),
+          _vm._v(" "),
+          _c(
+            "table",
+            { staticClass: "table table-hover" },
+            [
+              _vm._m(0),
+              _vm._v(" "),
+              !_vm.users.length > 0
+                ? _c("tr", { staticStyle: { "text-align": "center" } }, [
+                    _c("td", [_c("Spinner")], 1),
+                    _vm._v(" "),
+                    _c("td", [_c("Spinner")], 1),
+                    _vm._v(" "),
+                    _c("td", [_c("Spinner")], 1),
+                    _vm._v(" "),
+                    _c("td", [_c("Spinner")], 1)
+                  ])
+                : _vm._e(),
+              _vm._v(" "),
+              _vm._l(_vm.users, function(user) {
+                return _c("tr", { staticStyle: { "text-align": "center" } }, [
+                  _c("td", [_vm._v(_vm._s(user.name))]),
+                  _vm._v(" "),
+                  _c("td", [_vm._v(_vm._s(user.totalPredictions))]),
+                  _vm._v(" "),
+                  _c("td", [
+                    _vm._v(
+                      _vm._s(
+                        parseFloat(
+                          (user.correctScores / user.totalPredictions) * 100
+                        ).toFixed(2)
+                      )
+                    )
+                  ]),
+                  _vm._v(" "),
+                  _c("td", [
+                    _vm._v(
+                      _vm._s(
+                        parseFloat(
+                          (user.correctOutcomes / user.totalPredictions) * 100
+                        ).toFixed(2)
+                      )
+                    )
+                  ])
+                ])
+              })
+            ],
+            2
+          )
+        ])
+      : _vm._e()
   ])
 }
 var staticRenderFns = [

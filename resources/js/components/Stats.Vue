@@ -1,9 +1,19 @@
 <template>
     <div  class="card my-2">
         
-        <div class="card-header">Stats Panel</div>
+        <div class="card-header">
+            <div class="row">
+                <div class="col-9">
+                    Statistics
+                </div>
+                <div class="col-3 text-right">
+                    <a v-if="!show" class="btn-sm btn-round btn-warning mr-0 ml-auto" @click="showOrHide()">Show</a>
+                    <a v-if="show" class="btn-sm btn-round btn-warning mr-0 ml-auto" @click="showOrHide()">Hide</a>
+                </div>
+            </div>
+        </div>
 
-        <div class="card-body">
+        <div v-if="show" class="card-body">
             <p class="text-right"><small>There are {{ totalResultedMatches }} resulted matches so far</small></p>
 
             <table class="table table-hover">
@@ -40,6 +50,7 @@
         },
         data() {
             return {
+                show: false,
                 totalResultedMatches: 0,
             }
         },
@@ -53,6 +64,9 @@
                     .catch(err => {
                         console.log(err.response);
                     })
+            },
+            showOrHide() {
+                this.show = !this.show;
             }
         },
         props: [

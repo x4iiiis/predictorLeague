@@ -19,6 +19,9 @@
 
             <!-- Key Vue Component -->
             <Key />
+
+            <!-- User Stats Component -->
+            <Stats :users="users" />
         </div>
 
 
@@ -43,6 +46,7 @@ import Announcement from '../components/Announcement';
 import LeagueTable from '../components/LeagueTable';
 import Rules from '../components/Rules';
 import Key from '../components/Key';
+import Stats from '../components/Stats';
 import Fixtures from '../components/Fixtures';
 import Results from '../components/Results';
 
@@ -91,6 +95,7 @@ export default {
         LeagueTable,
         Rules,
         Key,
+        Stats,
         Fixtures,
         Results
     }

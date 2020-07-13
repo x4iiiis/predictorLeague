@@ -54,6 +54,9 @@
                         this.totalResultedMatches = res.data[1];
                         this.getMoreMatches();
                     })
+                    .catch(err => {
+                        console.log(err.response);
+                    })
             },
             async getMoreMatches() {
                 await axios

@@ -4,6 +4,8 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\User;
+use App\Prediction;
+use App\Match;
 use Auth;
 use Carbon\Carbon;
 use Illuminate\Support\Str;
@@ -17,10 +19,23 @@ class LeagueTableController extends Controller
      */
     public function index()
     {
+        $users = User::orderBy('points', 'desc')
+                ->orderBy('correctScores', 'desc')
+                ->orderBy('correctOutcomes', 'desc')->get();
+
+        // The following is for statistics purproses
+        foreach($users as $user) {
+            $user->totalPredictions = 0;
+
+            foreach(Prediction::where('user_id', $user->id)->get() as $prediction) {
+                if(!is_null(Match::where('id', $prediction->match_id)->first()->homeGoals)) {
+                    $user->totalPredictions += 1;
+                }
+            }
+        }
+
         return [
-            'users', User::orderBy('points', 'desc')
-                        ->orderBy('correctScores', 'desc')
-                        ->orderBy('correctOutcomes', 'desc')->get()
+            'users', $users
         ];
     }
 

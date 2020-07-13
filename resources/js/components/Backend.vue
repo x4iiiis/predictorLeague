@@ -23,7 +23,24 @@
                 <div class="card my-2">
                     <h3 class="card-title pt-2">Match Maker </h3>
                     <div class="card-body">
-
+                        <table class="table">
+                            <tr>
+                                <td><a href="https://www.bbc.co.uk/sport/football/scottish-premiership/scores-fixtures" target="_blank">Scottish Premiership</a></td>
+                                <td><a href="https://www.bbc.co.uk/sport/football/premier-league/scores-fixtures" target="_blank">Premier League</a></td>
+                            </tr>
+                            <tr>
+                                <td><a href="https://www.bbc.co.uk/sport/football/scottish-cup/scores-fixtures" target="_blank">Scottish Cup</a></td>
+                                <td><a href="https://www.bbc.co.uk/sport/football/fa-cup/scores-fixtures" target="_blank">FA Cup</a></td>
+                            </tr>
+                            <tr>
+                                <td><a href="https://www.bbc.co.uk/sport/football/scottish-league-cup/scores-fixtures" target="_blank">Scottish League Cup</a></td>
+                                <td><a href="https://www.bbc.co.uk/sport/football/league-cup/scores-fixtures" target="_blank">English League Cup</a></td>
+                            </tr>
+                            <!-- <tr>
+                                <td><a href="https://www.bbc.co.uk/sport/football/scottish-championship/scores-fixtures" target="_blank">Scottish Championship</a></td>
+                                <td></td>
+                            </tr> -->
+                        </table>
 
                         <form action="/match/store" method="post" @submit.prevent="onSubmit">
                             <div class="form-group">

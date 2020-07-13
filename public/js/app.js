@@ -2372,6 +2372,23 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 
 /* harmony default export */ __webpack_exports__["default"] = ({
   mounted: function mounted() {
@@ -46199,6 +46216,8 @@ var render = function() {
           ]),
           _vm._v(" "),
           _c("div", { staticClass: "card-body" }, [
+            _vm._m(0),
+            _vm._v(" "),
             _c(
               "form",
               {
@@ -46414,7 +46433,7 @@ var render = function() {
                 attrs: { id: "leagueTable" }
               },
               [
-                _vm._m(0),
+                _vm._m(1),
                 _vm._v(" "),
                 !_vm.users.length > 0
                   ? _c("tr", { staticStyle: { "text-align": "center" } }, [
@@ -46773,7 +46792,7 @@ var render = function() {
                               _c("hr"),
                               _vm._v(" "),
                               _c("div", { staticClass: "btn-group dropup" }, [
-                                _vm._m(1, true),
+                                _vm._m(2, true),
                                 _vm._v(" "),
                                 _c("div", { staticClass: "dropdown-menu" }, [
                                   _c(
@@ -46854,7 +46873,7 @@ var render = function() {
                                             "div",
                                             { staticClass: "modal-body" },
                                             [
-                                              _vm._m(2, true),
+                                              _vm._m(3, true),
                                               _vm._v(" "),
                                               _c(
                                                 "form",
@@ -46970,7 +46989,7 @@ var render = function() {
                                             "div",
                                             { staticClass: "modal-body" },
                                             [
-                                              _vm._m(3, true),
+                                              _vm._m(4, true),
                                               _vm._v(" "),
                                               _c(
                                                 "form",
@@ -47107,7 +47126,7 @@ var render = function() {
                         ])
                       }),
                       _vm._v(" "),
-                      _vm._m(4)
+                      _vm._m(5)
                     ],
                     2
                   )
@@ -47181,7 +47200,7 @@ var render = function() {
                                 _vm._v(_vm._s(match.kickoff.split(" ")[4]))
                               ]),
                               _vm._v(" "),
-                              _vm._m(5, true)
+                              _vm._m(6, true)
                             ]
                           ),
                           _vm._v(" "),
@@ -47220,7 +47239,7 @@ var render = function() {
                             })
                           ]),
                           _vm._v(" "),
-                          _vm._m(6, true)
+                          _vm._m(7, true)
                         ]
                       )
                     ])
@@ -47232,6 +47251,102 @@ var render = function() {
   ])
 }
 var staticRenderFns = [
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("table", { staticClass: "table" }, [
+      _c("tr", [
+        _c("td", [
+          _c(
+            "a",
+            {
+              attrs: {
+                href:
+                  "https://www.bbc.co.uk/sport/football/scottish-premiership/scores-fixtures",
+                target: "_blank"
+              }
+            },
+            [_vm._v("Scottish Premiership")]
+          )
+        ]),
+        _vm._v(" "),
+        _c("td", [
+          _c(
+            "a",
+            {
+              attrs: {
+                href:
+                  "https://www.bbc.co.uk/sport/football/premier-league/scores-fixtures",
+                target: "_blank"
+              }
+            },
+            [_vm._v("Premier League")]
+          )
+        ])
+      ]),
+      _vm._v(" "),
+      _c("tr", [
+        _c("td", [
+          _c(
+            "a",
+            {
+              attrs: {
+                href:
+                  "https://www.bbc.co.uk/sport/football/scottish-cup/scores-fixtures",
+                target: "_blank"
+              }
+            },
+            [_vm._v("Scottish Cup")]
+          )
+        ]),
+        _vm._v(" "),
+        _c("td", [
+          _c(
+            "a",
+            {
+              attrs: {
+                href:
+                  "https://www.bbc.co.uk/sport/football/fa-cup/scores-fixtures",
+                target: "_blank"
+              }
+            },
+            [_vm._v("FA Cup")]
+          )
+        ])
+      ]),
+      _vm._v(" "),
+      _c("tr", [
+        _c("td", [
+          _c(
+            "a",
+            {
+              attrs: {
+                href:
+                  "https://www.bbc.co.uk/sport/football/scottish-league-cup/scores-fixtures",
+                target: "_blank"
+              }
+            },
+            [_vm._v("Scottish League Cup")]
+          )
+        ]),
+        _vm._v(" "),
+        _c("td", [
+          _c(
+            "a",
+            {
+              attrs: {
+                href:
+                  "https://www.bbc.co.uk/sport/football/league-cup/scores-fixtures",
+                target: "_blank"
+              }
+            },
+            [_vm._v("English League Cup")]
+          )
+        ])
+      ])
+    ])
+  },
   function() {
     var _vm = this
     var _h = _vm.$createElement

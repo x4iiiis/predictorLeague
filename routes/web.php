@@ -11,10 +11,6 @@
 |
 */
 
-Route::get('/', function () {
-    return view('welcome');
-});
-
 Auth::routes();
 
 //Route::get('/home', 'HomeController@index')->name('home');
@@ -31,13 +27,20 @@ Route::post('match/updateetp', 'MatchController@updateETP')->name('match.etp');
 Route::post('match/reversefixture', 'MatchController@reverseFixture')->name('match.reverse');
 
 
-Route::get('/updatetable', 'PredictionController@updateScores')->name('update.scores');
+// Route::get('/updatetable', 'PredictionController@updateScores')->name('update.scores');
+Route::get('/recalculatetable', 'PredictionController@recalculateScores')->name('recalculate.scores');
 Route::get('/lockpredictions', 'PredictionController@lock');
 Route::get('/unlockpredictions', 'PredictionController@unlock');
 
 Route::get('/getteams', 'MatchController@create');
 Route::get('/getusers', 'LeagueTableController@index');
 Route::get('/whoami', 'LeagueTableController@whoAmI');
+
+Route::post('/user/flipsubmissionstatus', 'PredictionController@flipStatus');
+
+Route::post('/user/checkemailexists', 'LeagueTableController@checkEmail');
+Route::post('/user/resetpassword', 'LeagueTableController@resetPassword');
+
 route::get('/getupcomingmatches', 'MatchController@upcomingMatches');
 route::get('/getresultedmatches', 'MatchController@resultedMatches');
 route::get('/getresultedmatches/{counter}', 'MatchController@moreResultedMatches');

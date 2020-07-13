@@ -55,7 +55,7 @@ class PredictionController extends Controller
 
     }
 
-    public function updateScores() {
+    public function recalculateScores() {
         //Update the users table's scores 
         $allPredictions = Prediction::all();
 
@@ -125,6 +125,7 @@ class PredictionController extends Controller
                 $user->save();
             }
         }
+        return redirect('/');
     }
 
     public function lock() {
@@ -141,6 +142,15 @@ class PredictionController extends Controller
                 $user->hasSubmitted = 0;
                 $user->save();
             }
+        }
+    }
+
+    public function flipStatus(Request $request) {
+        if(Auth::user()) {
+            $user = User::where('id', $request->id)->first();
+
+            $user->hasSubmitted = !$user->hasSubmitted;
+            $user->save();
         }
     }
 

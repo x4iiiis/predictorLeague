@@ -5,7 +5,12 @@
                 Submission Successful! 
             </div>
             <div v-if="!previouslySubmitted" class="card-body">
-                <form action="prediction/store" method="post" @submit.prevent="onSubmit">
+                <form v-if="hasFixtures" action="prediction/store" method="post" @submit.prevent="onSubmit">
+                    
+                    <div v-if="user.name == 'Guest'" class="row">
+                        <a class="mx-auto" href="/login" v-if="user.length != 0">Login or register to take part!</a>
+                    </div>
+
                     <div v-for="(match, index) in matches" :key="match.id" class="row py-2">
                         <div class="col-12 text-center mb-2">
                             <hr>
@@ -20,17 +25,17 @@
                                 <hr> 
                             </div>
                         </div>
-                        <div v-if="!(match.etp_available && match.homeGoals == match.awayGoals && match.homeGoals != null)" class="col-3 mx-auto">
+                        <div v-if="!(match.etp_available && match.homeGoals == match.awayGoals && match.homeGoals != null)" :class="[user.name !='Guest' ? 'mx-auto col-3' : 'text-right col-6']">
                             <img :src="match.homeEmblem" :alt="match.homeTeam">
                         </div>
                         <div v-else class="col-3 mx-auto" v-on:click="match.winner = match.homeTeam">
                             <img :src="match.homeEmblem" :alt="match.homeTeam">
                         </div>
-                        <div class="form-group col-6 my-auto mx-auto text-center">
+                        <div v-if="user.length != 0 && users.length != 0 && user.name!='Guest'" class="form-group col-6 my-auto mx-auto text-center">
                             <input class="col-5" :name="'home' + match.id" v-model="match.homeGoals" required type="number"></input>
                             <input class="col-5" :name="'away' + match.id" v-model="match.awayGoals" required type="number"></input>
                         </div>
-                        <div v-if="!(match.etp_available && match.homeGoals == match.awayGoals && match.homeGoals != null)" class="col-3 mx-auto">
+                        <div v-if="!(match.etp_available && match.homeGoals == match.awayGoals && match.homeGoals != null)" :class="[user.name !='Guest' ? 'mx-auto col-3' : 'ml-0 mr-auto col-6']">
                             <img :src="match.awayEmblem" :alt="match.awayTeam">
                         </div>
                         <div v-else class="col-3 mx-auto" v-on:click="match.winner = match.awayTeam">
@@ -67,63 +72,74 @@
                         </div>
                     </div>
                     <!-- @endforeach -->
-                    <div class="text-center">
+                    <div v-if="user.length != 0 && users.length != 0 && user.name!='Guest'" class="text-center">
                         <button class="btn btn-lg btn-primary mx-auto">Submit</button>
                     </div>
                 </form>
+                <div v-else class="row">
+                    <div class="mx-auto">
+                        <Spinner></Spinner>
+                    </div>
+                </div>
             </div>
 
             <div v-else class="card-body">
-                
-                <div v-for="(match, index) in matches" :key="match.id">
+                <div v-if="hasFixtures">
+                    <div v-for="(match, index) in matches" :key="match.id">
 
-                    <div v-if="allPredictions[index].length > 0" class="row py-2">
-                        <div class="col-12 text-center mb-2">
-                            <hr>
-                            <small>
-                                {{match.kickoff.split(' ')[0]}}
-                                {{match.kickoff.split(' ')[1]}}
-                                {{match.kickoff.split(' ')[2]}}
-                                {{match.kickoff.split(' ')[3]}}
-                            </small>
-                            <h6>{{match.kickoff.split(' ')[4]}}</h6>
-                            <div class="col-9 mx-auto">
-                                <hr> 
+                        <div v-if="allPredictions[index].length > 0" class="row py-2">
+                            <div class="col-12 text-center mb-2">
+                                <hr>
+                                <small>
+                                    {{match.kickoff.split(' ')[0]}}
+                                    {{match.kickoff.split(' ')[1]}}
+                                    {{match.kickoff.split(' ')[2]}}
+                                    {{match.kickoff.split(' ')[3]}}
+                                </small>
+                                <h6>{{match.kickoff.split(' ')[4]}}</h6>
+                                <div class="col-9 mx-auto">
+                                    <hr> 
+                                </div>
+                            </div>
+                            <div class="col-3 mx-auto">
+                                <img :src="match.homeEmblem" :alt="match.homeTeam">
+                            </div>
+                            <div class="col-6 mx-auto my-auto text-center">
+                                <table v-if="users.length != 0">
+                                    <tr v-for="prediction in allPredictions[ index ]">
+                                        <td style="text-align:right">
+                                            <small>{{ users[prediction.user_id - 1].name }}</small>
+                                        </td>
+                                        <td v-if="prediction.winner == null">
+                                            <small>{{ prediction.homeGoals }} - {{ prediction.awayGoals }}</small>
+                                        </td>
+                                        <td v-else>
+                                            <small>
+                                                <span v-if="prediction.winner == match.homeTeam">
+                                                    <span>*</span>
+                                                </span>
+                                                    {{ prediction.homeGoals }} - {{ prediction.awayGoals }}
+                                                <span v-if="prediction.winner == match.awayTeam">
+                                                    <span>*</span>
+                                                </span>
+                                            </small>
+                                        </td>
+                                    </tr>
+                                </table>
+                            </div>
+                            <div class="col-3 mx-auto">
+                                <img :src="match.awayEmblem" :alt="match.awayTeam">
                             </div>
                         </div>
-                        <div class="col-3 mx-auto">
-                            <img :src="match.homeEmblem" :alt="match.homeTeam">
-                        </div>
-                        <div class="col-6 mx-auto my-auto text-center">
-                            <table>
-                                <tr v-for="prediction in allPredictions[ index ]">
-                                    <td style="text-align:right">
-                                        <small>{{ users[prediction.user_id - 1].name }}</small>
-                                    </td>
-                                    <td v-if="prediction.winner == null">
-                                        <small>{{ prediction.homeGoals }} - {{ prediction.awayGoals }}</small>
-                                    </td>
-                                    <td v-else>
-                                        <small>
-                                            <span v-if="prediction.winner == match.homeTeam">
-                                                <span>*</span>
-                                            </span>
-                                                {{ prediction.homeGoals }} - {{ prediction.awayGoals }}
-                                            <span v-if="prediction.winner == match.awayTeam">
-                                                <span>*</span>
-                                            </span>
-                                        </small>
-                                    </td>
-                                </tr>
-                            </table>
-                        </div>
-                        <div class="col-3 mx-auto">
-                            <img :src="match.awayEmblem" :alt="match.awayTeam">
-                        </div>
+                        
                     </div>
-                    
+                        
                 </div>
-                    
+            </div>
+            <div v-else class="row">
+                <div class="mx-auto">
+                    <Spinner></Spinner>
+                </div>
             </div>
 
         </div>
@@ -159,15 +175,13 @@
         },
         data() {
             return {
-                user: [],
                 matches: [],
                 predictions: {},
-                ready: false,
+                hasFixtures: false,
+                ready: true,
                 submitted: false,
                 previouslySubmitted: false,
 
-                //Everyone, for when previously submitted = true
-                users: [],
                 allPredictions: []
             }
         },
@@ -176,15 +190,14 @@
                 axios
                     .get('/getupcomingmatches')
                     .then(res => {
-                        this.user = res.data[1]
-                        this.matches = res.data[3];
+                        this.matches = res.data[1];
 
-                        if(res.data[5]) {
+                        if(res.data[3]) {
                             //Get everyone's predictions here
                             this.getUnresultedMatches()
                         }
                         else {
-                            this.ready = true;
+                            this.hasFixtures = true;
                         }
                     })
                     .catch(err => {
@@ -195,11 +208,10 @@
                 axios
                     .get('/getunresultedmatches')
                     .then(res => {
-                        this.users = res.data[1];
-                        this.matches = res.data[3];
-                        this.allPredictions = res.data[5];
+                        this.matches = res.data[1];
+                        this.allPredictions = res.data[3];
                         this.previouslySubmitted = true;
-                        this.ready = true;
+                        this.hasFixtures = true;
                     })
                     .catch( err => {
                         console.log(err.response);
@@ -212,7 +224,7 @@
                         // console.log('Predictions received');
                         
                         this.submitted = true;
-                        this.ready = false;
+                        this.hasFixtures = false;
 
                         var self = this;
                         setTimeout( function() {
@@ -226,6 +238,10 @@
                 
             }
         },
+        props: [
+            'users',
+            'user'
+        ],
     components: {
         Spinner
     }

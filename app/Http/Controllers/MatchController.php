@@ -22,7 +22,6 @@ class MatchController extends Controller
         if(Auth::user()) {
             if(Auth::user()->hasSubmitted == 0) {
                 return [
-                    'user', Auth::user(),
                     'matches', Match::all()->where('kickoff', '>', date('Y-m-d H:i:s'))
                 ];
             }
@@ -31,13 +30,16 @@ class MatchController extends Controller
                 // Would be ideal if this ran beyond kickoff so we could see what people were 
                 // waiting on, to add to the fun of it all 
                 return [
-                    'user', Auth::user(),
                     'matches', Match::all()->where('kickoff', '>', date('Y-m-d H:i:s')),
                     'previouslySubmitted', true
                 ];
             }
         }
-        return redirect('/login');
+        // return redirect('/login');
+
+        return [
+            'matches', Match::all()->where('kickoff', '>', date('Y-m-d H:i:s')),
+        ];
     }
 
     public function resultedMatches() {
@@ -51,7 +53,6 @@ class MatchController extends Controller
             
 
             return [
-                'users', User::all(),
                 'matches', $prevMatches,
             ];
         }
@@ -59,78 +60,72 @@ class MatchController extends Controller
     }
 
     public function countResultedMatches() {
-        if(Auth::user()) {
-            $resultedTotal = sizeof(Match::where('homeGoals', '>=', 0)->get());
+        $resultedTotal = sizeof(Match::where('homeGoals', '>=', 0)->get());
 
-            // dd($resultedTotal);
+        // dd($resultedTotal);
 
-            return [
-                'totalResultedMatches', $resultedTotal
-            ];
-        }
-        return redirect('/login');
+        return [
+            'totalResultedMatches', $resultedTotal
+        ];
     }
 
     //For lazy loading results
     public function moreResultedMatches($counter) {
-        if(Auth::user()) {
 
-            $limit = 10;
-            $resultedTotal = Match::orderBy('id', 'desc')->where('homeGoals', '>=', 0)->first()->id + 1;
-            //dd(Match::find($counter));
-            $prevMatches = Match::orderBy('id', 'desc')
-                                ->where('homeGoals', '>=', 0)
-                                ->find(range(
-                                    $resultedTotal - (($counter * $limit) - 1),
-                                    $resultedTotal - (($counter * $limit) - $limit))
-                                );
+        $limit = 10;
+        $resultedTotal = Match::orderBy('id', 'desc')->where('homeGoals', '>=', 0)->first()->id + 1;
+        //dd(Match::find($counter));
+        $prevMatches = Match::orderBy('id', 'desc')
+                            ->where('homeGoals', '>=', 0)
+                            ->find(range(
+                                $resultedTotal - (($counter * $limit) - 1),
+                                $resultedTotal - (($counter * $limit) - $limit))
+                            );
 
-            // dd($resultedTotal - (($counter) * $limit) - 1);
-            // dd($resultedTotal - ($counter * $limit) - $limit);
+        // dd($resultedTotal - (($counter) * $limit) - 1);
+        // dd($resultedTotal - ($counter * $limit) - $limit);
 
-            // dd(Match::orderBy('id', 'desc')->where('homeGoals', '>=', 0)->first()->id);
-            
-            return [
-                'users', User::all(),
-                'matches', $prevMatches,
-            ];
-        }
-        return redirect('/login');
+        // dd(Match::orderBy('id', 'desc')->where('homeGoals', '>=', 0)->first()->id);
+        
+        return [
+            'matches', $prevMatches,
+        ];
     }
 
     //For each Result.vue Component
     public function getMatchPredictions($match_id) {
-        if(Auth::user()) {
-            return [
-                'predictions', Match::where('id', $match_id)->first()->predictions()->get()
-            ];
-        }
+        return [
+            'predictions', Match::where('id', $match_id)->first()->predictions()->get()
+        ];
     }
 
     public function unresultedMatches() {
+        
+        $unresultedMatches = Match::orderBy('kickoff')->where('homeGoals', null)->get();
+        
+        $predictions = [];
+        
+        // foreach($unresultedMatches as $match) {
+        //     array_push($predictions, Prediction::all()->where('match_id', '==', $match->id));
+        // }
+        
         if(Auth::user()) {
             if(Auth::user()->hasSubmitted == 1) {
-
-                $unresultedMatches = Match::orderBy('kickoff')->where('homeGoals', null)->get();
-
-                $predictions = [];
-
-                // foreach($unresultedMatches as $match) {
-                //     array_push($predictions, Prediction::all()->where('match_id', '==', $match->id));
-                // }
 
                 foreach($unresultedMatches as $match) {
                     array_push($predictions, $match->predictions()->get());
                 }
-
+        
                 return [
-                    'users', User::all(),
                     'matches', $unresultedMatches,
                     'predictions', $predictions,
                 ];
             }
         }
-        return redirect('/login');
+        // return redirect('/login');
+        return [
+            'matches', $unresultedMatches,
+        ];
     }
 
     public function unresultedMatchesBackend() {
@@ -156,40 +151,7 @@ class MatchController extends Controller
 
     public function index()
     {
-        //return "Technical difficulties; Back soon. xoxo gossip girl";
-
-        if(Auth::user()) {
-            $users = User::all();
-            $matches = Match::all()->where('kickoff', '>', date('Y-m-d H:i:s'));
-            $prevMatches = Match::orderBy('id', 'desc')
-                                        ->where('homeGoals', '>=', 0);
-
-            $predictions = []; 
-            
-            foreach(Match::all() as $match) {
-                //dd($prevMatch->id);
-                //dd(Prediction::all()->where('match_id', '==', $prevMatch->id));
-                array_push($predictions, Prediction::all()->where('match_id', '==', $match->id));
-            }
-            //dd($predictions);
-
-
-
-            //$prevMatches = Match::whereNotNull('homeGoals')->get()->all();
-            //dd($prevMatches);
-
-            if(Auth::user()->hasSubmitted == 0) {
-                return view('home')->with('users',$users)
-                                    ->with('matches',$matches)
-                                    ->with('prevMatches',$prevMatches)
-                                    ->with('predictions',$predictions);
-            }
-
-            return view('home')->with('users',$users)
-                                ->with('prevMatches',$prevMatches)
-                                ->with('predictions',$predictions);
-        }
-        return redirect('/login');
+        return view('home');
     }
 
     /**
@@ -209,7 +171,7 @@ class MatchController extends Controller
 
     public function backend() {
         if(Auth::user()) {
-            return view('backend');
+            return view('backend')->with('users', User::all());
         }
         return redirect('login');
     }
@@ -261,6 +223,74 @@ class MatchController extends Controller
                     $relevantMatch->homeGoalsPens = $match['homeGoalsPens'];
                     $relevantMatch->awayGoalsPens = $match['awayGoalsPens'];
                     $relevantMatch->save();
+
+                    //Now loop through all of the predictions relating to this match, and update the
+                    //corresponding user's score.
+
+                    //Doing this here so that every time I push new results, I'm not fully calculating
+                    //their entire scores from all of their predictions. That's excrutiatingly taxing
+                    //and needless. If mistakes are made and scores need to be altered etc, I can use
+                    //the '/recalculatetable' endpoint
+
+                    $relevantPredictions = Prediction::where('match_id', $match['id'])->get();
+
+                    foreach($relevantPredictions as $prediction) {
+                        $user = User::where('id', $prediction->user_id)->first();
+
+                        $homeGoals = $relevantMatch->homeGoals; 
+                        $awayGoals = $relevantMatch->awayGoals;
+
+                        if(!is_null($homeGoals)) {
+
+                            //Correct Score
+                            if($prediction->homeGoals == $homeGoals && $prediction->awayGoals == $awayGoals) {
+                                $user->correctScores += 1;
+                            }
+                            //Correct Outcome - Home Win
+                            else if($prediction->homeGoals > $prediction->awayGoals && $homeGoals > $awayGoals) {
+                                $user->correctOutcomes += 1;
+                            } 
+                            //Correct Outcome - Away Win
+                            else if($prediction->homeGoals < $prediction->awayGoals && $homeGoals < $awayGoals) {
+                                $user->correctOutcomes += 1;
+                            } 
+                            //Correct Outcome - Draw
+                            else if($prediction->homeGoals == $prediction->awayGoals && $homeGoals == $awayGoals) {
+                                $user->correctOutcomes += 1;
+                            } 
+            
+                            //Cups / Playoffs
+                            if($relevantMatch->etp_available == 1 && $homeGoals == $awayGoals) {
+                                if($relevantMatch->homeGoalsAET > $relevantMatch->awayGoalsAET || $relevantMatch->homeGoalsPens > $relevantMatch->awayGoalsPens) {
+                                    $relevantMatch->winner = $relevantMatch->homeTeam;
+                                }
+                                else if($relevantMatch->homeGoalsAET < $relevantMatch->awayGoalsAET || $relevantMatch->homeGoalsPens < $relevantMatch->awayGoalsPens) {
+                                    $relevantMatch->winner = $relevantMatch->awayTeam;
+                                }
+                                $relevantMatch->save();
+            
+                                //ET / Pens Predicted
+                                if($prediction->homeGoals == $prediction->awayGoals && $prediction->winner == $relevantMatch->winner && $prediction->winner != null) {
+                                    $user->correctOutcomes += 1;
+                                }
+                                //90 Minute Winner Picked - Home
+                                else if($prediction->homeGoals > $prediction->awayGoals && $relevantMatch->winner == $relevantMatch->homeTeam) {
+                                    $prediction->winner == $relevantMatch->homeTeam;
+                                    $prediction->save();
+                                    $user->correctOutcomes += 1;
+                                }
+                                //90 Minute Winner Picked - Away
+                                else if($prediction->homeGoals < $prediction->awayGoals && $relevantMatch->winner == $relevantMatch->awayTeam) {
+                                    $prediction->winner == $relevantMatch->awayTeam;
+                                    $prediction->save();
+                                    $user->correctOutcomes += 1;
+                                }
+                            }
+            
+                            $user->points = ($user->correctScores * 3) + $user->correctOutcomes;
+                            $user->save();
+                        }
+                    }
                 }
             }
             return 'Scores Updated';

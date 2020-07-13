@@ -23,7 +23,24 @@
                 <div class="card my-2">
                     <h3 class="card-title pt-2">Match Maker </h3>
                     <div class="card-body">
-
+                        <table class="table">
+                            <tr>
+                                <td><a href="https://www.bbc.co.uk/sport/football/scottish-premiership/scores-fixtures" target="_blank">Scottish Premiership</a></td>
+                                <td><a href="https://www.bbc.co.uk/sport/football/premier-league/scores-fixtures" target="_blank">Premier League</a></td>
+                            </tr>
+                            <tr>
+                                <td><a href="https://www.bbc.co.uk/sport/football/scottish-cup/scores-fixtures" target="_blank">Scottish Cup</a></td>
+                                <td><a href="https://www.bbc.co.uk/sport/football/fa-cup/scores-fixtures" target="_blank">FA Cup</a></td>
+                            </tr>
+                            <tr>
+                                <td><a href="https://www.bbc.co.uk/sport/football/scottish-league-cup/scores-fixtures" target="_blank">Scottish League Cup</a></td>
+                                <td><a href="https://www.bbc.co.uk/sport/football/league-cup/scores-fixtures" target="_blank">English League Cup</a></td>
+                            </tr>
+                            <!-- <tr>
+                                <td><a href="https://www.bbc.co.uk/sport/football/scottish-championship/scores-fixtures" target="_blank">Scottish Championship</a></td>
+                                <td></td>
+                            </tr> -->
+                        </table>
 
                         <form action="/match/store" method="post" @submit.prevent="onSubmit">
                             <div class="form-group">
@@ -59,6 +76,37 @@
                             <button type="submit" class="btn btn-primary">Submit</button>
                         </form>
 
+                    </div>
+                </div>
+
+                <!-- show which users have submitted - and be able to alter it here -->
+                <div class="card my-2">
+                    <h3 class="card-title pt-2">Prediction Status'</h3>
+                    <div class="card-body">
+
+                        <table class="table table-hover" id="leagueTable">
+                            <tr style="text-align:center">
+                                <th>ID</th>
+                                <th>Name</th>
+                                <th>Status</th>
+                                <th></th>
+                            </tr>
+                            
+                            <tr v-if="!users.length > 0" style="text-align:center;">
+                                <td><Spinner /></td>
+                                <td><Spinner /></td>
+                                <td><Spinner /></td>
+                                <td></td>
+                            </tr>
+                            <tr v-for="user in users" style="text-align:center">
+                                <td>{{ user.id }}</td>
+                                <td>{{ user.name }}</td>
+                                <td>{{ user.hasSubmitted }}</td>
+                                <td><a class="btn btn-round btn-warning" @click="flipSubmissionStatus(user.id)">Flip</a></td>
+                            </tr>
+                        </table>
+                        
+                        
                     </div>
                 </div>
             </div>
@@ -338,7 +386,6 @@
                         console.log('Scores Recieved');
                         console.log(response);
                         this.ready = false;
-                        this.updateTable();
                         this.getUnresultedMatches();
                     })
                     .catch(err => {
@@ -357,7 +404,7 @@
                         console.log('Scores Reset');
                         console.log(response);
                         this.ready = false;
-                        this.updateTable();
+                        this.recalculateTable();
                         this.getResultedMatches();
                     })
                     .catch(err => {
@@ -430,9 +477,9 @@
                     })
                 }
             },
-            updateTable() {
+            recalculateTable() {
                 axios
-                    .get('/updatetable')
+                    .get('/recalculatetable')
                     .then(res => {
                         console.log('League Table Updated');
                     })
@@ -463,10 +510,37 @@
                     .catch(err => {
                         console.log(err);
                     })
+            },
+            flipSubmissionStatus(userID) {
+                console.log("id n status", userID, status);
+
+                axios
+                    .post('/user/flipsubmissionstatus', {
+                        id: userID,
+                    })
+                    .then(response => {
+                        this.getUsers();
+                    })
+                    .catch(err => {
+                        console.log(err.response);
+                    })
+            },
+            getUsers() {
+                axios
+                    .get('/getusers')
+                    .then(res => {
+                        this.users = res.data[1];
+                    })
+                    .catch(err => {
+                        console.log(err.response);
+                    })
             }
         },
-    components: {
-        Spinner
+        props: [
+            'users',
+        ],
+        components: {
+            Spinner
+        }
     }
-}
 </script>

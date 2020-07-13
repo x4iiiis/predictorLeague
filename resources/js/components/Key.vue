@@ -1,9 +1,19 @@
 <template>
     <div class="mr-0 ml-auto my-2">
         <div class="card">
-            <div class="card-header">Legend</div>
+            <div class="card-header">
+                <div class="row">
+                    <div class="col-9">
+                        Legend
+                    </div>
+                    <div class="col-3 text-right">
+                        <a v-if="!show" class="btn-sm btn-round btn-warning mr-0 ml-auto" @click="showOrHide()">Show</a>
+                        <a v-if="show" class="btn-sm btn-round btn-warning mr-0 ml-auto" @click="showOrHide()">Hide</a>
+                    </div>
+                </div>
+            </div>
 
-            <div class="card-body">
+            <div v-if="show" class="card-body">
                 <table class="table" style="vertical-align:middle">
                     <!-- <th>Legend</th> -->
                     <tr>
@@ -32,6 +42,16 @@
     export default {
         mounted() {
             // console.log('Legend Component mounted.')
+        },
+        data() {
+            return {
+                show: false
+            }
+        },
+        methods: {
+            showOrHide() {
+                this.show = !this.show;
+            }
         }
     }
 </script>

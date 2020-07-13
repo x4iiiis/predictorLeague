@@ -8,6 +8,9 @@
                 <div class="card-header">{{ __('Register') }}</div>
 
                 <div class="card-body">
+                
+                    <p><em>I haven't gone to a lot of effort with security here, so I'd <strong><u><mark>strongly advise</mark></u></strong> not using a password you use for important/sensitive accounts.</em></p>
+                
                     <form method="POST" action="{{ route('register') }}">
                         @csrf
 

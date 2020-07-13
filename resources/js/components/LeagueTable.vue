@@ -34,8 +34,6 @@
 
     export default {
         mounted() {
-            console.log('lengf m8', this.users.length)
-            console.log(this.users.length == 0)
             this.ready = true;
         },
         data() {

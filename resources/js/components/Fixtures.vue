@@ -6,6 +6,11 @@
             </div>
             <div v-if="!previouslySubmitted" class="card-body">
                 <form v-if="hasFixtures" action="prediction/store" method="post" @submit.prevent="onSubmit">
+                    
+                    <div class="row">
+                        <a class="mx-auto" href="/login" v-if="user.length != 0">Login or register to take part!</a>
+                    </div>
+
                     <div v-for="(match, index) in matches" :key="match.id" class="row py-2">
                         <div class="col-12 text-center mb-2">
                             <hr>

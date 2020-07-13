@@ -2753,6 +2753,11 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
+//
 
 /* harmony default export */ __webpack_exports__["default"] = ({
   mounted: function mounted() {
@@ -47002,6 +47007,19 @@ var render = function() {
                       }
                     },
                     [
+                      _c("div", { staticClass: "row" }, [
+                        _vm.user.length != 0
+                          ? _c(
+                              "a",
+                              {
+                                staticClass: "mx-auto",
+                                attrs: { href: "/login" }
+                              },
+                              [_vm._v("Login or register to take part!")]
+                            )
+                          : _vm._e()
+                      ]),
+                      _vm._v(" "),
                       _vm._l(_vm.matches, function(match, index) {
                         return _c(
                           "div",

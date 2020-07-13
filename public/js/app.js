@@ -47068,6 +47068,8 @@ var render = function() {
                                   ]
                                 ),
                             _vm._v(" "),
+                            _vm.user.length != 0 &&
+                            _vm.users.length != 0 &&
                             _vm.user.name != "Guest"
                               ? _c(
                                   "div",
@@ -47233,6 +47235,8 @@ var render = function() {
                         )
                       }),
                       _vm._v(" "),
+                      _vm.user.length != 0 &&
+                      _vm.users.length != 0 &&
                       _vm.user.name != "Guest"
                         ? _c("div", { staticClass: "text-center" }, [
                             _c(
@@ -47301,73 +47305,84 @@ var render = function() {
                                     "col-6 mx-auto my-auto text-center"
                                 },
                                 [
-                                  _c(
-                                    "table",
-                                    _vm._l(_vm.allPredictions[index], function(
-                                      prediction
-                                    ) {
-                                      return _c("tr", [
-                                        _c(
-                                          "td",
-                                          {
-                                            staticStyle: {
-                                              "text-align": "right"
-                                            }
-                                          },
-                                          [
-                                            _c("small", [
-                                              _vm._v(
-                                                _vm._s(
-                                                  _vm.users[
-                                                    prediction.user_id - 1
-                                                  ].name
-                                                )
-                                              )
+                                  _vm.users.length != 0
+                                    ? _c(
+                                        "table",
+                                        _vm._l(
+                                          _vm.allPredictions[index],
+                                          function(prediction) {
+                                            return _c("tr", [
+                                              _c(
+                                                "td",
+                                                {
+                                                  staticStyle: {
+                                                    "text-align": "right"
+                                                  }
+                                                },
+                                                [
+                                                  _c("small", [
+                                                    _vm._v(
+                                                      _vm._s(
+                                                        _vm.users[
+                                                          prediction.user_id - 1
+                                                        ].name
+                                                      )
+                                                    )
+                                                  ])
+                                                ]
+                                              ),
+                                              _vm._v(" "),
+                                              prediction.winner == null
+                                                ? _c("td", [
+                                                    _c("small", [
+                                                      _vm._v(
+                                                        _vm._s(
+                                                          prediction.homeGoals
+                                                        ) +
+                                                          " - " +
+                                                          _vm._s(
+                                                            prediction.awayGoals
+                                                          )
+                                                      )
+                                                    ])
+                                                  ])
+                                                : _c("td", [
+                                                    _c("small", [
+                                                      prediction.winner ==
+                                                      match.homeTeam
+                                                        ? _c("span", [
+                                                            _c("span", [
+                                                              _vm._v("*")
+                                                            ])
+                                                          ])
+                                                        : _vm._e(),
+                                                      _vm._v(
+                                                        "\n                                                " +
+                                                          _vm._s(
+                                                            prediction.homeGoals
+                                                          ) +
+                                                          " - " +
+                                                          _vm._s(
+                                                            prediction.awayGoals
+                                                          ) +
+                                                          "\n                                            "
+                                                      ),
+                                                      prediction.winner ==
+                                                      match.awayTeam
+                                                        ? _c("span", [
+                                                            _c("span", [
+                                                              _vm._v("*")
+                                                            ])
+                                                          ])
+                                                        : _vm._e()
+                                                    ])
+                                                  ])
                                             ])
-                                          ]
+                                          }
                                         ),
-                                        _vm._v(" "),
-                                        prediction.winner == null
-                                          ? _c("td", [
-                                              _c("small", [
-                                                _vm._v(
-                                                  _vm._s(prediction.homeGoals) +
-                                                    " - " +
-                                                    _vm._s(prediction.awayGoals)
-                                                )
-                                              ])
-                                            ])
-                                          : _c("td", [
-                                              _c("small", [
-                                                prediction.winner ==
-                                                match.homeTeam
-                                                  ? _c("span", [
-                                                      _c("span", [_vm._v("*")])
-                                                    ])
-                                                  : _vm._e(),
-                                                _vm._v(
-                                                  "\n                                                " +
-                                                    _vm._s(
-                                                      prediction.homeGoals
-                                                    ) +
-                                                    " - " +
-                                                    _vm._s(
-                                                      prediction.awayGoals
-                                                    ) +
-                                                    "\n                                            "
-                                                ),
-                                                prediction.winner ==
-                                                match.awayTeam
-                                                  ? _c("span", [
-                                                      _c("span", [_vm._v("*")])
-                                                    ])
-                                                  : _vm._e()
-                                              ])
-                                            ])
-                                      ])
-                                    }),
-                                    0
-                                  )
+                                        0
+                                      )
+                                    : _vm._e()
                                 ]
                               ),
                               _vm._v(" "),

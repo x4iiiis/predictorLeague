@@ -26,7 +26,7 @@
                         <div v-else class="col-3 mx-auto" v-on:click="match.winner = match.homeTeam">
                             <img :src="match.homeEmblem" :alt="match.homeTeam">
                         </div>
-                        <div v-if="user.name!='Guest'" class="form-group col-6 my-auto mx-auto text-center">
+                        <div v-if="user.length != 0 && users.length != 0 && user.name!='Guest'" class="form-group col-6 my-auto mx-auto text-center">
                             <input class="col-5" :name="'home' + match.id" v-model="match.homeGoals" required type="number"></input>
                             <input class="col-5" :name="'away' + match.id" v-model="match.awayGoals" required type="number"></input>
                         </div>
@@ -67,7 +67,7 @@
                         </div>
                     </div>
                     <!-- @endforeach -->
-                    <div v-if="user.name!='Guest'" class="text-center">
+                    <div v-if="user.length != 0 && users.length != 0 && user.name!='Guest'" class="text-center">
                         <button class="btn btn-lg btn-primary mx-auto">Submit</button>
                     </div>
                 </form>
@@ -100,7 +100,7 @@
                                 <img :src="match.homeEmblem" :alt="match.homeTeam">
                             </div>
                             <div class="col-6 mx-auto my-auto text-center">
-                                <table>
+                                <table v-if="users.length != 0">
                                     <tr v-for="prediction in allPredictions[ index ]">
                                         <td style="text-align:right">
                                             <small>{{ users[prediction.user_id - 1].name }}</small>

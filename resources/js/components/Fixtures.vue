@@ -7,7 +7,7 @@
             <div v-if="!previouslySubmitted" class="card-body">
                 <form v-if="hasFixtures" action="prediction/store" method="post" @submit.prevent="onSubmit">
                     
-                    <div class="row">
+                    <div v-if="user.name == 'Guest'" class="row">
                         <a class="mx-auto" href="/login" v-if="user.length != 0">Login or register to take part!</a>
                     </div>
 

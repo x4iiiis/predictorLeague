@@ -20,7 +20,7 @@
                                 <hr> 
                             </div>
                         </div>
-                        <div v-if="!(match.etp_available && match.homeGoals == match.awayGoals && match.homeGoals != null)" class="col-3 mx-auto">
+                        <div v-if="!(match.etp_available && match.homeGoals == match.awayGoals && match.homeGoals != null)" :class="[user.name !='Guest' ? 'mx-auto col-3' : 'text-right col-6']">
                             <img :src="match.homeEmblem" :alt="match.homeTeam">
                         </div>
                         <div v-else class="col-3 mx-auto" v-on:click="match.winner = match.homeTeam">
@@ -30,7 +30,7 @@
                             <input class="col-5" :name="'home' + match.id" v-model="match.homeGoals" required type="number"></input>
                             <input class="col-5" :name="'away' + match.id" v-model="match.awayGoals" required type="number"></input>
                         </div>
-                        <div v-if="!(match.etp_available && match.homeGoals == match.awayGoals && match.homeGoals != null)" class="col-3 mx-auto">
+                        <div v-if="!(match.etp_available && match.homeGoals == match.awayGoals && match.homeGoals != null)" :class="[user.name !='Guest' ? 'mx-auto col-3' : 'ml-0 mr-auto col-6']">
                             <img :src="match.awayEmblem" :alt="match.awayTeam">
                         </div>
                         <div v-else class="col-3 mx-auto" v-on:click="match.winner = match.awayTeam">

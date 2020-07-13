@@ -47040,14 +47040,24 @@ var render = function() {
                               match.homeGoals == match.awayGoals &&
                               match.homeGoals != null
                             )
-                              ? _c("div", { staticClass: "col-3 mx-auto" }, [
-                                  _c("img", {
-                                    attrs: {
-                                      src: match.homeEmblem,
-                                      alt: match.homeTeam
-                                    }
-                                  })
-                                ])
+                              ? _c(
+                                  "div",
+                                  {
+                                    class: [
+                                      _vm.user.name != "Guest"
+                                        ? "mx-auto col-3"
+                                        : "text-right col-6"
+                                    ]
+                                  },
+                                  [
+                                    _c("img", {
+                                      attrs: {
+                                        src: match.homeEmblem,
+                                        alt: match.homeTeam
+                                      }
+                                    })
+                                  ]
+                                )
                               : _c(
                                   "div",
                                   {
@@ -47146,14 +47156,24 @@ var render = function() {
                               match.homeGoals == match.awayGoals &&
                               match.homeGoals != null
                             )
-                              ? _c("div", { staticClass: "col-3 mx-auto" }, [
-                                  _c("img", {
-                                    attrs: {
-                                      src: match.awayEmblem,
-                                      alt: match.awayTeam
-                                    }
-                                  })
-                                ])
+                              ? _c(
+                                  "div",
+                                  {
+                                    class: [
+                                      _vm.user.name != "Guest"
+                                        ? "mx-auto col-3"
+                                        : "ml-0 mr-auto col-6"
+                                    ]
+                                  },
+                                  [
+                                    _c("img", {
+                                      attrs: {
+                                        src: match.awayEmblem,
+                                        alt: match.awayTeam
+                                      }
+                                    })
+                                  ]
+                                )
                               : _c(
                                   "div",
                                   {

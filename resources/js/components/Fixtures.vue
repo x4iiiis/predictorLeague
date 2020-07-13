@@ -239,7 +239,8 @@
             }
         },
         props: [
-            'users', 'user'
+            'users',
+            'user'
         ],
     components: {
         Spinner

@@ -171,7 +171,7 @@ class MatchController extends Controller
 
     public function backend() {
         if(Auth::user()) {
-            return view('backend');
+            return view('backend')->with('users', User::all());
         }
         return redirect('login');
     }

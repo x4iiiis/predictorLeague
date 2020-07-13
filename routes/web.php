@@ -35,6 +35,9 @@ Route::get('/unlockpredictions', 'PredictionController@unlock');
 Route::get('/getteams', 'MatchController@create');
 Route::get('/getusers', 'LeagueTableController@index');
 Route::get('/whoami', 'LeagueTableController@whoAmI');
+
+Route::post('/user/flipsubmissionstatus', 'PredictionController@flipStatus');
+
 route::get('/getupcomingmatches', 'MatchController@upcomingMatches');
 route::get('/getresultedmatches', 'MatchController@resultedMatches');
 route::get('/getresultedmatches/{counter}', 'MatchController@moreResultedMatches');

@@ -145,6 +145,15 @@ class PredictionController extends Controller
         }
     }
 
+    public function flipStatus(Request $request) {
+        if(Auth::user()) {
+            $user = User::where('id', $request->id)->first();
+
+            $user->hasSubmitted = !$user->hasSubmitted;
+            $user->save();
+        }
+    }
+
     /**
      * Display the specified resource.
      *

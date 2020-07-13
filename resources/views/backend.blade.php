@@ -4,7 +4,7 @@
 <div class="container">
 
     <!-- Backend Vue Component -->
-    <backend />
+    <backend :users="{{ $users }}"/>
     
 </div>
 @endsection

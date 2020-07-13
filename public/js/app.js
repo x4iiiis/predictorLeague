@@ -2341,6 +2341,37 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 
 /* harmony default export */ __webpack_exports__["default"] = ({
   mounted: function mounted() {
@@ -2539,8 +2570,30 @@ __webpack_require__.r(__webpack_exports__);
       })["catch"](function (err) {
         console.log(err);
       });
+    },
+    flipSubmissionStatus: function flipSubmissionStatus(userID) {
+      var _this13 = this;
+
+      console.log("id n status", userID, status);
+      axios.post('/user/flipsubmissionstatus', {
+        id: userID
+      }).then(function (response) {
+        _this13.getUsers();
+      })["catch"](function (err) {
+        console.log(err.response);
+      });
+    },
+    getUsers: function getUsers() {
+      var _this14 = this;
+
+      axios.get('/getusers').then(function (res) {
+        _this14.users = res.data[1];
+      })["catch"](function (err) {
+        console.log(err.response);
+      });
     }
   },
+  props: ['users'],
   components: {
     Spinner: _components_Spinner_vue__WEBPACK_IMPORTED_MODULE_0__["default"]
   }
@@ -46059,6 +46112,63 @@ var render = function() {
               ]
             )
           ])
+        ]),
+        _vm._v(" "),
+        _c("div", { staticClass: "card my-2" }, [
+          _c("h3", { staticClass: "card-title pt-2" }, [
+            _vm._v("Prediction Status'")
+          ]),
+          _vm._v(" "),
+          _c("div", { staticClass: "card-body" }, [
+            _c(
+              "table",
+              {
+                staticClass: "table table-hover",
+                attrs: { id: "leagueTable" }
+              },
+              [
+                _vm._m(0),
+                _vm._v(" "),
+                !_vm.users.length > 0
+                  ? _c("tr", { staticStyle: { "text-align": "center" } }, [
+                      _c("td", [_c("Spinner")], 1),
+                      _vm._v(" "),
+                      _c("td", [_c("Spinner")], 1),
+                      _vm._v(" "),
+                      _c("td", [_c("Spinner")], 1),
+                      _vm._v(" "),
+                      _c("td")
+                    ])
+                  : _vm._e(),
+                _vm._v(" "),
+                _vm._l(_vm.users, function(user) {
+                  return _c("tr", { staticStyle: { "text-align": "center" } }, [
+                    _c("td", [_vm._v(_vm._s(user.id))]),
+                    _vm._v(" "),
+                    _c("td", [_vm._v(_vm._s(user.name))]),
+                    _vm._v(" "),
+                    _c("td", [_vm._v(_vm._s(user.hasSubmitted))]),
+                    _vm._v(" "),
+                    _c("td", [
+                      _c(
+                        "a",
+                        {
+                          staticClass: "btn btn-round btn-warning",
+                          on: {
+                            click: function($event) {
+                              return _vm.flipSubmissionStatus(user.id)
+                            }
+                          }
+                        },
+                        [_vm._v("Flip")]
+                      )
+                    ])
+                  ])
+                })
+              ],
+              2
+            )
+          ])
         ])
       ]),
       _vm._v(" "),
@@ -46376,7 +46486,7 @@ var render = function() {
                               _c("hr"),
                               _vm._v(" "),
                               _c("div", { staticClass: "btn-group dropup" }, [
-                                _vm._m(0, true),
+                                _vm._m(1, true),
                                 _vm._v(" "),
                                 _c("div", { staticClass: "dropdown-menu" }, [
                                   _c(
@@ -46457,7 +46567,7 @@ var render = function() {
                                             "div",
                                             { staticClass: "modal-body" },
                                             [
-                                              _vm._m(1, true),
+                                              _vm._m(2, true),
                                               _vm._v(" "),
                                               _c(
                                                 "form",
@@ -46573,7 +46683,7 @@ var render = function() {
                                             "div",
                                             { staticClass: "modal-body" },
                                             [
-                                              _vm._m(2, true),
+                                              _vm._m(3, true),
                                               _vm._v(" "),
                                               _c(
                                                 "form",
@@ -46710,7 +46820,7 @@ var render = function() {
                         ])
                       }),
                       _vm._v(" "),
-                      _vm._m(3)
+                      _vm._m(4)
                     ],
                     2
                   )
@@ -46784,7 +46894,7 @@ var render = function() {
                                 _vm._v(_vm._s(match.kickoff.split(" ")[4]))
                               ]),
                               _vm._v(" "),
-                              _vm._m(4, true)
+                              _vm._m(5, true)
                             ]
                           ),
                           _vm._v(" "),
@@ -46823,7 +46933,7 @@ var render = function() {
                             })
                           ]),
                           _vm._v(" "),
-                          _vm._m(5, true)
+                          _vm._m(6, true)
                         ]
                       )
                     ])
@@ -46835,6 +46945,20 @@ var render = function() {
   ])
 }
 var staticRenderFns = [
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("tr", { staticStyle: { "text-align": "center" } }, [
+      _c("th", [_vm._v("ID")]),
+      _vm._v(" "),
+      _c("th", [_vm._v("Name")]),
+      _vm._v(" "),
+      _c("th", [_vm._v("Status")]),
+      _vm._v(" "),
+      _c("th")
+    ])
+  },
   function() {
     var _vm = this
     var _h = _vm.$createElement

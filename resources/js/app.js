@@ -22,6 +22,7 @@ window.Vue = require('vue');
 Vue.component('example-component', require('./components/ExampleComponent.vue').default);
 Vue.component('index', require('./components/Index.vue').default);
 Vue.component('backend', require('./components/Backend.vue').default);
+Vue.component('password-reset', require('./components/accounts/PasswordReset.vue').default);
 
 /**
  * Next, we will create a fresh Vue application instance and attach it to

@@ -9,6 +9,8 @@ use App\Match;
 use Auth;
 use Carbon\Carbon;
 use Illuminate\Support\Str;
+use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Facades\Validator;
 
 class LeagueTableController extends Controller
 {
@@ -50,6 +52,32 @@ class LeagueTableController extends Controller
                 'user', new User([ "name" => "Guest", "hasSubmitted" => 0 ])
             ];
         }
+    }
+
+    public function checkEmail(Request $request) {
+        return User::where('email', $request->email)->first();
+    }
+
+    public function resetPassword(Request $request) {
+
+        $validator = Validator::make($request->all(), [
+            'id' => 'required|integer|exists:Users,id',
+            'newPassword' => 'required|string|min:3',
+        ]);
+
+        if ($validator->fails()) {
+            return $validator->errors();
+        }
+        else {
+            $user = User::where('id', $request->id)->first();
+            $user->password = Hash::make($request->newPassword);
+            $user->save();
+
+            Auth::login($user);
+
+            return 'Password updated successfully.';
+        }
+        
     }
 
     /**

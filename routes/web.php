@@ -38,6 +38,9 @@ Route::get('/whoami', 'LeagueTableController@whoAmI');
 
 Route::post('/user/flipsubmissionstatus', 'PredictionController@flipStatus');
 
+Route::post('/user/checkemailexists', 'LeagueTableController@checkEmail');
+Route::post('/user/resetpassword', 'LeagueTableController@resetPassword');
+
 route::get('/getupcomingmatches', 'MatchController@upcomingMatches');
 route::get('/getresultedmatches', 'MatchController@resultedMatches');
 route::get('/getresultedmatches/{counter}', 'MatchController@moreResultedMatches');

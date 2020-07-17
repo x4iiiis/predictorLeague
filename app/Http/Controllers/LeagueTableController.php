@@ -23,7 +23,7 @@ class LeagueTableController extends Controller
     {
         $users = User::orderBy('points', 'desc')
                 ->orderBy('correctScores', 'desc')
-                ->orderBy('correctOutcomes', 'desc')->get();
+                ->orderBy('correctOutcomes', 'desc')->get(); 
 
         // The following is for statistics purproses
         foreach($users as $user) {
@@ -37,9 +37,10 @@ class LeagueTableController extends Controller
         }
 
         return [
-            'users', $users
+            'usersForLeague', $users, 'users', User::all()
         ];
     }
+
 
     public function whoAmI() {
         if(Auth::user()) {

@@ -73,7 +73,6 @@ export default {
                 .get('/whoami')
                 .then(res => {
                     this.user = res.data[1];
-
                 })
                 .catch(err => {
                     console.log(err.response);
@@ -84,19 +83,12 @@ export default {
                 .get('/getusers')
                 .then(res => {
                     this.usersForLeague = res.data[1];
-                    this.ready = true;
-                    this.orderUsersByID();
+                    this.users = res.data[3];
                 })
                 .catch(err => {
                     console.log(err.response);
                 })
         },
-        orderUsersByID() {
-            this.users = this.usersForLeague;
-            this.users.sort(function (x, y) {
-                                return x.id - y.id;
-                            });
-        }
     },
     components: {
         Login,

@@ -12,7 +12,7 @@
             <!-- <Announcement></Announcement> -->
             
             <!-- League Table Vue Component -->
-            <League-Table :users="users" />
+            <League-Table :users="usersForLeague" />
 
             <!-- Rules Vue Component -->
             <Rules />
@@ -21,7 +21,7 @@
             <Key />
 
             <!-- User Stats Component -->
-            <Stats :users="users" />
+            <Stats :users="usersForLeague" />
         </div>
 
 
@@ -63,6 +63,7 @@ export default {
         return {
             user: [],
             users: [],
+            usersForLeague: [],
             ready: false
         }
     },
@@ -72,6 +73,7 @@ export default {
                 .get('/whoami')
                 .then(res => {
                     this.user = res.data[1];
+
                 })
                 .catch(err => {
                     console.log(err.response);
@@ -81,12 +83,18 @@ export default {
             axios
                 .get('/getusers')
                 .then(res => {
-                    this.users = res.data[1];
+                    this.usersForLeague = res.data[1];
                     this.ready = true;
+                    this.orderUsersByID();
                 })
                 .catch(err => {
                     console.log(err.response);
                 })
+        },
+        orderUsersByID() {
+            this.users = this.usersForLeague.sort(function (x, y) {
+                                return x.id - y.id;
+                            });
         }
     },
     components: {

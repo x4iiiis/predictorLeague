@@ -538,7 +538,8 @@
             }
         },
         orderUsersByID() {
-            this.users = this.users.sort(function (x, y) {
+            this.users = this.usersForLeague;
+            this.users.sort(function (x, y) {
                                 return x.id - y.id;
                             });
         },

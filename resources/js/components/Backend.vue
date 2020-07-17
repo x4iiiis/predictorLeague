@@ -530,11 +530,17 @@
                     .get('/getusers')
                     .then(res => {
                         this.users = res.data[1];
+                        this.orderUsersByID();
                     })
                     .catch(err => {
                         console.log(err.response);
                     })
             }
+        },
+        orderUsersByID() {
+            this.users = this.users.sort(function (x, y) {
+                                return x.id - y.id;
+                            });
         },
         props: [
             'users',

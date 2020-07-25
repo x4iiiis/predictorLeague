@@ -51,7 +51,7 @@
 <script>
 import PollQuestion from '../democracy/PollQuestion';
 import VotingOptions from '../democracy/VotingOptions';
-import PollAnswers from '../../../mixins/PollAnswers'
+import PollAnswers from '../../mixins/PollAnswers'
 import Spinner from '../Spinner.vue';
 
 export default {

@@ -12,7 +12,7 @@ class TeamsTableSeeder extends Seeder
     public function run()
     {
         $this->ScottishPremiership();
-        $this->ScottishChampionship();
+        // $this->ScottishChampionship();
         $this->PremierLeague();
     }
 
@@ -29,13 +29,13 @@ class TeamsTableSeeder extends Seeder
             'league' => 'Scottish Premiership'
         ]);
         DB::table('teams')->insert([
-            'name' => 'Hamilton Academical',
-            'emblem' => 'img/clubEmblems/Hamilton.png',
+            'name' => 'Dundee United',
+            'emblem' => 'img/clubEmblems/DundeeUnited.png',
             'league' => 'Scottish Premiership'
         ]);
         DB::table('teams')->insert([
-            'name' => 'Heart of Midlothian',
-            'emblem' => 'img/clubEmblems/HeartOfMidlothian.png',
+            'name' => 'Hamilton Academical',
+            'emblem' => 'img/clubEmblems/Hamilton.png',
             'league' => 'Scottish Premiership'
         ]);
         DB::table('teams')->insert([
@@ -103,13 +103,13 @@ class TeamsTableSeeder extends Seeder
             'league' => 'Scottish Championship'
         ]);
         DB::table('teams')->insert([
-            'name' => 'Dundee United',
-            'emblem' => 'img/clubEmblems/DundeeUnited.png',
+            'name' => 'Dunfermline Athletic',
+            'emblem' => 'img/clubEmblems/Dunfermline.png',
             'league' => 'Scottish Championship'
         ]);
         DB::table('teams')->insert([
-            'name' => 'Dunfermline Athletic',
-            'emblem' => 'img/clubEmblems/Dunfermline.png',
+            'name' => 'Heart of Midlothian',
+            'emblem' => 'img/clubEmblems/HeartOfMidlothian.png',
             'league' => 'Scottish Championship'
         ]);
         DB::table('teams')->insert([
@@ -123,13 +123,13 @@ class TeamsTableSeeder extends Seeder
             'league' => 'Scottish Championship'
         ]);
         DB::table('teams')->insert([
-            'name' => 'Partick Thistle',
-            'emblem' => 'img/clubEmblems/PartickThistle.png',
+            'name' => 'Queen of the South',
+            'emblem' => 'img/clubEmblems/QOTS.png',
             'league' => 'Scottish Championship'
         ]);
         DB::table('teams')->insert([
-            'name' => 'Queen of the South',
-            'emblem' => 'img/clubEmblems/QOTS.png',
+            'name' => 'Raith Rovers',
+            'emblem' => 'img/clubEmblems/RaithRovers.png',
             'league' => 'Scottish Championship'
         ]);
 
@@ -178,6 +178,11 @@ class TeamsTableSeeder extends Seeder
             'league' => 'Premier League'
         ]);
         DB::table('teams')->insert([
+            'name' => 'Leeds United',
+            'emblem' => 'img/clubEmblems/LeedsUnited.png',
+            'league' => 'Premier League'
+        ]);
+        DB::table('teams')->insert([
             'name' => 'Leicester City',
             'emblem' => 'img/clubEmblems/Leicester.png',
             'league' => 'Premier League'
@@ -203,11 +208,6 @@ class TeamsTableSeeder extends Seeder
             'league' => 'Premier League'
         ]);
         DB::table('teams')->insert([
-            'name' => 'Norwich City',
-            'emblem' => 'img/clubEmblems/Norwich.png',
-            'league' => 'Premier League'
-        ]);
-        DB::table('teams')->insert([
             'name' => 'Sheffield United',
             'emblem' => 'img/clubEmblems/SheffieldUnited.png',
             'league' => 'Premier League'
@@ -225,6 +225,11 @@ class TeamsTableSeeder extends Seeder
         DB::table('teams')->insert([
             'name' => 'Watford',
             'emblem' => 'img/clubEmblems/Watford.png',
+            'league' => 'Premier League'
+        ]);
+        DB::table('teams')->insert([
+            'name' => 'West Bromwich Albion',
+            'emblem' => 'img/clubEmblems/WestBrom.png',
             'league' => 'Premier League'
         ]);
         DB::table('teams')->insert([

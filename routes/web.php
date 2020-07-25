@@ -26,8 +26,6 @@ Route::post('/match/updatekickoff', 'MatchController@updateKickoff')->name('matc
 Route::post('match/updateetp', 'MatchController@updateETP')->name('match.etp');
 Route::post('match/reversefixture', 'MatchController@reverseFixture')->name('match.reverse');
 
-
-// Route::get('/updatetable', 'PredictionController@updateScores')->name('update.scores');
 Route::get('/recalculatetable', 'PredictionController@recalculateScores')->name('recalculate.scores');
 Route::get('/lockpredictions', 'PredictionController@lock');
 Route::get('/unlockpredictions', 'PredictionController@unlock');
@@ -37,6 +35,12 @@ Route::get('/getusers', 'LeagueTableController@index');
 Route::get('/whoami', 'LeagueTableController@whoAmI');
 
 Route::post('/user/flipsubmissionstatus', 'PredictionController@flipStatus');
+
+Route::post('/vote', 'VoteController@store');
+Route::get('/getvotes', 'VoteController@index');
+Route::get('/openpolls', 'VoteController@openPolls');
+Route::get('/closepolls', 'VoteController@closePolls');
+Route::get('/clearpolls', 'VoteController@clear');
 
 Route::post('/user/checkemailexists', 'LeagueTableController@checkEmail');
 Route::post('/user/resetpassword', 'LeagueTableController@resetPassword');

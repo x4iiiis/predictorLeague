@@ -50,7 +50,7 @@ class LeagueTableController extends Controller
         }
         else {
             return [
-                'user', new User([ "name" => "Guest", "hasSubmitted" => 0 ])
+                'user', new User([ "name" => "Guest", "hasSubmitted" => 0, "hasVoted" => 1 ])
             ];
         }
     }

@@ -2,14 +2,20 @@
   <div class="container">
     <div class="row justify-content-center">
         
-        <div class="col-12 col-md-6">
+        <!-- <div class="col-12 col-md-6"> -->
             <!-- Login Vue Component -->
-            <Login />
+            <!-- <Login /> -->
+        <!-- </div> -->
+
+        <div v-if="!user.hasVoted && ready" class="col-10 mx-auto">
+            <!-- Polling Station -->
+            <PollingStation :user="user" @voted="closePollingStation" />
         </div>
         
-        <div class="col-md-7">
+        <div v-if="user.hasVoted" class="col-md-7">
             <!-- Announcement Vue Commponent -->
             <!-- <Announcement></Announcement> -->
+
             
             <!-- League Table Vue Component -->
             <League-Table :users="usersForLeague" />
@@ -25,7 +31,7 @@
         </div>
 
 
-        <div class="col-md-5">
+        <div v-if="user.hasVoted" class="col-md-5">
             <!-- Fixtures Vue Component --> 
             <Fixtures class="my-2" :users="users" :user="user"/>
 
@@ -43,6 +49,7 @@
 <script>
 import Login from '../components/Login';
 import Announcement from '../components/Announcement';
+import PollingStation from '../components/democracy/PollingStation';
 import LeagueTable from '../components/LeagueTable';
 import Rules from '../components/Rules';
 import Key from '../components/Key';
@@ -84,15 +91,23 @@ export default {
                 .then(res => {
                     this.usersForLeague = res.data[1];
                     this.users = res.data[3];
+                    this.ready = true;
                 })
                 .catch(err => {
                     console.log(err.response);
                 })
         },
+        closePollingStation() {
+            var self = this;
+            setTimeout( function() {
+                self.user.hasVoted = true;
+            }, 3000);
+        }
     },
     components: {
         Login,
         Announcement,
+        PollingStation,
         LeagueTable,
         Rules,
         Key,

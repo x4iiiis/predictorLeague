@@ -6,13 +6,19 @@
             <!-- Login Vue Component -->
             <!-- <Login /> -->
         <!-- </div> -->
+        <div v-if="!ready" class="col-1 mx-auto">
+            <Spinner />
+        </div>
+        
 
         <div v-if="!user.hasVoted && ready" class="col-10 mx-auto">
             <!-- Polling Station -->
             <PollingStation :user="user" @voted="closePollingStation" />
         </div>
+
+
         
-        <div v-if="user.hasVoted" class="col-md-7">
+        <div v-if="user.hasVoted && ready" class="col-md-7">
             <!-- Announcement Vue Commponent -->
             <!-- <Announcement></Announcement> -->
 
@@ -31,7 +37,7 @@
         </div>
 
 
-        <div v-if="user.hasVoted" class="col-md-5">
+        <div v-if="user.hasVoted && ready" class="col-md-5">
             <!-- Fixtures Vue Component --> 
             <Fixtures class="my-2" :users="users" :user="user"/>
 
@@ -42,6 +48,8 @@
         <!-- <p>Down for some gentle TLC.</p>
         <br>
         <p>Check back soon!</p> -->
+
+
     </div>
 </div>
 </template>
@@ -56,6 +64,7 @@ import Key from '../components/Key';
 import Stats from '../components/Stats';
 import Fixtures from '../components/Fixtures';
 import Results from '../components/Results';
+import Spinner from '../components/Spinner.vue';
 
 export default {
     async mounted() {
@@ -113,7 +122,8 @@ export default {
         Key,
         Stats,
         Fixtures,
-        Results
+        Results,
+        Spinner
     }
 }
 </script>

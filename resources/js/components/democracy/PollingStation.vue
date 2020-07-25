@@ -35,7 +35,7 @@
                             </div>
                         </div>
 
-                        <div v-else>
+                        <div v-else class="col-1 mx-auto">
                             <Spinner />
                         </div>
                     </div>

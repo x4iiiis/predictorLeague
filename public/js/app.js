@@ -3052,6 +3052,7 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _components_Stats__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! ../components/Stats */ "./resources/js/components/Stats.vue");
 /* harmony import */ var _components_Fixtures__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(/*! ../components/Fixtures */ "./resources/js/components/Fixtures.vue");
 /* harmony import */ var _components_Results__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(/*! ../components/Results */ "./resources/js/components/Results.vue");
+/* harmony import */ var _components_Spinner_vue__WEBPACK_IMPORTED_MODULE_10__ = __webpack_require__(/*! ../components/Spinner.vue */ "./resources/js/components/Spinner.vue");
 
 
 function asyncGeneratorStep(gen, resolve, reject, _next, _throw, key, arg) { try { var info = gen[key](arg); var value = info.value; } catch (error) { reject(error); return; } if (info.done) { resolve(value); } else { Promise.resolve(value).then(_next, _throw); } }
@@ -3106,6 +3107,15 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+
 
 
 
@@ -3189,7 +3199,8 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
     Key: _components_Key__WEBPACK_IMPORTED_MODULE_6__["default"],
     Stats: _components_Stats__WEBPACK_IMPORTED_MODULE_7__["default"],
     Fixtures: _components_Fixtures__WEBPACK_IMPORTED_MODULE_8__["default"],
-    Results: _components_Results__WEBPACK_IMPORTED_MODULE_9__["default"]
+    Results: _components_Results__WEBPACK_IMPORTED_MODULE_9__["default"],
+    Spinner: _components_Spinner_vue__WEBPACK_IMPORTED_MODULE_10__["default"]
   }
 });
 
@@ -48476,6 +48487,10 @@ var render = function() {
   var _c = _vm._self._c || _h
   return _c("div", { staticClass: "container" }, [
     _c("div", { staticClass: "row justify-content-center" }, [
+      !_vm.ready
+        ? _c("div", { staticClass: "col-1 mx-auto" }, [_c("Spinner")], 1)
+        : _vm._e(),
+      _vm._v(" "),
       !_vm.user.hasVoted && _vm.ready
         ? _c(
             "div",
@@ -48490,7 +48505,7 @@ var render = function() {
           )
         : _vm._e(),
       _vm._v(" "),
-      _vm.user.hasVoted
+      _vm.user.hasVoted && _vm.ready
         ? _c(
             "div",
             { staticClass: "col-md-7" },
@@ -48507,7 +48522,7 @@ var render = function() {
           )
         : _vm._e(),
       _vm._v(" "),
-      _vm.user.hasVoted
+      _vm.user.hasVoted && _vm.ready
         ? _c(
             "div",
             { staticClass: "col-md-5" },
@@ -49903,7 +49918,12 @@ var render = function() {
                         }),
                         0
                       )
-                    : _c("div", [_c("Spinner")], 1)
+                    : _c(
+                        "div",
+                        { staticClass: "col-1 mx-auto" },
+                        [_c("Spinner")],
+                        1
+                      )
                 ],
                 1
               )

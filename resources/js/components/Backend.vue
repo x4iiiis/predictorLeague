@@ -157,9 +157,9 @@
                             </tr>
                         </table>
 
-                        <button @click="openPolls">Open Polls</button>
-                        <button @click="closePolls">Close Polls</button>
-                        <button @click="clearVotes" class="bg-danger">Clear Polls</button>
+                        <button class="col-5 mx-auto" @click="openPolls">Open Polls</button>
+                        <button class="col-5 mx-auto" @click="closePolls">Close Polls</button>
+                        <button class="col-5 mx-auto bg-danger my-2" @click="clearVotes">Clear Polls</button>
                         
                     </div>
                 </div>

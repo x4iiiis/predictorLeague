@@ -2,66 +2,40 @@
   <div class="container">
     <div class="row justify-content-center">
         
-        <!-- <div class="col-12 col-md-6"> -->
-            <!-- Login Vue Component -->
-            <!-- <Login /> -->
-        <!-- </div> -->
         <div v-if="!ready" class="col-1 mx-auto">
             <Spinner />
         </div>
         
-
         <div v-if="!user.hasVoted && ready" class="col-10 mx-auto">
-            <!-- Polling Station -->
             <PollingStation :user="user" @voted="closePollingStation" />
         </div>
 
-
-        
         <div v-if="user.hasVoted && ready" class="col-md-7">
-            <!-- Announcement Vue Commponent -->
             <!-- <Announcement></Announcement> -->
-
-            
-            <!-- League Table Vue Component -->
             <League-Table :users="usersForLeague" />
-
-            <!-- Rules Vue Component -->
             <Rules />
-
-            <!-- Key Vue Component -->
             <Key />
-
-            <!-- User Stats Component -->
             <Stats :users="usersForLeague" />
+            <Archive />
         </div>
-
 
         <div v-if="user.hasVoted && ready" class="col-md-5">
-            <!-- Fixtures Vue Component --> 
             <Fixtures class="my-2" :users="users" :user="user"/>
-
-            <!-- Results Vue Component -->
             <Results :users="users" />
         </div>
-
-        <!-- <p>Down for some gentle TLC.</p>
-        <br>
-        <p>Check back soon!</p> -->
-
 
     </div>
 </div>
 </template>
 
 <script>
-import Login from '../components/Login';
 import Announcement from '../components/Announcement';
 import PollingStation from '../components/democracy/PollingStation';
 import LeagueTable from '../components/LeagueTable';
 import Rules from '../components/Rules';
 import Key from '../components/Key';
 import Stats from '../components/Stats';
+import Archive from '../components/archive/Archive';
 import Fixtures from '../components/Fixtures';
 import Results from '../components/Results';
 import Spinner from '../components/Spinner.vue';
@@ -114,13 +88,13 @@ export default {
         }
     },
     components: {
-        Login,
         Announcement,
         PollingStation,
         LeagueTable,
         Rules,
         Key,
         Stats,
+        Archive,
         Fixtures,
         Results,
         Spinner

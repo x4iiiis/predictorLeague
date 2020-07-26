@@ -1,10 +1,10 @@
 <template>
-    <div  class="card my-2">
+    <div class="card my-2">
         
         <div class="card-header">League Table</div>
 
         <div class="card-body">
-            <table class="table table-hover" id="leagueTable">
+            <table class="table table-hover">
                 <tr style="text-align:center">
                     <th></th>
                     <th>Points</th>

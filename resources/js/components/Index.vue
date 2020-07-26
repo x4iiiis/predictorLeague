@@ -16,7 +16,7 @@
             <Rules />
             <Key />
             <Stats :users="usersForLeague" />
-            <!-- <Archive /> -->
+            <Archive />
         </div>
 
         <div v-if="user.hasVoted && ready" class="col-md-5">

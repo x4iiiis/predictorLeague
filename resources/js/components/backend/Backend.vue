@@ -3,155 +3,15 @@
         <div class="row text-center">
 
             <div class="col-md-5 mx-auto">
-
-                <div class="card my-2">
-                    <h3 class="card-title pt-2">Match Maker </h3>
-                    <div class="card-body">
-                        <table class="table">
-                            <tr>
-                                <td><a href="https://www.bbc.co.uk/sport/football/scottish-premiership/scores-fixtures" target="_blank">Scottish Premiership</a></td>
-                                <td><a href="https://www.bbc.co.uk/sport/football/premier-league/scores-fixtures" target="_blank">Premier League</a></td>
-                            </tr>
-                            <tr>
-                                <td><a href="https://www.bbc.co.uk/sport/football/scottish-cup/scores-fixtures" target="_blank">Scottish Cup</a></td>
-                                <td><a href="https://www.bbc.co.uk/sport/football/fa-cup/scores-fixtures" target="_blank">FA Cup</a></td>
-                            </tr>
-                            <tr>
-                                <td><a href="https://www.bbc.co.uk/sport/football/scottish-league-cup/scores-fixtures" target="_blank">Scottish League Cup</a></td>
-                                <td><a href="https://www.bbc.co.uk/sport/football/league-cup/scores-fixtures" target="_blank">English League Cup</a></td>
-                            </tr>
-                            <!-- <tr>
-                                <td><a href="https://www.bbc.co.uk/sport/football/scottish-championship/scores-fixtures" target="_blank">Scottish Championship</a></td>
-                                <td></td>
-                            </tr> -->
-                        </table>
-
-                        <form action="/match/store" method="post" @submit.prevent="onSubmit">
-                            <div class="form-group">
-                                <label>Home Team</label>
-                                <select  class="form-control" placeholder="homeTeam" v-model="match.homeTeam">
-
-                                    <option v-for="(team, index) in teams" :key="team.id">{{team.name}}</option>
-
-                                </select>
-                            </div>
-                            <br />
-                            <div class="form-group">
-                                <label>Away Team</label>
-                                <select  class="form-control" placeholder="awayTeam" v-model="match.awayTeam">
-
-                                        <option v-for="(team, index) in teams" :key="team.id">{{team.name}}</option>
-
-                                </select>
-                            </div>
-                            <br />
-                            <div class="form-group">
-                                <label>Kickoff</label>
-                                <input class="form-control" type="datetime-local" id="kickoff" placeholder="dateTime" v-model="match.kickoff">
-                            </div>
-
-                            <div class="form-group mt-3">
-                                <hr class="col-8 mx-auto">
-                                <label>Extra Time and / or Penalties Available</label>
-                                <input class="form-control col-1 mx-auto text-center" type="checkbox" v-model="match.etp_available">
-                                <hr class="col-5 mx-auto">
-                            </div>
-
-                            <button type="submit" class="btn btn-primary">Submit</button>
-                        </form>
-
-                    </div>
-                </div>
-
-                <!-- show which users have submitted - and be able to alter it here -->
-                <div class="card my-2">
-                    <h3 class="card-title pt-2">Prediction Status'</h3>
-                    <div class="card-body">
-
-                        <table class="table table-hover" id="leagueTable">
-                            <tr style="text-align:center">
-                                <th>ID</th>
-                                <th>Name</th>
-                                <th>Status</th>
-                                <th></th>
-                            </tr>
-                            
-                            <tr v-if="!users.length > 0" style="text-align:center;">
-                                <td><Spinner /></td>
-                                <td><Spinner /></td>
-                                <td><Spinner /></td>
-                                <td></td>
-                            </tr>
-                            <tr v-for="user in users" style="text-align:center">
-                                <td>{{ user.id }}</td>
-                                <td>{{ user.name }}</td>
-                                <td>{{ user.hasSubmitted }}</td>
-                                <td><a class="btn btn-round btn-warning" @click="flipSubmissionStatus(user.id)">Flip</a></td>
-                            </tr>
-                        </table>
-
-                        <a class="btn btn-round btn-success col-5" v-on:click="unlock()">Unlock Predictions</a>
-                        <a class="btn btn-round btn-danger col-5" v-on:click="lock()">Lock Predictions</a>
-                        
-                    </div>
-                </div>
-                
-                <div class="card my-2">
-                    <h3 class="card-title pt-2">Poll Results</h3>
-                    <div class="card-body" v-if="votes.length > 0">
-
-                        <span>Question:</span>
-                        <div class="col-11 mx-auto mt-2">
-                            <PollQuestion />
-
-                            <div v-if="this.votes.length > 0">
-                                <div v-for="(vote, index) in voteCount" class="col-12 px-0">
-                                    
-                                    <span class="mr-3">{{ votePercentages[index] }} %</span> - {{ availableAnswers()[index] }}
-                                    <div class="bg-info mb-3" v-bind:style="{width: votePercentages[index] + '%'}" style="height: 20px;"></div>
-                                </div>
-                            </div>
-
-                        </div>
-                        
-                    </div>
-                </div>
-
-                <div class="card my-2">
-                    <h3 class="card-title pt-2">Voter Status'</h3>
-                    <div class="card-body">
-
-                        <table class="table table-hover" id="leagueTable">
-                            <tr style="text-align:center">
-                                <th>ID</th>
-                                <th>Name</th>
-                                <th>Status</th>
-                            </tr>
-                            
-                            <tr v-if="!users.length > 0" style="text-align:center;">
-                                <td><Spinner /></td>
-                                <td><Spinner /></td>
-                                <td><Spinner /></td>
-                            </tr>
-                            <tr v-for="user in users" style="text-align:center">
-                                <td>{{ user.id }}</td>
-                                <td>{{ user.name }}</td>
-                                <td>{{ user.hasVoted }}</td>
-                            </tr>
-                        </table>
-
-                        <button class="col-5 mx-auto" @click="openPolls">Open Polls</button>
-                        <button class="col-5 mx-auto" @click="closePolls">Close Polls</button>
-                        <button class="col-5 mx-auto bg-danger my-2" @click="clearVotes">Clear Polls</button>
-                        
-                    </div>
-                </div>
-
-
+                <MatchMaker :teams="teams" @submitted="getUnresultedMatches" />
+                <PredictionStatus :users="users" @getusers="getUsers" />
+                <PollResults />
+                <VoterStatus :users="users" @getusers="getUsers" />
             </div>
 
 
             <div v-if="!showResulted" class="col-md-6 card mx-auto my-2">
+
                 <div class="row">
                     <a class="btn btn-round btn-warning col-6 mx-auto" v-on:click="getResultedMatches()">Edit Resulted</a>
                 </div>
@@ -372,30 +232,24 @@
 </template>
 
 <script>
-    import PollQuestion from '../components/democracy/PollQuestion';
-    import VotingOptions from '../components/democracy/VotingOptions';
-    import PollAnswers from '../mixins/PollAnswers'
-    import Spinner from '../components/Spinner.vue';
+    import MatchMaker from '../backend/MatchMaker'
+    import PredictionStatus from '../backend/PredictionStatus'
+    import PollResults from '../backend/PollResults'
+    import VoterStatus from '../backend/VoterStatus'
+    import Spinner from '../Spinner';
 
     export default {
         mounted() {
             console.log('Fixtures Component mounted.')
-            this.match.etp_available = false;
             this.getTeams();
-            this.getVotes();
         },
-        mixins: [ PollAnswers ],
         data() {
             return {
                 teams: [],
                 matches: [],
-                match: {},
                 ready: false,
                 submitted: false,
                 showResulted: false,
-                votes: [],
-                voteCount: [],
-                votePercentages: [],
             }
         },
         methods: {
@@ -431,23 +285,6 @@
                         this.ready = true;
                     })
                     .catch( err => {
-                        console.log(err.response);
-                    })
-            },
-            onSubmit() {
-                axios
-                    .post('/match/store', { 
-                        homeTeam: this.match.homeTeam,
-                        awayTeam: this.match.awayTeam,
-                        kickoff: this.match.kickoff,
-                        etp_available: this.match.etp_available
-                    })
-                    .then(response => {
-                        console.log('Match Created');
-                        this.ready = false;
-                        this.getUnresultedMatches();
-                    })
-                    .catch(err => {
                         console.log(err.response);
                     })
             },
@@ -577,42 +414,6 @@
                         console.log(err.response);
                     })
             },
-            unlock() {
-                axios
-                    .get('/unlockpredictions')
-                    .then(res => {
-                        console.log('Predictions unlocked!');
-                        this.getUsers();
-                    })
-                    .catch(err => {
-                        console.log(err);
-                    })
-            },
-            lock() {
-                axios
-                    .get('/lockpredictions')
-                    .then(res => {
-                        console.log('Predictions locked!');
-                        this.getUsers();
-                    })
-                    .catch(err => {
-                        console.log(err);
-                    })
-            },
-            flipSubmissionStatus(userID) {
-                console.log("id n status", userID, status);
-
-                axios
-                    .post('/user/flipsubmissionstatus', {
-                        id: userID,
-                    })
-                    .then(response => {
-                        this.getUsers();
-                    })
-                    .catch(err => {
-                        console.log(err.response);
-                    })
-            },
             getUsers() {
                 axios
                     .get('/getusers')
@@ -623,75 +424,16 @@
                         console.log(err.response);
                     })
             },
-            getVotes() {
-                axios
-                    .get('/getvotes')
-                    .then(res => {
-                        this.votes = res.data;
-                        this.countVotes();
-                    })
-                    .catch(err => {
-                        console.log(err.response);
-                    })
-            },
-            countVotes() {
-                for(var i = 0; i <  this.availableAnswers().length; i++) {
-                    this.voteCount[i] = 0;
-                }
-
-                for(i = 0; i <  this.availableAnswers().length; i++) {
-                    for(var j = 0; j < this.votes.length; j++) {
-                        if(this.votes[j].vote == this.availableAnswers()[i]) {
-                            this.voteCount[i] += 1;
-                        } 
-                    }
-                }
-
-                for(i = 0; i < this.voteCount.length; i++) {
-                    this.votePercentages[i] = parseFloat(( this.voteCount[i] / this.votes.length ) * 100).toFixed(2);
-                }
-            },
-            openPolls() {
-                axios
-                    .get('/openpolls')
-                    .then(res => {
-                        console.log('Polls opened!');
-                        this.getUsers();
-                    })
-                    .catch(err => {
-                        console.log(err);
-                    })
-            },
-            closePolls() {
-                axios
-                    .get('/closepolls')
-                    .then(res => {
-                        console.log('Polls closed!');
-                        this.getUsers();
-                    })
-                    .catch(err => {
-                        console.log(err);
-                    })
-            },
-            clearVotes() {
-                axios
-                    .get('/clearpolls')
-                    .then(res => {
-                        console.log('Votes Deleted!');
-                        this.closePolls();
-                    })
-                    .catch(err => {
-                        console.log(err);
-                    })
-            }
         },
         props: [
             'users',
         ],
         components: {
-            PollQuestion,
-            VotingOptions,
-            Spinner
+            MatchMaker,
+            PredictionStatus,
+            PollResults,
+            VoterStatus,
+            Spinner,
         }
     }
 </script>

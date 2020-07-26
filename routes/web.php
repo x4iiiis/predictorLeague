@@ -22,6 +22,7 @@ Route::post('/prediction/store', 'PredictionController@store')->name('prediction
 Route::post('/match/submitscores', 'MatchController@updateScores')->name('match.scores');
 Route::post('/match/resetmatch', 'MatchController@resetMatch')->name('match.reset');
 Route::post('/match/cancelmatch', 'MatchController@cancelMatch')->name('match.cancel');
+Route::post('/match/updateteams', 'MatchController@updateTeams')->name('match.teams');
 Route::post('/match/updatekickoff', 'MatchController@updateKickoff')->name('match.kickoff');
 Route::post('match/updateetp', 'MatchController@updateETP')->name('match.etp');
 Route::post('match/reversefixture', 'MatchController@reverseFixture')->name('match.reverse');

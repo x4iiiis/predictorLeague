@@ -2445,6 +2445,21 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 
 
 
@@ -2464,8 +2479,6 @@ __webpack_require__.r(__webpack_exports__);
       match: {},
       ready: false,
       submitted: false,
-      locked: false,
-      unlocked: false,
       showResulted: false,
       votes: [],
       voteCount: [],
@@ -2573,15 +2586,15 @@ __webpack_require__.r(__webpack_exports__);
         console.log(err.response);
       });
     },
-    onEditETP: function onEditETP(match) {
+    onEditTeams: function onEditTeams(match) {
       var _this8 = this;
 
-      axios.post('match/updateetp', {
+      axios.post('/match/updateteams', {
         id: match.id,
-        etp_available: match.etp_available
+        homeTeam: match.homeTeam,
+        awayTeam: match.awayTeam
       }).then(function (response) {
-        console.log('ET & Pens Availability Updated');
-        console.log(response);
+        console.log('Match teams updated');
         _this8.ready = false;
 
         _this8.getUnresultedMatches();
@@ -2589,8 +2602,24 @@ __webpack_require__.r(__webpack_exports__);
         console.log(err.response);
       });
     },
-    cancelMatch: function cancelMatch(match) {
+    onEditETP: function onEditETP(match) {
       var _this9 = this;
+
+      axios.post('match/updateetp', {
+        id: match.id,
+        etp_available: match.etp_available
+      }).then(function (response) {
+        console.log('ET & Pens Availability Updated');
+        console.log(response);
+        _this9.ready = false;
+
+        _this9.getUnresultedMatches();
+      })["catch"](function (err) {
+        console.log(err.response);
+      });
+    },
+    cancelMatch: function cancelMatch(match) {
+      var _this10 = this;
 
       if (confirm("Are you sure you want to cancel " + match.homeTeam + " vs " + match.awayTeam + "?")) {
         axios.post('/match/cancelmatch', {
@@ -2598,16 +2627,16 @@ __webpack_require__.r(__webpack_exports__);
         }).then(function (response) {
           console.log(match.homeTeam + " vs " + match.awayTeam + " cancelled");
           console.log(response);
-          _this9.ready = false;
+          _this10.ready = false;
 
-          _this9.getUnresultedMatches();
+          _this10.getUnresultedMatches();
         })["catch"](function (err) {
           console.log(err.response);
         });
       }
     },
     reverseFixture: function reverseFixture(match) {
-      var _this10 = this;
+      var _this11 = this;
 
       if (confirm("Are you sure you want to switch sides for " + match.homeTeam + " vs " + match.awayTeam + "?")) {
         axios.post('match/reversefixture', {
@@ -2615,9 +2644,9 @@ __webpack_require__.r(__webpack_exports__);
         }).then(function (response) {
           console.log(match.homeTeam + " vs " + match.awayTeam + " reversed");
           console.log(response);
-          _this10.ready = false;
+          _this11.ready = false;
 
-          _this10.getUnresultedMatches();
+          _this11.getUnresultedMatches();
         })["catch"](function (err) {
           console.log(err.response);
         });
@@ -2631,55 +2660,55 @@ __webpack_require__.r(__webpack_exports__);
       });
     },
     unlock: function unlock() {
-      var _this11 = this;
+      var _this12 = this;
 
       axios.get('/unlockpredictions').then(function (res) {
         console.log('Predictions unlocked!');
-        _this11.locked = false;
-        _this11.unlocked = true;
+
+        _this12.getUsers();
       })["catch"](function (err) {
         console.log(err);
       });
     },
     lock: function lock() {
-      var _this12 = this;
+      var _this13 = this;
 
       axios.get('/lockpredictions').then(function (res) {
         console.log('Predictions locked!');
-        _this12.unlocked = false;
-        _this12.locked = true;
+
+        _this13.getUsers();
       })["catch"](function (err) {
         console.log(err);
       });
     },
     flipSubmissionStatus: function flipSubmissionStatus(userID) {
-      var _this13 = this;
+      var _this14 = this;
 
       console.log("id n status", userID, status);
       axios.post('/user/flipsubmissionstatus', {
         id: userID
       }).then(function (response) {
-        _this13.getUsers();
+        _this14.getUsers();
       })["catch"](function (err) {
         console.log(err.response);
       });
     },
     getUsers: function getUsers() {
-      var _this14 = this;
+      var _this15 = this;
 
       axios.get('/getusers').then(function (res) {
-        _this14.users = res.data[3];
+        _this15.users = res.data[3];
       })["catch"](function (err) {
         console.log(err.response);
       });
     },
     getVotes: function getVotes() {
-      var _this15 = this;
+      var _this16 = this;
 
       axios.get('/getvotes').then(function (res) {
-        _this15.votes = res.data;
+        _this16.votes = res.data;
 
-        _this15.countVotes();
+        _this16.countVotes();
       })["catch"](function (err) {
         console.log(err.response);
       });
@@ -2702,34 +2731,34 @@ __webpack_require__.r(__webpack_exports__);
       }
     },
     openPolls: function openPolls() {
-      var _this16 = this;
+      var _this17 = this;
 
       axios.get('/openpolls').then(function (res) {
         console.log('Polls opened!');
-
-        _this16.getUsers();
-      })["catch"](function (err) {
-        console.log(err);
-      });
-    },
-    closePolls: function closePolls() {
-      var _this17 = this;
-
-      axios.get('/closepolls').then(function (res) {
-        console.log('Polls closed!');
 
         _this17.getUsers();
       })["catch"](function (err) {
         console.log(err);
       });
     },
-    clearVotes: function clearVotes() {
+    closePolls: function closePolls() {
       var _this18 = this;
+
+      axios.get('/closepolls').then(function (res) {
+        console.log('Polls closed!');
+
+        _this18.getUsers();
+      })["catch"](function (err) {
+        console.log(err);
+      });
+    },
+    clearVotes: function clearVotes() {
+      var _this19 = this;
 
       axios.get('/clearpolls').then(function (res) {
         console.log('Votes Deleted!');
 
-        _this18.closePolls();
+        _this19.closePolls();
       })["catch"](function (err) {
         console.log(err);
       });
@@ -46484,48 +46513,6 @@ var render = function() {
     _c("div", { staticClass: "row text-center" }, [
       _c("div", { staticClass: "col-md-5 mx-auto" }, [
         _c("div", { staticClass: "card my-2" }, [
-          _c("div", { staticClass: "row" }, [
-            _c(
-              "a",
-              {
-                staticClass: "btn btn-round btn-success col-6",
-                on: {
-                  click: function($event) {
-                    return _vm.unlock()
-                  }
-                }
-              },
-              [_vm._v("Unlock Predictions")]
-            ),
-            _vm._v(" "),
-            _c(
-              "a",
-              {
-                staticClass: "btn btn-round btn-danger col-6",
-                on: {
-                  click: function($event) {
-                    return _vm.lock()
-                  }
-                }
-              },
-              [_vm._v("Lock Predictions")]
-            ),
-            _vm._v(" "),
-            _vm.locked
-              ? _c("div", { staticClass: "col-6 mx-auto" }, [
-                  _c("span", { staticClass: "fa fa-lock fa-5x text-danger" })
-                ])
-              : _vm.unlocked
-              ? _c("div", { staticClass: "col-6 mx-auto" }, [
-                  _c("span", { staticClass: "fa fa-unlock fa-5x text-success" })
-                ])
-              : _c("div", { staticClass: "col-6 mx-auto" }, [
-                  _c("span", { staticClass: "fa fa-key fa-5x" })
-                ])
-          ])
-        ]),
-        _vm._v(" "),
-        _c("div", { staticClass: "card my-2" }, [
           _c("h3", { staticClass: "card-title pt-2" }, [
             _vm._v("Match Maker ")
           ]),
@@ -46788,6 +46775,32 @@ var render = function() {
                 })
               ],
               2
+            ),
+            _vm._v(" "),
+            _c(
+              "a",
+              {
+                staticClass: "btn btn-round btn-success col-5",
+                on: {
+                  click: function($event) {
+                    return _vm.unlock()
+                  }
+                }
+              },
+              [_vm._v("Unlock Predictions")]
+            ),
+            _vm._v(" "),
+            _c(
+              "a",
+              {
+                staticClass: "btn btn-round btn-danger col-5",
+                on: {
+                  click: function($event) {
+                    return _vm.lock()
+                  }
+                }
+              },
+              [_vm._v("Lock Predictions")]
             )
           ])
         ]),
@@ -47239,6 +47252,18 @@ var render = function() {
                                       staticClass: "dropdown-item",
                                       attrs: {
                                         "data-toggle": "modal",
+                                        "data-target": "#teams-" + match.id
+                                      }
+                                    },
+                                    [_vm._v("Edit Teams")]
+                                  ),
+                                  _vm._v(" "),
+                                  _c(
+                                    "a",
+                                    {
+                                      staticClass: "dropdown-item",
+                                      attrs: {
+                                        "data-toggle": "modal",
                                         "data-target": "#kickoff-" + match.id
                                       }
                                     },
@@ -47277,7 +47302,7 @@ var render = function() {
                                 {
                                   staticClass: "modal fade",
                                   attrs: {
-                                    id: "kickoff-" + match.id,
+                                    id: "teams-" + match.id,
                                     tabindex: "-1",
                                     role: "dialog"
                                   }
@@ -47299,6 +47324,216 @@ var render = function() {
                                             { staticClass: "modal-body" },
                                             [
                                               _vm._m(4, true),
+                                              _vm._v(" "),
+                                              _c(
+                                                "form",
+                                                {
+                                                  attrs: {
+                                                    action: "match/editkteams",
+                                                    method: "post"
+                                                  },
+                                                  on: {
+                                                    submit: function($event) {
+                                                      $event.preventDefault()
+                                                      return _vm.onEditTeams(
+                                                        match
+                                                      )
+                                                    }
+                                                  }
+                                                },
+                                                [
+                                                  _c(
+                                                    "select",
+                                                    {
+                                                      directives: [
+                                                        {
+                                                          name: "model",
+                                                          rawName: "v-model",
+                                                          value: match.homeTeam,
+                                                          expression:
+                                                            "match.homeTeam"
+                                                        }
+                                                      ],
+                                                      staticClass:
+                                                        "form-control my-1",
+                                                      attrs: {
+                                                        id: "editHomeTeam",
+                                                        placeholder: "dateTime"
+                                                      },
+                                                      on: {
+                                                        change: function(
+                                                          $event
+                                                        ) {
+                                                          var $$selectedVal = Array.prototype.filter
+                                                            .call(
+                                                              $event.target
+                                                                .options,
+                                                              function(o) {
+                                                                return o.selected
+                                                              }
+                                                            )
+                                                            .map(function(o) {
+                                                              var val =
+                                                                "_value" in o
+                                                                  ? o._value
+                                                                  : o.value
+                                                              return val
+                                                            })
+                                                          _vm.$set(
+                                                            match,
+                                                            "homeTeam",
+                                                            $event.target
+                                                              .multiple
+                                                              ? $$selectedVal
+                                                              : $$selectedVal[0]
+                                                          )
+                                                        }
+                                                      }
+                                                    },
+                                                    _vm._l(_vm.teams, function(
+                                                      team,
+                                                      index
+                                                    ) {
+                                                      return _c(
+                                                        "option",
+                                                        { key: team.id },
+                                                        [
+                                                          _vm._v(
+                                                            _vm._s(team.name)
+                                                          )
+                                                        ]
+                                                      )
+                                                    }),
+                                                    0
+                                                  ),
+                                                  _vm._v(" "),
+                                                  _c(
+                                                    "select",
+                                                    {
+                                                      directives: [
+                                                        {
+                                                          name: "model",
+                                                          rawName: "v-model",
+                                                          value: match.awayTeam,
+                                                          expression:
+                                                            "match.awayTeam"
+                                                        }
+                                                      ],
+                                                      staticClass:
+                                                        "form-control my-1",
+                                                      attrs: {
+                                                        id: "editAwayTeam",
+                                                        placeholder: "dateTime"
+                                                      },
+                                                      on: {
+                                                        change: function(
+                                                          $event
+                                                        ) {
+                                                          var $$selectedVal = Array.prototype.filter
+                                                            .call(
+                                                              $event.target
+                                                                .options,
+                                                              function(o) {
+                                                                return o.selected
+                                                              }
+                                                            )
+                                                            .map(function(o) {
+                                                              var val =
+                                                                "_value" in o
+                                                                  ? o._value
+                                                                  : o.value
+                                                              return val
+                                                            })
+                                                          _vm.$set(
+                                                            match,
+                                                            "awayTeam",
+                                                            $event.target
+                                                              .multiple
+                                                              ? $$selectedVal
+                                                              : $$selectedVal[0]
+                                                          )
+                                                        }
+                                                      }
+                                                    },
+                                                    _vm._l(_vm.teams, function(
+                                                      team,
+                                                      index
+                                                    ) {
+                                                      return _c(
+                                                        "option",
+                                                        { key: team.id },
+                                                        [
+                                                          _vm._v(
+                                                            _vm._s(team.name)
+                                                          )
+                                                        ]
+                                                      )
+                                                    }),
+                                                    0
+                                                  ),
+                                                  _vm._v(" "),
+                                                  _c(
+                                                    "div",
+                                                    {
+                                                      staticClass: "text-center"
+                                                    },
+                                                    [
+                                                      _c(
+                                                        "button",
+                                                        {
+                                                          staticClass:
+                                                            "btn btn-lg btn-primary mx-auto mt-3",
+                                                          attrs: {
+                                                            type: "submit",
+                                                            "data-toggle":
+                                                              "modal",
+                                                            "data-target":
+                                                              "#teams-" +
+                                                              match.id
+                                                          }
+                                                        },
+                                                        [_vm._v("Submit")]
+                                                      )
+                                                    ]
+                                                  )
+                                                ]
+                                              )
+                                            ]
+                                          )
+                                        ]
+                                      )
+                                    ]
+                                  )
+                                ]
+                              ),
+                              _vm._v(" "),
+                              _c(
+                                "div",
+                                {
+                                  staticClass: "modal fade",
+                                  attrs: {
+                                    id: "kickoff-" + match.id,
+                                    tabindex: "-1",
+                                    role: "dialog"
+                                  }
+                                },
+                                [
+                                  _c(
+                                    "div",
+                                    {
+                                      staticClass: "modal-dialog modal-sm",
+                                      attrs: { role: "document" }
+                                    },
+                                    [
+                                      _c(
+                                        "div",
+                                        { staticClass: "modal-content" },
+                                        [
+                                          _c(
+                                            "div",
+                                            { staticClass: "modal-body" },
+                                            [
+                                              _vm._m(5, true),
                                               _vm._v(" "),
                                               _c(
                                                 "form",
@@ -47414,7 +47649,7 @@ var render = function() {
                                             "div",
                                             { staticClass: "modal-body" },
                                             [
-                                              _vm._m(5, true),
+                                              _vm._m(6, true),
                                               _vm._v(" "),
                                               _c(
                                                 "form",
@@ -47551,7 +47786,7 @@ var render = function() {
                         ])
                       }),
                       _vm._v(" "),
-                      _vm._m(6)
+                      _vm._m(7)
                     ],
                     2
                   )
@@ -47625,7 +47860,7 @@ var render = function() {
                                 _vm._v(_vm._s(match.kickoff.split(" ")[4]))
                               ]),
                               _vm._v(" "),
-                              _vm._m(7, true)
+                              _vm._m(8, true)
                             ]
                           ),
                           _vm._v(" "),
@@ -47664,7 +47899,7 @@ var render = function() {
                             })
                           ]),
                           _vm._v(" "),
-                          _vm._m(8, true)
+                          _vm._m(9, true)
                         ]
                       )
                     ])
@@ -47805,6 +48040,23 @@ var staticRenderFns = [
     return _c("span", { attrs: { "data-toggle": "dropdown" } }, [
       _c("i", { staticClass: "fa fa-edit" })
     ])
+  },
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c(
+      "button",
+      {
+        staticClass: "close",
+        attrs: {
+          type: "button",
+          "data-dismiss": "modal",
+          "aria-label": "Close"
+        }
+      },
+      [_c("span", { attrs: { "aria-hidden": "true" } }, [_vm._v("×")])]
+    )
   },
   function() {
     var _vm = this

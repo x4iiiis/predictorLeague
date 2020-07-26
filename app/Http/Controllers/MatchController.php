@@ -348,6 +348,23 @@ class MatchController extends Controller
         }
     }
 
+    public function updateTeams(Request $request)
+    {
+        if(Auth::user()) {
+            $relevantMatch = Match::where('id', $request->id)->first();
+
+            $relevantMatch['homeTeam'] = $request->homeTeam;
+            $relevantMatch['homeEmblem'] = Team::where('name', $request->homeTeam)->first()->emblem;
+            $relevantMatch['awayTeam'] = $request->awayTeam;
+            $relevantMatch['awayEmblem'] = Team::where('name', $request->awayTeam)->first()->emblem;
+
+            $relevantMatch->save();
+        }
+        else {
+            return redirect('login');
+        }
+    }
+
     public function resetMatch(Request $request) {
         if(Auth::user()) {
             $relevantMatch = Match::where('id', $request->match['id'])->first();

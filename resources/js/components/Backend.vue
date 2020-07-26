@@ -3,22 +3,6 @@
         <div class="row text-center">
 
             <div class="col-md-5 mx-auto">
-                <div class="card my-2">
-                    <div class="row">
-                        <a class="btn btn-round btn-success col-6" v-on:click="unlock()">Unlock Predictions</a>
-                        <a class="btn btn-round btn-danger col-6" v-on:click="lock()">Lock Predictions</a>
-                        
-                        <div v-if="locked" class="col-6 mx-auto">
-                            <span class="fa fa-lock fa-5x text-danger"></span>
-                        </div>
-                        <div v-else-if="unlocked" class="col-6 mx-auto">
-                            <span class="fa fa-unlock fa-5x text-success"></span>
-                        </div>
-                        <div v-else class="col-6 mx-auto">
-                            <span class="fa fa-key fa-5x"></span>
-                        </div>
-                    </div>
-                </div>
 
                 <div class="card my-2">
                     <h3 class="card-title pt-2">Match Maker </h3>
@@ -105,7 +89,9 @@
                                 <td><a class="btn btn-round btn-warning" @click="flipSubmissionStatus(user.id)">Flip</a></td>
                             </tr>
                         </table>
-                        
+
+                        <a class="btn btn-round btn-success col-5" v-on:click="unlock()">Unlock Predictions</a>
+                        <a class="btn btn-round btn-danger col-5" v-on:click="lock()">Lock Predictions</a>
                         
                     </div>
                 </div>
@@ -234,9 +220,38 @@
                                         <span data-toggle="dropdown"><i class="fa fa-edit"></i></span>
                                         <div class="dropdown-menu">
                                         <a class="dropdown-item" v-on:click="cancelMatch(match)">P - P / A - A</a>
+                                        <a class="dropdown-item" data-toggle="modal" :data-target="'#teams-' + match.id">Edit Teams</a>
                                         <a class="dropdown-item" data-toggle="modal" :data-target="'#kickoff-' + match.id">Edit Kickoff</a>
                                         <a class="dropdown-item" data-toggle="modal" :data-target="'#ETP-' + match.id">Alter ET&P</a>
                                         <a class="dropdown-item" v-on:click="reverseFixture(match)">Reverse Fixture</a>
+                                        </div>
+                                    </div>
+
+                                    <div class="modal fade" :id="'teams-' + match.id" tabindex="-1" role="dialog">
+                                        <div class="modal-dialog modal-sm" role="document">
+                                            <div class="modal-content">
+
+                                                <div class="modal-body">
+                                                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                                        <span aria-hidden="true">&times;</span>
+                                                    </button>
+
+                                                    <form action="match/editkteams" method="post" @submit.prevent="onEditTeams(match)">
+                                                        <select class="form-control my-1"  id="editHomeTeam" placeholder="dateTime" v-model="match.homeTeam">
+                                                            <option v-for="(team, index) in teams" :key="team.id">{{team.name}}</option>
+                                                        </select>
+                                                        
+                                                        <select class="form-control my-1"  id="editAwayTeam" placeholder="dateTime" v-model="match.awayTeam">
+                                                            <option v-for="(team, index) in teams" :key="team.id">{{team.name}}</option>
+                                                        </select>
+
+                                                        <div class="text-center">
+                                                            <button type="submit" class="btn btn-lg btn-primary mx-auto mt-3" data-toggle="modal" :data-target="'#teams-' + match.id">Submit</button>
+                                                        </div>
+                                                    </form>
+                                                </div>
+
+                                            </div>
                                         </div>
                                     </div>
 
@@ -377,8 +392,6 @@
                 match: {},
                 ready: false,
                 submitted: false,
-                locked: false,
-                unlocked: false,
                 showResulted: false,
                 votes: [],
                 voteCount: [],
@@ -488,6 +501,22 @@
                         console.log(err.response);
                     })
             },
+            onEditTeams(match) {
+                axios
+                    .post('/match/updateteams', {
+                        id: match.id,
+                        homeTeam: match.homeTeam,
+                        awayTeam: match.awayTeam
+                    })
+                    .then(response => {
+                        console.log('Match teams updated');
+                        this.ready = false;
+                        this.getUnresultedMatches();
+                    })
+                    .catch(err => {
+                        console.log(err.response)
+                    })
+            },
             onEditETP(match) {
                 axios
                     .post('match/updateetp', {
@@ -553,8 +582,7 @@
                     .get('/unlockpredictions')
                     .then(res => {
                         console.log('Predictions unlocked!');
-                        this.locked = false;
-                        this.unlocked = true;
+                        this.getUsers();
                     })
                     .catch(err => {
                         console.log(err);
@@ -565,8 +593,7 @@
                     .get('/lockpredictions')
                     .then(res => {
                         console.log('Predictions locked!');
-                        this.unlocked = false;
-                        this.locked = true;
+                        this.getUsers();
                     })
                     .catch(err => {
                         console.log(err);

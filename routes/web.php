@@ -54,3 +54,5 @@ route::get('/getpredictions/{match_id}', 'MatchController@getMatchPredictions');
 route::get('/getunresultedmatches', 'MatchController@unresultedMatches');
 route::get('/getunresultedmatchesbackend', 'MatchController@unresultedMatchesBackend');
 route::get('/getresultedmatchesbackend', 'MatchController@resultedMatchesBackend');
+
+route::get('resetseason', 'MatchController@resetSeason');

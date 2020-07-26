@@ -7,6 +7,7 @@
                 <PredictionStatus :users="users" @getusers="getUsers" />
                 <PollResults />
                 <VoterStatus :users="users" @getusers="getUsers" />
+                <SeasonReset />
             </div>
 
 
@@ -236,6 +237,7 @@
     import PredictionStatus from '../backend/PredictionStatus'
     import PollResults from '../backend/PollResults'
     import VoterStatus from '../backend/VoterStatus'
+    import SeasonReset from '../backend/SeasonReset'
     import Spinner from '../Spinner';
 
     export default {
@@ -433,6 +435,7 @@
             PredictionStatus,
             PollResults,
             VoterStatus,
+            SeasonReset,
             Spinner,
         }
     }

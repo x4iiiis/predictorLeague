@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Schema;
 use App\Match;
 use App\User;
 use App\Team;
@@ -387,48 +388,24 @@ class MatchController extends Controller
         }
     }
 
-    /**
-     * Display the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function show($id)
-    {
-        //
-    }
+    public function resetSeason() {
+        if(Auth::user()) {
 
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function edit($id)
-    {
-        //
-    }
+            Schema::disableForeignKeyConstraints();
+            Prediction::truncate();
+            Match::truncate();
+            Schema::enableForeignKeyConstraints();
 
-    /**
-     * Update the specified resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function update(Request $request, $id)
-    {
-        //
-    }
+            foreach(User::all() as $user) {
+                $user->points = 0;
+                $user->correctScores = 0;
+                $user->correctOutcomes = 0;
+                $user->hasSubmitted = true;
+                $user->hasVoted = true;
+                $user->save();
+            }
 
-    /**
-     * Remove the specified resource from storage.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function destroy($id)
-    {
-        //
+            return 'Season reset; Good luck for the new one!';
+        }
     }
 }

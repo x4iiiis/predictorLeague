@@ -2445,9 +2445,6 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
-//
-//
-//
 
 
 
@@ -46800,48 +46797,48 @@ var render = function() {
             _vm._v("Poll Results")
           ]),
           _vm._v(" "),
-          _c("div", { staticClass: "card-body" }, [
-            _c("p", [
-              _vm._v(
-                "Thanks for your vote. Here are the current vote standings:"
-              )
-            ]),
-            _vm._v(" "),
-            _c("span", [_vm._v("Question:")]),
-            _vm._v(" "),
-            _c(
-              "div",
-              { staticClass: "col-11 mx-auto mt-2" },
-              [
-                _c("PollQuestion"),
+          _vm.votes.length > 0
+            ? _c("div", { staticClass: "card-body" }, [
+                _c("span", [_vm._v("Question:")]),
                 _vm._v(" "),
-                this.votes.length > 0
-                  ? _c(
-                      "div",
-                      _vm._l(_vm.voteCount, function(vote, index) {
-                        return _c("div", { staticClass: "col-12 px-0" }, [
-                          _c("span", { staticClass: "mr-3" }, [
-                            _vm._v(_vm._s(_vm.votePercentages[index]) + " %")
-                          ]),
-                          _vm._v(
-                            " - " +
-                              _vm._s(_vm.availableAnswers()[index]) +
-                              "\n                                "
-                          ),
-                          _c("div", {
-                            staticClass: "bg-info mb-3",
-                            staticStyle: { height: "20px" },
-                            style: { width: _vm.votePercentages[index] + "%" }
-                          })
-                        ])
-                      }),
-                      0
-                    )
-                  : _vm._e()
-              ],
-              1
-            )
-          ])
+                _c(
+                  "div",
+                  { staticClass: "col-11 mx-auto mt-2" },
+                  [
+                    _c("PollQuestion"),
+                    _vm._v(" "),
+                    this.votes.length > 0
+                      ? _c(
+                          "div",
+                          _vm._l(_vm.voteCount, function(vote, index) {
+                            return _c("div", { staticClass: "col-12 px-0" }, [
+                              _c("span", { staticClass: "mr-3" }, [
+                                _vm._v(
+                                  _vm._s(_vm.votePercentages[index]) + " %"
+                                )
+                              ]),
+                              _vm._v(
+                                " - " +
+                                  _vm._s(_vm.availableAnswers()[index]) +
+                                  "\n                                "
+                              ),
+                              _c("div", {
+                                staticClass: "bg-info mb-3",
+                                staticStyle: { height: "20px" },
+                                style: {
+                                  width: _vm.votePercentages[index] + "%"
+                                }
+                              })
+                            ])
+                          }),
+                          0
+                        )
+                      : _vm._e()
+                  ],
+                  1
+                )
+              ])
+            : _vm._e()
         ]),
         _vm._v(" "),
         _c("div", { staticClass: "card my-2" }, [

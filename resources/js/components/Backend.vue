@@ -112,10 +112,7 @@
                 
                 <div class="card my-2">
                     <h3 class="card-title pt-2">Poll Results</h3>
-                    <div class="card-body">
-
-
-                        <p>Thanks for your vote. Here are the current vote standings:</p>
+                    <div class="card-body" v-if="votes.length > 0">
 
                         <span>Question:</span>
                         <div class="col-11 mx-auto mt-2">

@@ -20,7 +20,7 @@ class CreateUsersTable extends Migration
             $table->integer('correctScores')->default(0);
             $table->integer('correctOutcomes')->default(0);
             $table->boolean('hasSubmitted')->default(0);
-            $table->boolean('hasVoted')->default(1);
+            $table->boolean('hasVoted')->default(0);
             $table->string('email')->unique();
             $table->string('password');
             $table->rememberToken();

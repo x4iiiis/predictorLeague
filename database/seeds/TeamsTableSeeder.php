@@ -148,11 +148,6 @@ class TeamsTableSeeder extends Seeder
             'league' => 'Premier League'
         ]);
         DB::table('teams')->insert([
-            'name' => 'AFC Bournemouth',
-            'emblem' => 'img/clubEmblems/Bournemouth.png',
-            'league' => 'Premier League'
-        ]);
-        DB::table('teams')->insert([
             'name' => 'Burnley',
             'emblem' => 'img/clubEmblems/Burnley.png',
             'league' => 'Premier League'
@@ -220,11 +215,6 @@ class TeamsTableSeeder extends Seeder
         DB::table('teams')->insert([
             'name' => 'Tottenham Hotspur',
             'emblem' => 'img/clubEmblems/Spurs.png',
-            'league' => 'Premier League'
-        ]);
-        DB::table('teams')->insert([
-            'name' => 'Watford',
-            'emblem' => 'img/clubEmblems/Watford.png',
             'league' => 'Premier League'
         ]);
         DB::table('teams')->insert([

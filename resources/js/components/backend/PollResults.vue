@@ -1,7 +1,11 @@
 <template>
     <div class="card my-2">
         <h3 class="card-title pt-2">Poll Results</h3>
-        <div class="card-body" v-if="votes.length > 0">
+
+        <a v-if="!show" class="btn-sm btn-round btn-warning mx-auto mb-2" @click="showOrHide()">Show</a>
+        <a v-if="show" class="btn-sm btn-round btn-warning mx-auto mb-2" @click="showOrHide()">Hide</a>
+
+        <div v-if="show && votes.length > 0" class="card-body">
 
             <span>Question:</span>
             <div class="col-11 mx-auto mt-2">
@@ -32,6 +36,7 @@ export default {
     },
     data() {
         return {
+            show: false,
             votes: [],
             voteCount: [],
             votePercentages: [],
@@ -39,6 +44,9 @@ export default {
     },
     mixins: [ PollAnswers ],
     methods: {
+        showOrHide() {
+            this.show = !this.show;
+        },
         getVotes() {
             axios
                 .get('/getvotes')

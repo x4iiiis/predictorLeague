@@ -1,7 +1,11 @@
 <template>
     <div class="card my-2">
         <h3 class="card-title pt-2">Match Maker </h3>
-        <div class="card-body">
+
+        <a v-if="!show" class="btn-sm btn-round btn-warning mx-auto mb-2" @click="showOrHide()">Show</a>
+        <a v-if="show" class="btn-sm btn-round btn-warning mx-auto mb-2" @click="showOrHide()">Hide</a>
+
+        <div v-if="show" class="card-body">
             <table class="table">
                 <tr>
                     <td><a href="https://www.bbc.co.uk/sport/football/scottish-premiership/scores-fixtures" target="_blank">Scottish Premiership</a></td>
@@ -63,6 +67,7 @@
 export default {
     data() {
         return {
+            show: false,
             match: { 
                 etp_available: false,
             },
@@ -70,6 +75,9 @@ export default {
     },
     props: ['teams'],
     methods: {
+        showOrHide() {
+            this.show = !this.show;
+        },
         onSubmit() {
             axios
                 .post('/match/store', { 

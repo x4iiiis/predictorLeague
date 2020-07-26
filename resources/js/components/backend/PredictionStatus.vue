@@ -1,7 +1,11 @@
 <template>
     <div class="card my-2">
         <h3 class="card-title pt-2">Prediction Status'</h3>
-        <div class="card-body">
+
+        <a v-if="!show" class="btn-sm btn-round btn-warning mx-auto mb-2" @click="showOrHide()">Show</a>
+        <a v-if="show" class="btn-sm btn-round btn-warning mx-auto mb-2" @click="showOrHide()">Hide</a>
+
+        <div v-if="show" class="card-body">
 
             <table class="table table-hover" id="leagueTable">
                 <tr style="text-align:center">
@@ -34,8 +38,16 @@
 
 <script>
 export default {
+    data() {
+        return {
+            show: false,
+        }
+    },
     props: ['users'],
     methods: {
+        showOrHide() {
+            this.show = !this.show;
+        },
         unlock() {
             axios
                 .get('/unlockpredictions')

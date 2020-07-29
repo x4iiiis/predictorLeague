@@ -7,7 +7,6 @@ use App\User;
 use App\Prediction;
 use App\Match;
 use Auth;
-use Carbon\Carbon;
 use Illuminate\Support\Str;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Validator;

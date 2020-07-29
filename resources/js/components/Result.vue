@@ -6,12 +6,12 @@
             <Spinner></Spinner>
         </div>
         <small>
-            {{this.match.kickoff.split(' ')[0]}}
-            {{this.match.kickoff.split(' ')[1]}}
-            {{this.match.kickoff.split(' ')[2]}}
-            {{this.match.kickoff.split(' ')[3]}}
+            {{ kickoffFormat(this.match.kickoff).split(' ')[0] }}
+            {{ kickoffFormat(this.match.kickoff).split(' ')[1] }}
+            {{ kickoffFormat(this.match.kickoff).split(' ')[2] }}
+            {{ kickoffFormat(this.match.kickoff).split(' ')[3] }}
         </small>
-        <h6>{{this.match.kickoff.split(' ')[4]}}</h6>
+        <h6>{{ kickoffFormat(this.match.kickoff).split(' ')[4] }}</h6>
         <div class="col-9 mx-auto">
             <hr> 
         </div>
@@ -126,43 +126,41 @@
 </template>
 
 <script>
-import Spinner from '../components/Spinner.vue';
+    import Spinner from '../components/Spinner.vue';
+    import FormatKickoff from '../mixins/moment/formatKickoff'
 
-export default {
-    name: 'Result',
-    mounted() {
-        // console.log('Match Mounted');
-        this.getPredictions();
-    },
-    props: {
-        match: Object,
-        users: Array,
-    },
-    data() {
-        return {
-            ready: false,
-            predictions: {},
-        };
-    },
-    methods: {
-        getPredictions() {
-            axios
-                .get('/getpredictions/' + this.match.id)
-                .then(res => {
-                    this.predictions = res.data[1];
-                    this.ready = true;
-                })
-                .catch(err => {
-                    console.log(err);
-                })
+    export default {
+        name: 'Result',
+        mounted() {
+            // console.log('Match Mounted');
+            this.getPredictions();
+        },
+        props: {
+            match: Object,
+            users: Array,
+        },
+        mixins: [ FormatKickoff ],
+        data() {
+            return {
+                ready: false,
+                predictions: {},
+            };
+        },
+        methods: {
+            getPredictions() {
+                axios
+                    .get('/getpredictions/' + this.match.id)
+                    .then(res => {
+                        this.predictions = res.data[1];
+                        this.ready = true;
+                    })
+                    .catch(err => {
+                        console.log(err);
+                    })
+            }
+        },
+        components: {
+            Spinner
         }
-    },
-    components: {
-        Spinner
     }
-}
 </script>
-
-<style>
-
-</style>

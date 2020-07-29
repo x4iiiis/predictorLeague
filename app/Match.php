@@ -21,10 +21,6 @@ class Match extends Model
         'awayGoalsPens'
     ];
 
-    protected $casts = [
-        'kickoff' => 'datetime:l jS F Y H:i',
-    ];
-
     public function predictions()
     {
         return $this->hasMany('App\Prediction');

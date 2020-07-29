@@ -11,16 +11,42 @@
                         <a class="mx-auto" href="/login" v-if="user.length != 0">Login or register to take part!</a>
                     </div>
 
+                    <KickoffCountdown
+                        v-else-if="matches.length != 0" 
+                        :date="localTime(Object.values(matches)[0].kickoff)"
+                        v-on:end="getMatches"
+                    >
+                        <template slot-scope="props" v-if="props.time.days < 1">
+                            <h5 class="text-center">NEXT MATCH:</h5>
+                            <div class="col-9 mx-auto">
+                                <hr> 
+                            </div>
+                            <div class="text-center lead">
+                                <template v-if="props.time.hours > 0">
+                                    <span class="font-weight-bolder text-danger">{{ props.time.hours }}</span> Hours
+                                </template>
+                                <template v-if="props.time.minutes > 0">
+                                    <span class="font-weight-bolder text-danger">{{ props.time.minutes }}</span> Minutes
+                                </template>
+                                <template>
+                                    <span class="font-weight-bolder text-danger">{{ props.time.seconds }}</span> Seconds
+                                </template>
+                            </div>
+                        </template>
+                    </KickoffCountdown>
+
+
                     <div v-for="(match, index) in matches" :key="match.id" class="row py-2">
+                        
                         <div class="col-12 text-center mb-2">
                             <hr>
                             <small>
-                                {{match.kickoff.split(' ')[0]}}
-                                {{match.kickoff.split(' ')[1]}}
-                                {{match.kickoff.split(' ')[2]}}
-                                {{match.kickoff.split(' ')[3]}}
+                                {{ kickoffFormat(match.kickoff).split(' ')[0] }}
+                                {{ kickoffFormat(match.kickoff).split(' ')[1] }}
+                                {{ kickoffFormat(match.kickoff).split(' ')[2] }}
+                                {{ kickoffFormat(match.kickoff).split(' ')[3] }}
                             </small>
-                            <h6>{{match.kickoff.split(' ')[4]}}</h6>
+                            <h6>{{ kickoffFormat(match.kickoff).split(' ')[4] }}</h6>
                             <div class="col-9 mx-auto">
                                 <hr> 
                             </div>
@@ -91,12 +117,12 @@
                             <div class="col-12 text-center mb-2">
                                 <hr>
                                 <small>
-                                    {{match.kickoff.split(' ')[0]}}
-                                    {{match.kickoff.split(' ')[1]}}
-                                    {{match.kickoff.split(' ')[2]}}
-                                    {{match.kickoff.split(' ')[3]}}
+                                    {{ kickoffFormat(match.kickoff).split(' ')[0] }}
+                                    {{ kickoffFormat(match.kickoff).split(' ')[1] }}
+                                    {{ kickoffFormat(match.kickoff).split(' ')[2] }}
+                                    {{ kickoffFormat(match.kickoff).split(' ')[3] }}
                                 </small>
-                                <h6>{{match.kickoff.split(' ')[4]}}</h6>
+                                <h6>{{ kickoffFormat(match.kickoff).split(' ')[4] }}</h6>
                                 <div class="col-9 mx-auto">
                                     <hr> 
                                 </div>
@@ -166,12 +192,22 @@
 </template>
 
 <script>
-    import Spinner from '../components/Spinner.vue';
+    import Spinner from '../components/Spinner';
+    import KickoffCountdown from '../components/ui/KickoffCountdown';
+    import TimeUntilDateInMilliseconds from '../mixins/moment/timeUntilDateInMilliseconds'
+    import LocalTime from '../mixins/moment/localTime'
+    import FormatKickoff from '../mixins/moment/formatKickoff'
 
     export default {
-        mounted() {
+        async mounted() {
             // console.log('Fixtures Component mounted.')
-            this.getMatches()
+            await this.getMatches();
+
+            let func = () => {
+                this.timeToNextKickoffInMilliseconds = this.timeUntilDateInMilliseconds(this.localTime(Object.values(this.matches)[0].kickoff))
+            }
+            this.timer = setInterval(func, 1000)
+            func()
         },
         data() {
             return {
@@ -181,10 +217,12 @@
                 ready: true,
                 submitted: false,
                 previouslySubmitted: false,
-
-                allPredictions: []
+                allPredictions: [],
+                timeToNextKickoffInMilliseconds: 1001,
+                timer: null,
             }
         },
+        mixins: [ TimeUntilDateInMilliseconds, LocalTime, FormatKickoff ],
         methods: {
             getMatches() {
                 axios
@@ -212,6 +250,8 @@
                         this.allPredictions = res.data[3];
                         this.previouslySubmitted = true;
                         this.hasFixtures = true;
+
+                        this.timeToNextKickoffInMilliseconds = this.timeUntilDateInMilliseconds(this.localTime(Object.values(this.matches)[0].kickoff))
                     })
                     .catch( err => {
                         console.log(err.response);
@@ -236,14 +276,18 @@
                         console.log(err.response);
                     })
                 
-            }
+            },
         },
         props: [
             'users',
             'user'
         ],
-    components: {
-        Spinner
-    }
+        components: {
+            Spinner,
+            KickoffCountdown
+        },
+        beforeDestroy() {
+            clearInterval(this.timer);
+        }
 }
 </script>

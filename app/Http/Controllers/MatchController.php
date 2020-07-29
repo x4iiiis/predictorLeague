@@ -10,6 +10,7 @@ use App\Team;
 use App\Prediction;
 use Auth;
 use DateTime;
+use Carbon\Carbon;
 
 class MatchController extends Controller
 {
@@ -23,7 +24,7 @@ class MatchController extends Controller
         if(Auth::user()) {
             if(Auth::user()->hasSubmitted == 0) {
                 return [
-                    'matches', Match::all()->where('kickoff', '>', date('Y-m-d H:i:s'))
+                    'matches', Match::all()->where('kickoff', '>', Carbon::now('Europe/London'))
                 ];
             }
             else { 

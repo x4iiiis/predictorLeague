@@ -129,12 +129,18 @@
                     .post('/api/prediction', { match: this.matches, user_id: this.user.id })
                     .then((response) => {
                         // console.log('Predictions received');
+                        this.scrollToTop();
                         this.$emit('submitted');
                     })
                     .catch(err => {
                         console.log(err.response);
                     })
             },
+            scrollToTop() {
+                $('html, body').animate({
+                    scrollTop: $("#top").offset().top
+                }, 1000);
+            }
         },
         props: [
             'users',

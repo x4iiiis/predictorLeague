@@ -79,18 +79,11 @@
                         this.hasFixtures = true;
                         this.ready = true;
 
-                        this.scrollToTop();
-
                         this.timeToNextKickoffInMilliseconds = this.timeUntilDateInMilliseconds(this.localTime(Object.values(this.matches)[0].kickoff))
                     })
                     .catch( err => {
                         console.log(err.response);
                     })
-            },
-            scrollToTop() {
-                $('html, body').animate({
-                    scrollTop: $("#top").offset().top
-                }, 1000);
             }
         },
         props: [

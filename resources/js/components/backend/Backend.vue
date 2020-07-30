@@ -36,12 +36,12 @@
                                 <div class="col-12 text-center mb-2">
                                     <hr>
                                     <small>
-                                        {{match.kickoff.split(' ')[0]}}
-                                        {{match.kickoff.split(' ')[1]}}
-                                        {{match.kickoff.split(' ')[2]}}
-                                        {{match.kickoff.split(' ')[3]}}
+                                        {{ kickoffFormat(match.kickoff).split(' ')[0] }}
+                                        {{ kickoffFormat(match.kickoff).split(' ')[1] }}
+                                        {{ kickoffFormat(match.kickoff).split(' ')[2] }}
+                                        {{ kickoffFormat(match.kickoff).split(' ')[3] }}
                                     </small>
-                                    <h6>{{match.kickoff.split(' ')[4]}}</h6>
+                                    <h6>{{ kickoffFormat(match.kickoff).split(' ')[4] }}</h6>
                                     <div class="col-9 mx-auto">
                                         <hr> 
                                         <small v-if="match.etp_available"><em>Plays to conclusion</em></small>
@@ -128,7 +128,7 @@
                                                     <form action="match/editkickoff" method="post" @submit.prevent="onEditKickoff(match)">
                                                         <input class="form-control" type="datetime-local" id="kickoff" placeholder="dateTime" v-model="match.kickoff">
 
-                                                        <div class="text-center">
+                                                         <div class="text-center">
                                                             <button type="submit" class="btn btn-lg btn-primary mx-auto mt-3" data-toggle="modal" :data-target="'#kickoff-' + match.id">Submit</button>
                                                         </div>
                                                     </form>
@@ -196,12 +196,12 @@
                             <div class="col-12 text-center mb-2">
                                 <hr>
                                 <small>
-                                    {{match.kickoff.split(' ')[0]}}
-                                    {{match.kickoff.split(' ')[1]}}
-                                    {{match.kickoff.split(' ')[2]}}
-                                    {{match.kickoff.split(' ')[3]}}
+                                    {{ kickoffFormat(match.kickoff).split(' ')[0] }}
+                                    {{ kickoffFormat(match.kickoff).split(' ')[1] }}
+                                    {{ kickoffFormat(match.kickoff).split(' ')[2] }}
+                                    {{ kickoffFormat(match.kickoff).split(' ')[3] }}
                                 </small>
-                                <h6>{{match.kickoff.split(' ')[4]}}</h6>
+                                <h6>{{ kickoffFormat(match.kickoff).split(' ')[4] }}</h6>
                                 <div class="col-9 mx-auto">
                                     <hr> 
                                 </div>
@@ -238,7 +238,8 @@
     import PollResults from '../backend/PollResults'
     import VoterStatus from '../backend/VoterStatus'
     import SeasonReset from '../backend/SeasonReset'
-    import Spinner from '../Spinner';
+    import Spinner from '../Spinner'
+    import FormatKickoff from '../../mixins/moment/formatKickoff'
 
     export default {
         mounted() {
@@ -254,6 +255,7 @@
                 showResulted: false,
             }
         },
+        mixins: [ FormatKickoff ],
         methods: {
             getTeams() {
                 axios
@@ -329,7 +331,7 @@
                     .post('/match/updatekickoff', {
                         id: match.id,
                         kickoff: match.kickoff
-                    })
+                     })
                     .then(response => {
                         console.log('Kickoff Updated');
                         console.log(response);

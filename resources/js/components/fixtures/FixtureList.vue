@@ -55,7 +55,6 @@
 </template>
 
 <script>
-    import LocalTime from '../../mixins/moment/localTime'
     import FormatKickoff from '../../mixins/moment/formatKickoff'
     
     export default {
@@ -66,7 +65,7 @@
             'predictions',
             'allPredictions',
         ],
-        mixins: [ LocalTime, FormatKickoff ],
-        
+        mixins: [ FormatKickoff ],
+
     }
 </script>

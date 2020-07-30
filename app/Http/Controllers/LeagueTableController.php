@@ -7,18 +7,12 @@ use App\User;
 use App\Prediction;
 use App\Match;
 use Auth;
-use Carbon\Carbon;
 use Illuminate\Support\Str;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Validator;
 
 class LeagueTableController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
     public function index()
     {
         $users = User::orderBy('points', 'desc')
@@ -35,7 +29,6 @@ class LeagueTableController extends Controller
                 }
             }
         }
-
         return [
             'usersForLeague', $users, 'users', User::all()
         ];
@@ -60,7 +53,7 @@ class LeagueTableController extends Controller
     }
 
     public function resetPassword(Request $request) {
-
+        
         $validator = Validator::make($request->all(), [
             'id' => 'required|integer|exists:Users,id',
             'newPassword' => 'required|string|min:3',

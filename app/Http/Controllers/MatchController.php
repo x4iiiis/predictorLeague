@@ -10,6 +10,7 @@ use App\Team;
 use App\Prediction;
 use Auth;
 use DateTime;
+use Carbon\Carbon;
 
 class MatchController extends Controller
 {
@@ -23,21 +24,16 @@ class MatchController extends Controller
         if(Auth::user()) {
             if(Auth::user()->hasSubmitted == 0) {
                 return [
-                    'matches', Match::all()->where('kickoff', '>', date('Y-m-d H:i:s'))
+                    'matches', Match::all()->where('kickoff', '>', Carbon::now('Europe/London'))
                 ];
             }
             else { 
-                // Show everyone's predictions on unresulted matches if the user has submitted
-                // Would be ideal if this ran beyond kickoff so we could see what people were 
-                // waiting on, to add to the fun of it all 
                 return [
                     'matches', Match::all()->where('kickoff', '>', date('Y-m-d H:i:s')),
                     'previouslySubmitted', true
                 ];
             }
         }
-        // return redirect('/login');
-
         return [
             'matches', Match::all()->where('kickoff', '>', date('Y-m-d H:i:s')),
         ];
@@ -45,13 +41,8 @@ class MatchController extends Controller
 
     public function resultedMatches() {
 
-        //TEMP
-        //dd(Match::first()->predictions()->get());
-
         if(Auth::user()) {
-
             $prevMatches = Match::orderBy('kickoff', 'desc')->where('homeGoals', '>=', 0)->get();
-            
 
             return [
                 'matches', $prevMatches,
@@ -63,37 +54,33 @@ class MatchController extends Controller
     public function countResultedMatches() {
         $resultedTotal = sizeof(Match::where('homeGoals', '>=', 0)->get());
 
-        // dd($resultedTotal);
-
         return [
             'totalResultedMatches', $resultedTotal
         ];
     }
 
-    //For lazy loading results
     public function moreResultedMatches($counter) {
+
+        if(sizeof(Match::where('homeGoals', '>=', 0)->get()) == 1) {
+            return [ 
+                'matches', [Match::where('homeGoals', '>=', 0)->first()],
+            ];
+        }
 
         $limit = 10;
         $resultedTotal = Match::orderBy('id', 'desc')->where('homeGoals', '>=', 0)->first()->id + 1;
-        //dd(Match::find($counter));
+
         $prevMatches = Match::orderBy('id', 'desc')
                             ->where('homeGoals', '>=', 0)
                             ->find(range(
                                 $resultedTotal - (($counter * $limit) - 1),
                                 $resultedTotal - (($counter * $limit) - $limit))
                             );
-
-        // dd($resultedTotal - (($counter) * $limit) - 1);
-        // dd($resultedTotal - ($counter * $limit) - $limit);
-
-        // dd(Match::orderBy('id', 'desc')->where('homeGoals', '>=', 0)->first()->id);
-        
         return [
             'matches', $prevMatches,
         ];
     }
 
-    //For each Result.vue Component
     public function getMatchPredictions($match_id) {
         return [
             'predictions', Match::where('id', $match_id)->first()->predictions()->get()
@@ -103,12 +90,7 @@ class MatchController extends Controller
     public function unresultedMatches() {
         
         $unresultedMatches = Match::orderBy('kickoff')->where('homeGoals', null)->get();
-        
         $predictions = [];
-        
-        // foreach($unresultedMatches as $match) {
-        //     array_push($predictions, Prediction::all()->where('match_id', '==', $match->id));
-        // }
         
         if(Auth::user()) {
             if(Auth::user()->hasSubmitted == 1) {
@@ -123,7 +105,6 @@ class MatchController extends Controller
                 ];
             }
         }
-        // return redirect('/login');
         return [
             'matches', $unresultedMatches,
         ];
@@ -131,7 +112,6 @@ class MatchController extends Controller
 
     public function unresultedMatchesBackend() {
         if(Auth::user()) {
-
             return [
                 'matches', Match::orderBy('kickoff')->where('homeGoals', null)->get()
             ];
@@ -304,7 +284,6 @@ class MatchController extends Controller
     public function updateKickoff(Request $request)
     {
         if(Auth::user()) {
-
             $relevantMatch = Match::where('id', $request->id)->first();
             $relevantMatch->kickoff = date('Y-m-d H:i:s', strtotime($request->kickoff));
             $relevantMatch->save();
@@ -317,7 +296,6 @@ class MatchController extends Controller
     public function updateETP(Request $request)
     {
         if(Auth::user()) {
-
             $relevantMatch = Match::where('id', $request->id)->first();
             $relevantMatch->etp_available = $request->etp_available;
             $relevantMatch->save();

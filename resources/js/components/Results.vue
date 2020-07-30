@@ -1,9 +1,8 @@
 <template>
-    <div class="card my-2">
-            
+    <div v-if="ready" class="card my-2">
         <div class="card-header">Previous Matches</div>
 
-        <div v-if="ready" class="card-body">
+        <div class="card-body">
             <div v-if="matches.length > 0">
                 <div v-for="match in matches" :key="match.id" class="row py-2">
                     
@@ -18,13 +17,6 @@
             </div>
             <observer v-if="matches.length + 1 < totalResultedMatches" v-on:intersect="getMoreMatches()"></observer>
         </div>
-        <div v-else class="card-body">
-            <div class="row">
-                <div class="mx-auto">
-                    <Spinner></Spinner>
-                </div>
-            </div>
-        </div>  
     </div>
 </template>
 
@@ -52,7 +44,9 @@
                     .get('/countresultedmatches')
                     .then(res => {
                         this.totalResultedMatches = res.data[1];
-                        this.getMoreMatches();
+                        if(this.totalResultedMatches > 0) {
+                            this.getMoreMatches();
+                        }
                     })
                     .catch(err => {
                         console.log(err.response);

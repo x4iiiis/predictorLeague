@@ -10,32 +10,6 @@ use Auth;
 
 class PredictionController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function index()
-    {
-        //
-    }
-
-    /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function create()
-    {
-        //
-    }
-
-    /**
-     * Store a newly created resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
-     */
     public function store(Request $request)
     {
         foreach($request->match as $match) {
@@ -48,11 +22,9 @@ class PredictionController extends Controller
                 'winner' => $match['winner']
                 ]);   
         }
-
         $user = User::where('id', $request->user_id)->first();
         $user->hasSubmitted = 1; 
         $user->save();
-
     }
 
     public function recalculateScores() {
@@ -120,7 +92,6 @@ class PredictionController extends Controller
                         $user->correctOutcomes += 1;
                     }
                 }
-
                 $user->points = ($user->correctScores * 3) + $user->correctOutcomes;
                 $user->save();
             }

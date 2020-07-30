@@ -2550,11 +2550,9 @@ __webpack_require__.r(__webpack_exports__);
 __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! @babel/runtime/regenerator */ "./node_modules/@babel/runtime/regenerator/index.js");
 /* harmony import */ var _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0__);
-/* harmony import */ var _components_Spinner__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../components/Spinner */ "./resources/js/components/Spinner.vue");
-/* harmony import */ var _components_ui_KickoffCountdown__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../components/ui/KickoffCountdown */ "./resources/js/components/ui/KickoffCountdown.vue");
-/* harmony import */ var _mixins_moment_timeUntilDateInMilliseconds__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ../mixins/moment/timeUntilDateInMilliseconds */ "./resources/js/mixins/moment/timeUntilDateInMilliseconds.js");
-/* harmony import */ var _mixins_moment_localTime__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ../mixins/moment/localTime */ "./resources/js/mixins/moment/localTime.js");
-/* harmony import */ var _mixins_moment_formatKickoff__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ../mixins/moment/formatKickoff */ "./resources/js/mixins/moment/formatKickoff.js");
+/* harmony import */ var _components_fixtures_FixtureForm__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../components/fixtures/FixtureForm */ "./resources/js/components/fixtures/FixtureForm.vue");
+/* harmony import */ var _components_fixtures_FixtureList__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../components/fixtures/FixtureList */ "./resources/js/components/fixtures/FixtureList.vue");
+/* harmony import */ var _components_Spinner__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ../components/Spinner */ "./resources/js/components/Spinner.vue");
 
 
 function asyncGeneratorStep(gen, resolve, reject, _next, _throw, key, arg) { try { var info = gen[key](arg); var value = info.value; } catch (error) { reject(error); return; } if (info.done) { resolve(value); } else { Promise.resolve(value).then(_next, _throw); } }
@@ -2592,170 +2590,6 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
 //
 //
 //
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-
-
 
 
 
@@ -2766,7 +2600,6 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
     return _asyncToGenerator(
     /*#__PURE__*/
     _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee() {
-      var func;
       return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee$(_context) {
         while (1) {
           switch (_context.prev = _context.next) {
@@ -2775,14 +2608,6 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
               return _this.getMatches();
 
             case 2:
-              func = function func() {
-                _this.timeToNextKickoffInMilliseconds = _this.timeUntilDateInMilliseconds(_this.localTime(Object.values(_this.matches)[0].kickoff));
-              };
-
-              _this.timer = setInterval(func, 1000);
-              func();
-
-            case 5:
             case "end":
               return _context.stop();
           }
@@ -2795,15 +2620,11 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
       matches: [],
       predictions: {},
       hasFixtures: false,
-      ready: true,
-      submitted: false,
+      ready: false,
       previouslySubmitted: false,
-      allPredictions: [],
-      timeToNextKickoffInMilliseconds: 1001,
-      timer: null
+      allPredictions: []
     };
   },
-  mixins: [_mixins_moment_timeUntilDateInMilliseconds__WEBPACK_IMPORTED_MODULE_3__["default"], _mixins_moment_localTime__WEBPACK_IMPORTED_MODULE_4__["default"], _mixins_moment_formatKickoff__WEBPACK_IMPORTED_MODULE_5__["default"]],
   methods: {
     getMatches: function getMatches() {
       var _this2 = this;
@@ -2816,6 +2637,7 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
           _this2.getUnresultedMatches();
         } else {
           _this2.hasFixtures = true;
+          _this2.ready = true;
         }
       })["catch"](function (err) {
         console.log(err.response);
@@ -2829,35 +2651,26 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
         _this3.allPredictions = res.data[3];
         _this3.previouslySubmitted = true;
         _this3.hasFixtures = true;
+        _this3.ready = true;
+
+        _this3.scrollToTop();
+
         _this3.timeToNextKickoffInMilliseconds = _this3.timeUntilDateInMilliseconds(_this3.localTime(Object.values(_this3.matches)[0].kickoff));
       })["catch"](function (err) {
         console.log(err.response);
       });
     },
-    onSubmit: function onSubmit() {
-      var _this4 = this;
-
-      axios.post('/api/prediction', {
-        match: this.matches,
-        user_id: this.user.id
-      }).then(function (response) {
-        // console.log('Predictions received');
-        _this4.submitted = true;
-        _this4.hasFixtures = false;
-        var self = _this4;
-        setTimeout(function () {
-          self.submitted = false;
-          self.getUnresultedMatches();
-        }, 2000);
-      })["catch"](function (err) {
-        console.log(err.response);
-      });
+    scrollToTop: function scrollToTop() {
+      $('html, body').animate({
+        scrollTop: $("#top").offset().top
+      }, 1000);
     }
   },
   props: ['users', 'user'],
   components: {
-    Spinner: _components_Spinner__WEBPACK_IMPORTED_MODULE_1__["default"],
-    KickoffCountdown: _components_ui_KickoffCountdown__WEBPACK_IMPORTED_MODULE_2__["default"]
+    FixtureForm: _components_fixtures_FixtureForm__WEBPACK_IMPORTED_MODULE_1__["default"],
+    FixtureList: _components_fixtures_FixtureList__WEBPACK_IMPORTED_MODULE_2__["default"],
+    Spinner: _components_Spinner__WEBPACK_IMPORTED_MODULE_3__["default"]
   },
   beforeDestroy: function beforeDestroy() {
     clearInterval(this.timer);
@@ -3412,14 +3225,6 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
 //
 //
 //
-//
-//
-//
-//
-//
-//
-//
-//
 
 
 
@@ -3444,7 +3249,9 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
       axios.get('/countresultedmatches').then(function (res) {
         _this.totalResultedMatches = res.data[1];
 
-        _this.getMoreMatches();
+        if (_this.totalResultedMatches > 0) {
+          _this.getMoreMatches();
+        }
       })["catch"](function (err) {
         console.log(err.response);
       });
@@ -4987,6 +4794,276 @@ __webpack_require__.r(__webpack_exports__);
     }
   },
   props: ['options', 'user']
+});
+
+/***/ }),
+
+/***/ "./node_modules/babel-loader/lib/index.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/fixtures/FixtureForm.vue?vue&type=script&lang=js&":
+/*!*******************************************************************************************************************************************************************************!*\
+  !*** ./node_modules/babel-loader/lib??ref--4-0!./node_modules/vue-loader/lib??vue-loader-options!./resources/js/components/fixtures/FixtureForm.vue?vue&type=script&lang=js& ***!
+  \*******************************************************************************************************************************************************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! @babel/runtime/regenerator */ "./node_modules/@babel/runtime/regenerator/index.js");
+/* harmony import */ var _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0__);
+/* harmony import */ var _components_Spinner__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../../components/Spinner */ "./resources/js/components/Spinner.vue");
+/* harmony import */ var _components_ui_KickoffCountdown__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../../components/ui/KickoffCountdown */ "./resources/js/components/ui/KickoffCountdown.vue");
+/* harmony import */ var _mixins_moment_timeUntilDateInMilliseconds__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ../../mixins/moment/timeUntilDateInMilliseconds */ "./resources/js/mixins/moment/timeUntilDateInMilliseconds.js");
+/* harmony import */ var _mixins_moment_localTime__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ../../mixins/moment/localTime */ "./resources/js/mixins/moment/localTime.js");
+/* harmony import */ var _mixins_moment_formatKickoff__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ../../mixins/moment/formatKickoff */ "./resources/js/mixins/moment/formatKickoff.js");
+
+
+function asyncGeneratorStep(gen, resolve, reject, _next, _throw, key, arg) { try { var info = gen[key](arg); var value = info.value; } catch (error) { reject(error); return; } if (info.done) { resolve(value); } else { Promise.resolve(value).then(_next, _throw); } }
+
+function _asyncToGenerator(fn) { return function () { var self = this, args = arguments; return new Promise(function (resolve, reject) { var gen = fn.apply(self, args); function _next(value) { asyncGeneratorStep(gen, resolve, reject, _next, _throw, "next", value); } function _throw(err) { asyncGeneratorStep(gen, resolve, reject, _next, _throw, "throw", err); } _next(undefined); }); }; }
+
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+
+
+
+
+
+/* harmony default export */ __webpack_exports__["default"] = ({
+  mounted: function mounted() {
+    var _this = this;
+
+    return _asyncToGenerator(
+    /*#__PURE__*/
+    _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee() {
+      var func;
+      return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee$(_context) {
+        while (1) {
+          switch (_context.prev = _context.next) {
+            case 0:
+              func = function func() {
+                _this.timeToNextKickoffInMilliseconds = _this.timeUntilDateInMilliseconds(_this.localTime(Object.values(_this.matches)[0].kickoff));
+              };
+
+              _this.timer = setInterval(func, 1000);
+              func();
+
+            case 3:
+            case "end":
+              return _context.stop();
+          }
+        }
+      }, _callee);
+    }))();
+  },
+  data: function data() {
+    return {
+      ready: true,
+      timeToNextKickoffInMilliseconds: 1001,
+      timer: null
+    };
+  },
+  mixins: [_mixins_moment_timeUntilDateInMilliseconds__WEBPACK_IMPORTED_MODULE_3__["default"], _mixins_moment_localTime__WEBPACK_IMPORTED_MODULE_4__["default"], _mixins_moment_formatKickoff__WEBPACK_IMPORTED_MODULE_5__["default"]],
+  methods: {
+    onSubmit: function onSubmit() {
+      var _this2 = this;
+
+      axios.post('/api/prediction', {
+        match: this.matches,
+        user_id: this.user.id
+      }).then(function (response) {
+        // console.log('Predictions received');
+        _this2.$emit('submitted');
+      })["catch"](function (err) {
+        console.log(err.response);
+      });
+    }
+  },
+  props: ['users', 'user', 'matches'],
+  components: {
+    Spinner: _components_Spinner__WEBPACK_IMPORTED_MODULE_1__["default"],
+    KickoffCountdown: _components_ui_KickoffCountdown__WEBPACK_IMPORTED_MODULE_2__["default"],
+    TimeUntilDateInMilliseconds: _mixins_moment_timeUntilDateInMilliseconds__WEBPACK_IMPORTED_MODULE_3__["default"],
+    LocalTime: _mixins_moment_localTime__WEBPACK_IMPORTED_MODULE_4__["default"],
+    FormatKickoff: _mixins_moment_formatKickoff__WEBPACK_IMPORTED_MODULE_5__["default"]
+  },
+  beforeDestroy: function beforeDestroy() {
+    clearInterval(this.timer);
+  }
+});
+
+/***/ }),
+
+/***/ "./node_modules/babel-loader/lib/index.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/fixtures/FixtureList.vue?vue&type=script&lang=js&":
+/*!*******************************************************************************************************************************************************************************!*\
+  !*** ./node_modules/babel-loader/lib??ref--4-0!./node_modules/vue-loader/lib??vue-loader-options!./resources/js/components/fixtures/FixtureList.vue?vue&type=script&lang=js& ***!
+  \*******************************************************************************************************************************************************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _mixins_moment_localTime__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../../mixins/moment/localTime */ "./resources/js/mixins/moment/localTime.js");
+/* harmony import */ var _mixins_moment_formatKickoff__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../../mixins/moment/formatKickoff */ "./resources/js/mixins/moment/formatKickoff.js");
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+
+
+/* harmony default export */ __webpack_exports__["default"] = ({
+  props: ['user', 'users', 'matches', 'predictions', 'allPredictions'],
+  mixins: [_mixins_moment_localTime__WEBPACK_IMPORTED_MODULE_0__["default"], _mixins_moment_formatKickoff__WEBPACK_IMPORTED_MODULE_1__["default"]]
 });
 
 /***/ }),
@@ -69502,675 +69579,42 @@ var render = function() {
   var _vm = this
   var _h = _vm.$createElement
   var _c = _vm._self._c || _h
-  return _vm.ready
-    ? _c("div", { staticClass: "card" }, [
-        _c("div", { staticClass: "card-header" }, [_vm._v("Upcoming Matches")]),
-        _vm._v(" "),
-        _vm.submitted
-          ? _c("div", { staticClass: "card-body text-success text-center" }, [
-              _vm._v("\n            Submission Successful! \n        ")
-            ])
-          : _vm._e(),
-        _vm._v(" "),
-        !_vm.previouslySubmitted
-          ? _c("div", { staticClass: "card-body" }, [
-              _vm.hasFixtures
-                ? _c(
-                    "form",
-                    {
-                      attrs: { action: "prediction/store", method: "post" },
-                      on: {
-                        submit: function($event) {
-                          $event.preventDefault()
-                          return _vm.onSubmit($event)
-                        }
-                      }
-                    },
-                    [
-                      _vm.user.name == "Guest"
-                        ? _c("div", { staticClass: "row" }, [
-                            _vm.user.length != 0
-                              ? _c(
-                                  "a",
-                                  {
-                                    staticClass: "mx-auto",
-                                    attrs: { href: "/login" }
-                                  },
-                                  [_vm._v("Login or register to take part!")]
-                                )
-                              : _vm._e()
-                          ])
-                        : _vm.matches.length != 0
-                        ? _c("KickoffCountdown", {
-                            attrs: {
-                              date: _vm.localTime(
-                                Object.values(_vm.matches)[0].kickoff
-                              )
-                            },
-                            on: { end: _vm.getMatches },
-                            scopedSlots: _vm._u(
-                              [
-                                {
-                                  key: "default",
-                                  fn: function(props) {
-                                    return props.time.days < 1
-                                      ? [
-                                          _c(
-                                            "h5",
-                                            { staticClass: "text-center" },
-                                            [_vm._v("NEXT MATCH:")]
-                                          ),
-                                          _vm._v(" "),
-                                          _c(
-                                            "div",
-                                            { staticClass: "col-9 mx-auto" },
-                                            [_c("hr")]
-                                          ),
-                                          _vm._v(" "),
-                                          _c(
-                                            "div",
-                                            { staticClass: "text-center lead" },
-                                            [
-                                              props.time.hours > 0
-                                                ? [
-                                                    _c(
-                                                      "span",
-                                                      {
-                                                        staticClass:
-                                                          "font-weight-bolder text-danger"
-                                                      },
-                                                      [
-                                                        _vm._v(
-                                                          _vm._s(
-                                                            props.time.hours
-                                                          )
-                                                        )
-                                                      ]
-                                                    ),
-                                                    _vm._v(
-                                                      " Hours\n                            "
-                                                    )
-                                                  ]
-                                                : _vm._e(),
-                                              _vm._v(" "),
-                                              props.time.minutes > 0
-                                                ? [
-                                                    _c(
-                                                      "span",
-                                                      {
-                                                        staticClass:
-                                                          "font-weight-bolder text-danger"
-                                                      },
-                                                      [
-                                                        _vm._v(
-                                                          _vm._s(
-                                                            props.time.minutes
-                                                          )
-                                                        )
-                                                      ]
-                                                    ),
-                                                    _vm._v(
-                                                      " Minutes\n                            "
-                                                    )
-                                                  ]
-                                                : _vm._e(),
-                                              _vm._v(" "),
-                                              [
-                                                _c(
-                                                  "span",
-                                                  {
-                                                    staticClass:
-                                                      "font-weight-bolder text-danger"
-                                                  },
-                                                  [
-                                                    _vm._v(
-                                                      _vm._s(props.time.seconds)
-                                                    )
-                                                  ]
-                                                ),
-                                                _vm._v(
-                                                  " Seconds\n                            "
-                                                )
-                                              ]
-                                            ],
-                                            2
-                                          )
-                                        ]
-                                      : undefined
-                                  }
-                                }
-                              ],
-                              null,
-                              true
-                            )
-                          })
-                        : _vm._e(),
-                      _vm._v(" "),
-                      _vm._l(_vm.matches, function(match, index) {
-                        return _c(
-                          "div",
-                          { key: match.id, staticClass: "row py-2" },
-                          [
-                            _c(
-                              "div",
-                              { staticClass: "col-12 text-center mb-2" },
-                              [
-                                _c("hr"),
-                                _vm._v(" "),
-                                _c("small", [
-                                  _vm._v(
-                                    "\n                            " +
-                                      _vm._s(
-                                        _vm
-                                          .kickoffFormat(match.kickoff)
-                                          .split(" ")[0]
-                                      ) +
-                                      "\n                            " +
-                                      _vm._s(
-                                        _vm
-                                          .kickoffFormat(match.kickoff)
-                                          .split(" ")[1]
-                                      ) +
-                                      "\n                            " +
-                                      _vm._s(
-                                        _vm
-                                          .kickoffFormat(match.kickoff)
-                                          .split(" ")[2]
-                                      ) +
-                                      "\n                            " +
-                                      _vm._s(
-                                        _vm
-                                          .kickoffFormat(match.kickoff)
-                                          .split(" ")[3]
-                                      ) +
-                                      "\n                        "
-                                  )
-                                ]),
-                                _vm._v(" "),
-                                _c("h6", [
-                                  _vm._v(
-                                    _vm._s(
-                                      _vm
-                                        .kickoffFormat(match.kickoff)
-                                        .split(" ")[4]
-                                    )
-                                  )
-                                ]),
-                                _vm._v(" "),
-                                _vm._m(0, true)
-                              ]
-                            ),
-                            _vm._v(" "),
-                            !(
-                              match.etp_available &&
-                              match.homeGoals == match.awayGoals &&
-                              match.homeGoals != null
-                            )
-                              ? _c(
-                                  "div",
-                                  {
-                                    class: [
-                                      _vm.user.name != "Guest"
-                                        ? "mx-auto col-3"
-                                        : "text-right col-6"
-                                    ]
-                                  },
-                                  [
-                                    _c("img", {
-                                      attrs: {
-                                        src: match.homeEmblem,
-                                        alt: match.homeTeam
-                                      }
-                                    })
-                                  ]
-                                )
-                              : _c(
-                                  "div",
-                                  {
-                                    staticClass: "col-3 mx-auto",
-                                    on: {
-                                      click: function($event) {
-                                        match.winner = match.homeTeam
-                                      }
-                                    }
-                                  },
-                                  [
-                                    _c("img", {
-                                      attrs: {
-                                        src: match.homeEmblem,
-                                        alt: match.homeTeam
-                                      }
-                                    })
-                                  ]
-                                ),
-                            _vm._v(" "),
-                            _vm.user.length != 0 &&
-                            _vm.users.length != 0 &&
-                            _vm.user.name != "Guest"
-                              ? _c(
-                                  "div",
-                                  {
-                                    staticClass:
-                                      "form-group col-6 my-auto mx-auto text-center"
-                                  },
-                                  [
-                                    _c("input", {
-                                      directives: [
-                                        {
-                                          name: "model",
-                                          rawName: "v-model",
-                                          value: match.homeGoals,
-                                          expression: "match.homeGoals"
-                                        }
-                                      ],
-                                      staticClass: "col-5",
-                                      attrs: {
-                                        name: "home" + match.id,
-                                        required: "",
-                                        type: "number"
-                                      },
-                                      domProps: { value: match.homeGoals },
-                                      on: {
-                                        input: function($event) {
-                                          if ($event.target.composing) {
-                                            return
-                                          }
-                                          _vm.$set(
-                                            match,
-                                            "homeGoals",
-                                            $event.target.value
-                                          )
-                                        }
-                                      }
-                                    }),
-                                    _vm._v(" "),
-                                    _c("input", {
-                                      directives: [
-                                        {
-                                          name: "model",
-                                          rawName: "v-model",
-                                          value: match.awayGoals,
-                                          expression: "match.awayGoals"
-                                        }
-                                      ],
-                                      staticClass: "col-5",
-                                      attrs: {
-                                        name: "away" + match.id,
-                                        required: "",
-                                        type: "number"
-                                      },
-                                      domProps: { value: match.awayGoals },
-                                      on: {
-                                        input: function($event) {
-                                          if ($event.target.composing) {
-                                            return
-                                          }
-                                          _vm.$set(
-                                            match,
-                                            "awayGoals",
-                                            $event.target.value
-                                          )
-                                        }
-                                      }
-                                    })
-                                  ]
-                                )
-                              : _vm._e(),
-                            _vm._v(" "),
-                            !(
-                              match.etp_available &&
-                              match.homeGoals == match.awayGoals &&
-                              match.homeGoals != null
-                            )
-                              ? _c(
-                                  "div",
-                                  {
-                                    class: [
-                                      _vm.user.name != "Guest"
-                                        ? "mx-auto col-3"
-                                        : "ml-0 mr-auto col-6"
-                                    ]
-                                  },
-                                  [
-                                    _c("img", {
-                                      attrs: {
-                                        src: match.awayEmblem,
-                                        alt: match.awayTeam
-                                      }
-                                    })
-                                  ]
-                                )
-                              : _c(
-                                  "div",
-                                  {
-                                    staticClass: "col-3 mx-auto",
-                                    on: {
-                                      click: function($event) {
-                                        match.winner = match.awayTeam
-                                      }
-                                    }
-                                  },
-                                  [
-                                    _c("img", {
-                                      attrs: {
-                                        src: match.awayEmblem,
-                                        alt: match.awayTeam
-                                      }
-                                    })
-                                  ]
-                                ),
-                            _vm._v(" "),
-                            match.etp_available &&
-                            match.homeGoals != null &&
-                            match.homeGoals == match.awayGoals
-                              ? _c(
-                                  "div",
-                                  {
-                                    staticClass: "col-10 text-justify mx-auto"
-                                  },
-                                  [
-                                    _c("hr"),
-                                    _vm._v(" "),
-                                    _vm._m(1, true),
-                                    _c("p"),
-                                    _vm._m(2, true),
-                                    _vm._v(" "),
-                                    match.winner != null
-                                      ? _c(
-                                          "div",
-                                          { staticClass: "text-primary" },
-                                          [
-                                            _c("p", [
-                                              _c("small", [
-                                                _vm._v(
-                                                  "\n                                    You have selected\n                                "
-                                                )
-                                              ]),
-                                              _vm._v(" "),
-                                              _c("b", [
-                                                _vm._v(_vm._s(match.winner))
-                                              ]),
-                                              _vm._v(" "),
-                                              _c("small", [
-                                                _vm._v(
-                                                  "\n                                    to win the tie in extra time or on penalties after a \n                                    " +
-                                                    _vm._s(match.homeGoals) +
-                                                    " - " +
-                                                    _vm._s(match.awayGoals) +
-                                                    " \n                                    draw in 90 minutes.\n                                "
-                                                )
-                                              ])
-                                            ])
-                                          ]
-                                        )
-                                      : _c(
-                                          "div",
-                                          { staticClass: "text-danger" },
-                                          [
-                                            _c("p", [
-                                              _vm._v(
-                                                "You haven't selected an overall tie winner"
-                                              )
-                                            ])
-                                          ]
-                                        )
-                                  ]
-                                )
-                              : _vm._e()
-                          ]
-                        )
-                      }),
-                      _vm._v(" "),
-                      _vm.user.length != 0 &&
-                      _vm.users.length != 0 &&
-                      _vm.user.name != "Guest"
-                        ? _c("div", { staticClass: "text-center" }, [
-                            _c(
-                              "button",
-                              { staticClass: "btn btn-lg btn-primary mx-auto" },
-                              [_vm._v("Submit")]
-                            )
-                          ])
-                        : _vm._e()
-                    ],
-                    2
-                  )
-                : _c("div", { staticClass: "row" }, [
-                    _c("div", { staticClass: "mx-auto" }, [_c("Spinner")], 1)
-                  ])
-            ])
-          : _c("div", { staticClass: "card-body" }, [
-              _vm.hasFixtures
-                ? _c(
-                    "div",
-                    _vm._l(_vm.matches, function(match, index) {
-                      return _c("div", { key: match.id }, [
-                        _vm.allPredictions[index].length > 0
-                          ? _c("div", { staticClass: "row py-2" }, [
-                              _c(
-                                "div",
-                                { staticClass: "col-12 text-center mb-2" },
-                                [
-                                  _c("hr"),
-                                  _vm._v(" "),
-                                  _c("small", [
-                                    _vm._v(
-                                      "\n                                " +
-                                        _vm._s(
-                                          _vm
-                                            .kickoffFormat(match.kickoff)
-                                            .split(" ")[0]
-                                        ) +
-                                        "\n                                " +
-                                        _vm._s(
-                                          _vm
-                                            .kickoffFormat(match.kickoff)
-                                            .split(" ")[1]
-                                        ) +
-                                        "\n                                " +
-                                        _vm._s(
-                                          _vm
-                                            .kickoffFormat(match.kickoff)
-                                            .split(" ")[2]
-                                        ) +
-                                        "\n                                " +
-                                        _vm._s(
-                                          _vm
-                                            .kickoffFormat(match.kickoff)
-                                            .split(" ")[3]
-                                        ) +
-                                        "\n                            "
-                                    )
-                                  ]),
-                                  _vm._v(" "),
-                                  _c("h6", [
-                                    _vm._v(
-                                      _vm._s(
-                                        _vm
-                                          .kickoffFormat(match.kickoff)
-                                          .split(" ")[4]
-                                      )
-                                    )
-                                  ]),
-                                  _vm._v(" "),
-                                  _vm._m(3, true)
-                                ]
-                              ),
-                              _vm._v(" "),
-                              _c("div", { staticClass: "col-3 mx-auto" }, [
-                                _c("img", {
-                                  attrs: {
-                                    src: match.homeEmblem,
-                                    alt: match.homeTeam
-                                  }
-                                })
-                              ]),
-                              _vm._v(" "),
-                              _c(
-                                "div",
-                                {
-                                  staticClass:
-                                    "col-6 mx-auto my-auto text-center"
-                                },
-                                [
-                                  _vm.users.length != 0
-                                    ? _c(
-                                        "table",
-                                        _vm._l(
-                                          _vm.allPredictions[index],
-                                          function(prediction) {
-                                            return _c("tr", [
-                                              _c(
-                                                "td",
-                                                {
-                                                  staticStyle: {
-                                                    "text-align": "right"
-                                                  }
-                                                },
-                                                [
-                                                  _c("small", [
-                                                    _vm._v(
-                                                      _vm._s(
-                                                        _vm.users[
-                                                          prediction.user_id - 1
-                                                        ].name
-                                                      )
-                                                    )
-                                                  ])
-                                                ]
-                                              ),
-                                              _vm._v(" "),
-                                              prediction.winner == null
-                                                ? _c("td", [
-                                                    _c("small", [
-                                                      _vm._v(
-                                                        _vm._s(
-                                                          prediction.homeGoals
-                                                        ) +
-                                                          " - " +
-                                                          _vm._s(
-                                                            prediction.awayGoals
-                                                          )
-                                                      )
-                                                    ])
-                                                  ])
-                                                : _c("td", [
-                                                    _c("small", [
-                                                      prediction.winner ==
-                                                      match.homeTeam
-                                                        ? _c("span", [
-                                                            _c("span", [
-                                                              _vm._v("*")
-                                                            ])
-                                                          ])
-                                                        : _vm._e(),
-                                                      _vm._v(
-                                                        "\n                                                " +
-                                                          _vm._s(
-                                                            prediction.homeGoals
-                                                          ) +
-                                                          " - " +
-                                                          _vm._s(
-                                                            prediction.awayGoals
-                                                          ) +
-                                                          "\n                                            "
-                                                      ),
-                                                      prediction.winner ==
-                                                      match.awayTeam
-                                                        ? _c("span", [
-                                                            _c("span", [
-                                                              _vm._v("*")
-                                                            ])
-                                                          ])
-                                                        : _vm._e()
-                                                    ])
-                                                  ])
-                                            ])
-                                          }
-                                        ),
-                                        0
-                                      )
-                                    : _vm._e()
-                                ]
-                              ),
-                              _vm._v(" "),
-                              _c("div", { staticClass: "col-3 mx-auto" }, [
-                                _c("img", {
-                                  attrs: {
-                                    src: match.awayEmblem,
-                                    alt: match.awayTeam
-                                  }
-                                })
-                              ])
-                            ])
-                          : _vm._e()
-                      ])
-                    }),
-                    0
-                  )
-                : _vm._e()
-            ])
-      ])
-    : _vm.submitted
-    ? _c("div", { staticClass: "card" }, [
-        _c("div", { staticClass: "card-header" }, [_vm._v("Upcoming Matches")]),
-        _vm._v(" "),
-        _vm._m(4)
-      ])
-    : _c("div", { staticClass: "card" }, [
-        _c("div", { staticClass: "card-header" }, [_vm._v("Upcoming Matches")]),
-        _vm._v(" "),
-        _c("div", { staticClass: "card-body" }, [
-          _c("div", { staticClass: "row" }, [
+  return _c(
+    "div",
+    { staticClass: "card", attrs: { id: "top" } },
+    [
+      _c("div", { staticClass: "card-header" }, [_vm._v("Upcoming Matches")]),
+      _vm._v(" "),
+      !_vm.previouslySubmitted && _vm.hasFixtures && _vm.ready
+        ? _c("FixtureForm", {
+            attrs: { user: _vm.user, users: _vm.users, matches: _vm.matches },
+            on: {
+              submitted: _vm.getUnresultedMatches,
+              getmatches: _vm.getMatches
+            }
+          })
+        : _vm.previouslySubmitted && _vm.hasFixtures && _vm.ready
+        ? _c("FixtureList", {
+            attrs: {
+              user: _vm.user,
+              users: _vm.users,
+              matches: _vm.matches,
+              predictions: _vm.predictions,
+              "all-predictions": _vm.allPredictions
+            }
+          })
+        : _vm._e(),
+      _vm._v(" "),
+      !_vm.ready
+        ? _c("div", { staticClass: "row" }, [
             _c("div", { staticClass: "mx-auto" }, [_c("Spinner")], 1)
           ])
-        ])
-      ])
+        : _vm._e()
+    ],
+    1
+  )
 }
-var staticRenderFns = [
-  function() {
-    var _vm = this
-    var _h = _vm.$createElement
-    var _c = _vm._self._c || _h
-    return _c("div", { staticClass: "col-9 mx-auto" }, [_c("hr")])
-  },
-  function() {
-    var _vm = this
-    var _h = _vm.$createElement
-    var _c = _vm._self._c || _h
-    return _c("p", [
-      _c("small", [_vm._v("This match is to be played to a conclusion.")])
-    ])
-  },
-  function() {
-    var _vm = this
-    var _h = _vm.$createElement
-    var _c = _vm._self._c || _h
-    return _c("p", [
-      _c("small", [
-        _vm._v(
-          "\n                                Please click the crest of the team that you believe will win \n                                the tie after extra time and / or penalty kicks.\n                            "
-        )
-      ])
-    ])
-  },
-  function() {
-    var _vm = this
-    var _h = _vm.$createElement
-    var _c = _vm._self._c || _h
-    return _c("div", { staticClass: "col-9 mx-auto" }, [_c("hr")])
-  },
-  function() {
-    var _vm = this
-    var _h = _vm.$createElement
-    var _c = _vm._self._c || _h
-    return _c("div", { staticClass: "card-body" }, [
-      _c("p", [_vm._v("Thanks for your submission.")]),
-      _vm._v(" "),
-      _c("p", [_vm._v("Good luck!")])
-    ])
-  }
-]
+var staticRenderFns = []
 render._withStripped = true
 
 
@@ -70831,11 +70275,11 @@ var render = function() {
   var _vm = this
   var _h = _vm.$createElement
   var _c = _vm._self._c || _h
-  return _c("div", { staticClass: "card my-2" }, [
-    _c("div", { staticClass: "card-header" }, [_vm._v("Previous Matches")]),
-    _vm._v(" "),
-    _vm.ready
-      ? _c(
+  return _vm.ready
+    ? _c("div", { staticClass: "card my-2" }, [
+        _c("div", { staticClass: "card-header" }, [_vm._v("Previous Matches")]),
+        _vm._v(" "),
+        _c(
           "div",
           { staticClass: "card-body" },
           [
@@ -70872,12 +70316,8 @@ var render = function() {
           ],
           1
         )
-      : _c("div", { staticClass: "card-body" }, [
-          _c("div", { staticClass: "row" }, [
-            _c("div", { staticClass: "mx-auto" }, [_c("Spinner")], 1)
-          ])
-        ])
-  ])
+      ])
+    : _vm._e()
 }
 var staticRenderFns = []
 render._withStripped = true
@@ -74080,6 +73520,525 @@ var render = function() {
   )
 }
 var staticRenderFns = []
+render._withStripped = true
+
+
+
+/***/ }),
+
+/***/ "./node_modules/vue-loader/lib/loaders/templateLoader.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/fixtures/FixtureForm.vue?vue&type=template&id=2e7e0413&":
+/*!***********************************************************************************************************************************************************************************************************************!*\
+  !*** ./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/vue-loader/lib??vue-loader-options!./resources/js/components/fixtures/FixtureForm.vue?vue&type=template&id=2e7e0413& ***!
+  \***********************************************************************************************************************************************************************************************************************/
+/*! exports provided: render, staticRenderFns */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "render", function() { return render; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "staticRenderFns", function() { return staticRenderFns; });
+var render = function() {
+  var _vm = this
+  var _h = _vm.$createElement
+  var _c = _vm._self._c || _h
+  return _c("div", { staticClass: "card-body" }, [
+    _c(
+      "form",
+      {
+        attrs: { action: "prediction/store", method: "post" },
+        on: {
+          submit: function($event) {
+            $event.preventDefault()
+            return _vm.onSubmit($event)
+          }
+        }
+      },
+      [
+        _vm.user.name == "Guest"
+          ? _c("div", { staticClass: "row" }, [
+              _vm.user.length != 0
+                ? _c(
+                    "a",
+                    { staticClass: "mx-auto", attrs: { href: "/login" } },
+                    [_vm._v("Login or register to take part!")]
+                  )
+                : _vm._e()
+            ])
+          : _vm.matches.length != 0
+          ? _c("KickoffCountdown", {
+              attrs: {
+                date: _vm.localTime(Object.values(_vm.matches)[0].kickoff)
+              },
+              on: {
+                end: function($event) {
+                  return _vm.$emit("getmatches")
+                }
+              },
+              scopedSlots: _vm._u(
+                [
+                  {
+                    key: "default",
+                    fn: function(props) {
+                      return props.time.days < 1
+                        ? [
+                            _c("h5", { staticClass: "text-center" }, [
+                              _vm._v("NEXT MATCH:")
+                            ]),
+                            _vm._v(" "),
+                            _c("div", { staticClass: "col-9 mx-auto" }, [
+                              _c("hr")
+                            ]),
+                            _vm._v(" "),
+                            _c(
+                              "div",
+                              { staticClass: "text-center lead" },
+                              [
+                                props.time.hours > 0
+                                  ? [
+                                      _c(
+                                        "span",
+                                        {
+                                          staticClass:
+                                            "font-weight-bolder text-danger"
+                                        },
+                                        [_vm._v(_vm._s(props.time.hours))]
+                                      ),
+                                      _vm._v(" Hours\n                    ")
+                                    ]
+                                  : _vm._e(),
+                                _vm._v(" "),
+                                props.time.minutes > 0
+                                  ? [
+                                      _c(
+                                        "span",
+                                        {
+                                          staticClass:
+                                            "font-weight-bolder text-danger"
+                                        },
+                                        [_vm._v(_vm._s(props.time.minutes))]
+                                      ),
+                                      _vm._v(" Minutes\n                    ")
+                                    ]
+                                  : _vm._e(),
+                                _vm._v(" "),
+                                [
+                                  _c(
+                                    "span",
+                                    {
+                                      staticClass:
+                                        "font-weight-bolder text-danger"
+                                    },
+                                    [_vm._v(_vm._s(props.time.seconds))]
+                                  ),
+                                  _vm._v(" Seconds\n                    ")
+                                ]
+                              ],
+                              2
+                            )
+                          ]
+                        : undefined
+                    }
+                  }
+                ],
+                null,
+                true
+              )
+            })
+          : _vm._e(),
+        _vm._v(" "),
+        _vm._l(_vm.matches, function(match) {
+          return _c("div", { key: match.id, staticClass: "row py-2" }, [
+            _c("div", { staticClass: "col-12 text-center mb-2" }, [
+              _c("hr"),
+              _vm._v(" "),
+              _c("small", [
+                _vm._v(
+                  "\n                    " +
+                    _vm._s(_vm.kickoffFormat(match.kickoff).split(" ")[0]) +
+                    "\n                    " +
+                    _vm._s(_vm.kickoffFormat(match.kickoff).split(" ")[1]) +
+                    "\n                    " +
+                    _vm._s(_vm.kickoffFormat(match.kickoff).split(" ")[2]) +
+                    "\n                    " +
+                    _vm._s(_vm.kickoffFormat(match.kickoff).split(" ")[3]) +
+                    "\n                "
+                )
+              ]),
+              _vm._v(" "),
+              _c("h6", [
+                _vm._v(_vm._s(_vm.kickoffFormat(match.kickoff).split(" ")[4]))
+              ]),
+              _vm._v(" "),
+              _vm._m(0, true)
+            ]),
+            _vm._v(" "),
+            !(
+              match.etp_available &&
+              match.homeGoals == match.awayGoals &&
+              match.homeGoals != null
+            )
+              ? _c(
+                  "div",
+                  {
+                    class: [
+                      _vm.user.name != "Guest"
+                        ? "mx-auto col-3"
+                        : "text-right col-6"
+                    ]
+                  },
+                  [
+                    _c("img", {
+                      attrs: { src: match.homeEmblem, alt: match.homeTeam }
+                    })
+                  ]
+                )
+              : _c(
+                  "div",
+                  {
+                    staticClass: "col-3 mx-auto",
+                    on: {
+                      click: function($event) {
+                        match.winner = match.homeTeam
+                      }
+                    }
+                  },
+                  [
+                    _c("img", {
+                      attrs: { src: match.homeEmblem, alt: match.homeTeam }
+                    })
+                  ]
+                ),
+            _vm._v(" "),
+            _vm.user.length != 0 &&
+            _vm.users.length != 0 &&
+            _vm.user.name != "Guest"
+              ? _c(
+                  "div",
+                  {
+                    staticClass: "form-group col-6 my-auto mx-auto text-center"
+                  },
+                  [
+                    _c("input", {
+                      directives: [
+                        {
+                          name: "model",
+                          rawName: "v-model",
+                          value: match.homeGoals,
+                          expression: "match.homeGoals"
+                        }
+                      ],
+                      staticClass: "col-5",
+                      attrs: {
+                        name: "home" + match.id,
+                        required: "",
+                        type: "number"
+                      },
+                      domProps: { value: match.homeGoals },
+                      on: {
+                        input: function($event) {
+                          if ($event.target.composing) {
+                            return
+                          }
+                          _vm.$set(match, "homeGoals", $event.target.value)
+                        }
+                      }
+                    }),
+                    _vm._v(" "),
+                    _c("input", {
+                      directives: [
+                        {
+                          name: "model",
+                          rawName: "v-model",
+                          value: match.awayGoals,
+                          expression: "match.awayGoals"
+                        }
+                      ],
+                      staticClass: "col-5",
+                      attrs: {
+                        name: "away" + match.id,
+                        required: "",
+                        type: "number"
+                      },
+                      domProps: { value: match.awayGoals },
+                      on: {
+                        input: function($event) {
+                          if ($event.target.composing) {
+                            return
+                          }
+                          _vm.$set(match, "awayGoals", $event.target.value)
+                        }
+                      }
+                    })
+                  ]
+                )
+              : _vm._e(),
+            _vm._v(" "),
+            !(
+              match.etp_available &&
+              match.homeGoals == match.awayGoals &&
+              match.homeGoals != null
+            )
+              ? _c(
+                  "div",
+                  {
+                    class: [
+                      _vm.user.name != "Guest"
+                        ? "mx-auto col-3"
+                        : "ml-0 mr-auto col-6"
+                    ]
+                  },
+                  [
+                    _c("img", {
+                      attrs: { src: match.awayEmblem, alt: match.awayTeam }
+                    })
+                  ]
+                )
+              : _c(
+                  "div",
+                  {
+                    staticClass: "col-3 mx-auto",
+                    on: {
+                      click: function($event) {
+                        match.winner = match.awayTeam
+                      }
+                    }
+                  },
+                  [
+                    _c("img", {
+                      attrs: { src: match.awayEmblem, alt: match.awayTeam }
+                    })
+                  ]
+                ),
+            _vm._v(" "),
+            match.etp_available &&
+            match.homeGoals != null &&
+            match.homeGoals == match.awayGoals
+              ? _c("div", { staticClass: "col-10 text-justify mx-auto" }, [
+                  _c("hr"),
+                  _vm._v(" "),
+                  _vm._m(1, true),
+                  _c("p"),
+                  _vm._m(2, true),
+                  _vm._v(" "),
+                  match.winner != null
+                    ? _c("div", { staticClass: "text-primary" }, [
+                        _c("p", [
+                          _c("small", [
+                            _vm._v(
+                              "\n                            You have selected\n                        "
+                            )
+                          ]),
+                          _vm._v(" "),
+                          _c("b", [_vm._v(_vm._s(match.winner))]),
+                          _vm._v(" "),
+                          _c("small", [
+                            _vm._v(
+                              "\n                            to win the tie in extra time or on penalties after a \n                            " +
+                                _vm._s(match.homeGoals) +
+                                " - " +
+                                _vm._s(match.awayGoals) +
+                                " \n                            draw in 90 minutes.\n                        "
+                            )
+                          ])
+                        ])
+                      ])
+                    : _c("div", { staticClass: "text-danger" }, [
+                        _c("p", [
+                          _vm._v("You haven't selected an overall tie winner")
+                        ])
+                      ])
+                ])
+              : _vm._e()
+          ])
+        }),
+        _vm._v(" "),
+        _vm.user.length != 0 &&
+        _vm.users.length != 0 &&
+        _vm.user.name != "Guest"
+          ? _c("div", { staticClass: "text-center" }, [
+              _c("button", { staticClass: "btn btn-lg btn-primary mx-auto" }, [
+                _vm._v("Submit")
+              ])
+            ])
+          : _vm._e()
+      ],
+      2
+    )
+  ])
+}
+var staticRenderFns = [
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("div", { staticClass: "col-9 mx-auto" }, [_c("hr")])
+  },
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("p", [
+      _c("small", [_vm._v("This match is to be played to a conclusion.")])
+    ])
+  },
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("p", [
+      _c("small", [
+        _vm._v(
+          "\n                        Please click the crest of the team that you believe will win \n                        the tie after extra time and / or penalty kicks.\n                    "
+        )
+      ])
+    ])
+  }
+]
+render._withStripped = true
+
+
+
+/***/ }),
+
+/***/ "./node_modules/vue-loader/lib/loaders/templateLoader.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/fixtures/FixtureList.vue?vue&type=template&id=62772aed&":
+/*!***********************************************************************************************************************************************************************************************************************!*\
+  !*** ./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/vue-loader/lib??vue-loader-options!./resources/js/components/fixtures/FixtureList.vue?vue&type=template&id=62772aed& ***!
+  \***********************************************************************************************************************************************************************************************************************/
+/*! exports provided: render, staticRenderFns */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "render", function() { return render; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "staticRenderFns", function() { return staticRenderFns; });
+var render = function() {
+  var _vm = this
+  var _h = _vm.$createElement
+  var _c = _vm._self._c || _h
+  return _c("div", { staticClass: "card-body" }, [
+    _c(
+      "div",
+      _vm._l(_vm.matches, function(match, index) {
+        return _c("div", { key: match.id }, [
+          _vm.allPredictions[index].length > 0
+            ? _c("div", { staticClass: "row py-2" }, [
+                _c("div", { staticClass: "col-12 text-center mb-2" }, [
+                  _c("hr"),
+                  _vm._v(" "),
+                  _c("small", [
+                    _vm._v(
+                      "\n                        " +
+                        _vm._s(_vm.kickoffFormat(match.kickoff).split(" ")[0]) +
+                        "\n                        " +
+                        _vm._s(_vm.kickoffFormat(match.kickoff).split(" ")[1]) +
+                        "\n                        " +
+                        _vm._s(_vm.kickoffFormat(match.kickoff).split(" ")[2]) +
+                        "\n                        " +
+                        _vm._s(_vm.kickoffFormat(match.kickoff).split(" ")[3]) +
+                        "\n                    "
+                    )
+                  ]),
+                  _vm._v(" "),
+                  _c("h6", [
+                    _vm._v(
+                      _vm._s(_vm.kickoffFormat(match.kickoff).split(" ")[4])
+                    )
+                  ]),
+                  _vm._v(" "),
+                  _vm._m(0, true)
+                ]),
+                _vm._v(" "),
+                _c("div", { staticClass: "col-3 mx-auto" }, [
+                  _c("img", {
+                    attrs: { src: match.homeEmblem, alt: match.homeTeam }
+                  })
+                ]),
+                _vm._v(" "),
+                _c(
+                  "div",
+                  { staticClass: "col-6 mx-auto my-auto text-center" },
+                  [
+                    _vm.users.length != 0
+                      ? _c(
+                          "table",
+                          _vm._l(_vm.allPredictions[index], function(
+                            prediction
+                          ) {
+                            return _c("tr", [
+                              _c(
+                                "td",
+                                { staticStyle: { "text-align": "right" } },
+                                [
+                                  _c("small", [
+                                    _vm._v(
+                                      _vm._s(
+                                        _vm.users[prediction.user_id - 1].name
+                                      )
+                                    )
+                                  ])
+                                ]
+                              ),
+                              _vm._v(" "),
+                              prediction.winner == null
+                                ? _c("td", [
+                                    _c("small", [
+                                      _vm._v(
+                                        _vm._s(prediction.homeGoals) +
+                                          " - " +
+                                          _vm._s(prediction.awayGoals)
+                                      )
+                                    ])
+                                  ])
+                                : _c("td", [
+                                    _c("small", [
+                                      prediction.winner == match.homeTeam
+                                        ? _c("span", [
+                                            _c("span", [_vm._v("*")])
+                                          ])
+                                        : _vm._e(),
+                                      _vm._v(
+                                        "\n                                        " +
+                                          _vm._s(prediction.homeGoals) +
+                                          " - " +
+                                          _vm._s(prediction.awayGoals) +
+                                          "\n                                    "
+                                      ),
+                                      prediction.winner == match.awayTeam
+                                        ? _c("span", [
+                                            _c("span", [_vm._v("*")])
+                                          ])
+                                        : _vm._e()
+                                    ])
+                                  ])
+                            ])
+                          }),
+                          0
+                        )
+                      : _vm._e()
+                  ]
+                ),
+                _vm._v(" "),
+                _c("div", { staticClass: "col-3 mx-auto" }, [
+                  _c("img", {
+                    attrs: { src: match.awayEmblem, alt: match.awayTeam }
+                  })
+                ])
+              ])
+            : _vm._e()
+        ])
+      }),
+      0
+    )
+  ])
+}
+var staticRenderFns = [
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("div", { staticClass: "col-9 mx-auto" }, [_c("hr")])
+  }
+]
 render._withStripped = true
 
 
@@ -88074,6 +88033,144 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "render", function() { return _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_VotingOptions_vue_vue_type_template_id_1ac8c192___WEBPACK_IMPORTED_MODULE_0__["render"]; });
 
 /* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "staticRenderFns", function() { return _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_VotingOptions_vue_vue_type_template_id_1ac8c192___WEBPACK_IMPORTED_MODULE_0__["staticRenderFns"]; });
+
+
+
+/***/ }),
+
+/***/ "./resources/js/components/fixtures/FixtureForm.vue":
+/*!**********************************************************!*\
+  !*** ./resources/js/components/fixtures/FixtureForm.vue ***!
+  \**********************************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _FixtureForm_vue_vue_type_template_id_2e7e0413___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./FixtureForm.vue?vue&type=template&id=2e7e0413& */ "./resources/js/components/fixtures/FixtureForm.vue?vue&type=template&id=2e7e0413&");
+/* harmony import */ var _FixtureForm_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./FixtureForm.vue?vue&type=script&lang=js& */ "./resources/js/components/fixtures/FixtureForm.vue?vue&type=script&lang=js&");
+/* empty/unused harmony star reexport *//* harmony import */ var _node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../../../../node_modules/vue-loader/lib/runtime/componentNormalizer.js */ "./node_modules/vue-loader/lib/runtime/componentNormalizer.js");
+
+
+
+
+
+/* normalize component */
+
+var component = Object(_node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_2__["default"])(
+  _FixtureForm_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__["default"],
+  _FixtureForm_vue_vue_type_template_id_2e7e0413___WEBPACK_IMPORTED_MODULE_0__["render"],
+  _FixtureForm_vue_vue_type_template_id_2e7e0413___WEBPACK_IMPORTED_MODULE_0__["staticRenderFns"],
+  false,
+  null,
+  null,
+  null
+  
+)
+
+/* hot reload */
+if (false) { var api; }
+component.options.__file = "resources/js/components/fixtures/FixtureForm.vue"
+/* harmony default export */ __webpack_exports__["default"] = (component.exports);
+
+/***/ }),
+
+/***/ "./resources/js/components/fixtures/FixtureForm.vue?vue&type=script&lang=js&":
+/*!***********************************************************************************!*\
+  !*** ./resources/js/components/fixtures/FixtureForm.vue?vue&type=script&lang=js& ***!
+  \***********************************************************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _node_modules_babel_loader_lib_index_js_ref_4_0_node_modules_vue_loader_lib_index_js_vue_loader_options_FixtureForm_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../../node_modules/babel-loader/lib??ref--4-0!../../../../node_modules/vue-loader/lib??vue-loader-options!./FixtureForm.vue?vue&type=script&lang=js& */ "./node_modules/babel-loader/lib/index.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/fixtures/FixtureForm.vue?vue&type=script&lang=js&");
+/* empty/unused harmony star reexport */ /* harmony default export */ __webpack_exports__["default"] = (_node_modules_babel_loader_lib_index_js_ref_4_0_node_modules_vue_loader_lib_index_js_vue_loader_options_FixtureForm_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_0__["default"]); 
+
+/***/ }),
+
+/***/ "./resources/js/components/fixtures/FixtureForm.vue?vue&type=template&id=2e7e0413&":
+/*!*****************************************************************************************!*\
+  !*** ./resources/js/components/fixtures/FixtureForm.vue?vue&type=template&id=2e7e0413& ***!
+  \*****************************************************************************************/
+/*! exports provided: render, staticRenderFns */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_FixtureForm_vue_vue_type_template_id_2e7e0413___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../../node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!../../../../node_modules/vue-loader/lib??vue-loader-options!./FixtureForm.vue?vue&type=template&id=2e7e0413& */ "./node_modules/vue-loader/lib/loaders/templateLoader.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/fixtures/FixtureForm.vue?vue&type=template&id=2e7e0413&");
+/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "render", function() { return _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_FixtureForm_vue_vue_type_template_id_2e7e0413___WEBPACK_IMPORTED_MODULE_0__["render"]; });
+
+/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "staticRenderFns", function() { return _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_FixtureForm_vue_vue_type_template_id_2e7e0413___WEBPACK_IMPORTED_MODULE_0__["staticRenderFns"]; });
+
+
+
+/***/ }),
+
+/***/ "./resources/js/components/fixtures/FixtureList.vue":
+/*!**********************************************************!*\
+  !*** ./resources/js/components/fixtures/FixtureList.vue ***!
+  \**********************************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _FixtureList_vue_vue_type_template_id_62772aed___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./FixtureList.vue?vue&type=template&id=62772aed& */ "./resources/js/components/fixtures/FixtureList.vue?vue&type=template&id=62772aed&");
+/* harmony import */ var _FixtureList_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./FixtureList.vue?vue&type=script&lang=js& */ "./resources/js/components/fixtures/FixtureList.vue?vue&type=script&lang=js&");
+/* empty/unused harmony star reexport *//* harmony import */ var _node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../../../../node_modules/vue-loader/lib/runtime/componentNormalizer.js */ "./node_modules/vue-loader/lib/runtime/componentNormalizer.js");
+
+
+
+
+
+/* normalize component */
+
+var component = Object(_node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_2__["default"])(
+  _FixtureList_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__["default"],
+  _FixtureList_vue_vue_type_template_id_62772aed___WEBPACK_IMPORTED_MODULE_0__["render"],
+  _FixtureList_vue_vue_type_template_id_62772aed___WEBPACK_IMPORTED_MODULE_0__["staticRenderFns"],
+  false,
+  null,
+  null,
+  null
+  
+)
+
+/* hot reload */
+if (false) { var api; }
+component.options.__file = "resources/js/components/fixtures/FixtureList.vue"
+/* harmony default export */ __webpack_exports__["default"] = (component.exports);
+
+/***/ }),
+
+/***/ "./resources/js/components/fixtures/FixtureList.vue?vue&type=script&lang=js&":
+/*!***********************************************************************************!*\
+  !*** ./resources/js/components/fixtures/FixtureList.vue?vue&type=script&lang=js& ***!
+  \***********************************************************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _node_modules_babel_loader_lib_index_js_ref_4_0_node_modules_vue_loader_lib_index_js_vue_loader_options_FixtureList_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../../node_modules/babel-loader/lib??ref--4-0!../../../../node_modules/vue-loader/lib??vue-loader-options!./FixtureList.vue?vue&type=script&lang=js& */ "./node_modules/babel-loader/lib/index.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/fixtures/FixtureList.vue?vue&type=script&lang=js&");
+/* empty/unused harmony star reexport */ /* harmony default export */ __webpack_exports__["default"] = (_node_modules_babel_loader_lib_index_js_ref_4_0_node_modules_vue_loader_lib_index_js_vue_loader_options_FixtureList_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_0__["default"]); 
+
+/***/ }),
+
+/***/ "./resources/js/components/fixtures/FixtureList.vue?vue&type=template&id=62772aed&":
+/*!*****************************************************************************************!*\
+  !*** ./resources/js/components/fixtures/FixtureList.vue?vue&type=template&id=62772aed& ***!
+  \*****************************************************************************************/
+/*! exports provided: render, staticRenderFns */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_FixtureList_vue_vue_type_template_id_62772aed___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../../node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!../../../../node_modules/vue-loader/lib??vue-loader-options!./FixtureList.vue?vue&type=template&id=62772aed& */ "./node_modules/vue-loader/lib/loaders/templateLoader.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/fixtures/FixtureList.vue?vue&type=template&id=62772aed&");
+/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "render", function() { return _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_FixtureList_vue_vue_type_template_id_62772aed___WEBPACK_IMPORTED_MODULE_0__["render"]; });
+
+/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "staticRenderFns", function() { return _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_FixtureList_vue_vue_type_template_id_62772aed___WEBPACK_IMPORTED_MODULE_0__["staticRenderFns"]; });
 
 
 

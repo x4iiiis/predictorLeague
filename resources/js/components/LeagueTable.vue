@@ -6,7 +6,7 @@
         <div class="card-body">
             <table class="table table-hover">
                 <tr style="text-align:center">
-                    <th></th>
+                    <th class="d-none d-lg-block"></th>
                     <th></th>
                     <th>Points</th>
                     <th>Correct Score</th>
@@ -14,14 +14,14 @@
                 </tr>
                 
                 <tr v-if="!users.length > 0" style="text-align:center;">
-                    <td><td/>
+                    <td class="d-none d-lg-block"><td/>
                     <td><Spinner /></td>
                     <td><Spinner /></td>
                     <td><Spinner /></td>
                     <td><Spinner /></td>
                 </tr>
                 <tr v-for="(user, index) in users" style="text-align:center">
-                    <td>{{ index + 1 }}</td>
+                    <td class="d-none d-lg-block">{{ index + 1 }}</td>
                     <td>{{ user.name }}</td>
                     <td>{{ (user.correctScores * 3) + user.correctOutcomes }}</td> 
                     <td>{{ user.correctScores }}</td>

@@ -1,5 +1,5 @@
 <template>
-    <div class="card my-2">
+    <div class="card mb-2 mt-5">
         <h3 class="card-title pt-2">Season Reset</h3>
 
         <a v-if="!show" class="btn-sm btn-round btn-warning mx-auto mb-2" @click="showOrHide()">Show</a>

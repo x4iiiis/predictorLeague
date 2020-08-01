@@ -7,11 +7,10 @@
                 <PredictionStatus :users="users" @getusers="getUsers" />
                 <PollResults />
                 <VoterStatus :users="users" @getusers="getUsers" />
-                <SeasonReset />
             </div>
 
 
-            <div v-if="!showResulted" class="col-md-6 card mx-auto my-2">
+            <div v-if="!showResulted" class="col-md-6 card mx-auto mt-2 mb-5">
 
                 <div class="row">
                     <a class="btn btn-round btn-warning col-6 mx-auto" v-on:click="getResultedMatches()">Edit Resulted</a>
@@ -174,7 +173,7 @@
             </div>
 
 
-            <div v-else class="col-md-6 card mx-auto my-2">
+            <div v-else class="col-md-6 card mx-auto mt-2 mb-5">
                 <div class="row">
                     <a class="btn btn-round btn-info col-6 mx-auto" v-on:click="getUnresultedMatches()">Edit Unresulted</a>
                 </div>
@@ -226,7 +225,9 @@
 
             </div>
 
-
+            <div class="col-md-4 mr-0 ml-auto">
+                <SeasonReset />
+            </div>
 
         </div>
     </div>

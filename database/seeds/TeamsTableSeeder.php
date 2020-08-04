@@ -173,6 +173,11 @@ class TeamsTableSeeder extends Seeder
             'league' => 'Premier League'
         ]);
         DB::table('teams')->insert([
+            'name' => 'Fulham',
+            'emblem' => 'img/clubEmblems/Fulham.png',
+            'league' => 'Premier League'
+        ]);
+        DB::table('teams')->insert([
             'name' => 'Leeds United',
             'emblem' => 'img/clubEmblems/LeedsUnited.png',
             'league' => 'Premier League'

@@ -55,7 +55,7 @@ class LeagueTableController extends Controller
     public function resetPassword(Request $request) {
         
         $validator = Validator::make($request->all(), [
-            'id' => 'required|integer|exists:Users,id',
+            'id' => 'required|integer|exists:users,id',
             'newPassword' => 'required|string|min:3',
         ]);
 

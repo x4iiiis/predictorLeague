@@ -20,8 +20,9 @@
         </div>
 
         <div v-if="user.hasVoted && ready" class="col-md-5">
-            <Fixtures class="my-2" :users="users" :user="user"/>
-            <Results :users="users" />
+            <!-- <Fixtures class="my-2" :users="users" :user="user"/>
+            <Results :users="users" /> -->
+            <SalesPitch />
         </div>
 
     </div>
@@ -39,6 +40,8 @@ import Archive from '../components/archive/Archive';
 import Fixtures from '../components/Fixtures';
 import Results from '../components/Results';
 import Spinner from '../components/Spinner.vue';
+
+import SalesPitch from '../components/terms/RegistrationSalesPitch'
 
 export default {
     async mounted() {
@@ -97,7 +100,9 @@ export default {
         Archive,
         Fixtures,
         Results,
-        Spinner
+        Spinner,
+
+        SalesPitch
     }
 }
 </script>

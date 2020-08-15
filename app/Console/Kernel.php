@@ -36,7 +36,7 @@ class Kernel extends ConsoleKernel
                 // If today is matchday
                 if(Carbon::parse(Match::where('homeGoals', null)->first()->kickoff)->isToday()) {
                     // find all users who have not yet submitted predictions
-                    $recipients = User::where('hasSubmitted', false)->where('acceptEmails', true)->get();
+                    $recipients = User::where('hasSubmitted', false)->where('accept_emails', true)->get();
                     // email them all a reminder
                     $fixtures = Match::where('homeGoals', null)->get();
 

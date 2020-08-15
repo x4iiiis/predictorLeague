@@ -117,7 +117,7 @@ class PredictionController extends Controller
             }
 
             $fixtures = Match::all()->where('kickoff', '>', Carbon::now('Europe/London'));
-            FixturesReleased::dispatch($fixtures, User::all());
+            FixturesReleased::dispatch($fixtures, User::where('acceptEmails', true)->get());
         }
     }
 

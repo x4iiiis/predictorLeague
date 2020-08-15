@@ -6,12 +6,14 @@ use Illuminate\Bus\Queueable;
 use Illuminate\Mail\Mailable;
 use Illuminate\Queue\SerializesModels;
 use Illuminate\Contracts\Queue\ShouldQueue;
+use Carbon\Carbon;
 
 class FixturesReleasedEmail extends Mailable
 {
     use Queueable, SerializesModels;
 
     public $fixtures;
+    public $user;
 
     /**
      * Create a new message instance.
@@ -29,13 +31,12 @@ class FixturesReleasedEmail extends Mailable
      * @return $this
      */
     public function build()
-    {
-        // dd($this->fixtures->first());
-        
+    {   
         return $this->from(['address' => 'noreply@predictorleague.x4iiiis.com', 'name' => 'Fixture Release'])
+                    ->subject('New Fixtures Out Now!')
                     ->view('emails.predictionsReleased')
                     ->with([
-                        'firstKickoff' => $this->fixtures->first()->kickoff,
+                        'firstKickoff' => Carbon::parse($this->fixtures->first()->kickoff)->isoFormat('H:mm, dddd, MMMM Do'),
                         'matches' => $this->fixtures,
                     ]);
     }

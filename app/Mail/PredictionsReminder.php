@@ -6,12 +6,13 @@ use Illuminate\Bus\Queueable;
 use Illuminate\Mail\Mailable;
 use Illuminate\Queue\SerializesModels;
 use Illuminate\Contracts\Queue\ShouldQueue;
+use Carbon\Carbon;
 
 class PredictionsReminder extends Mailable
 {
     use Queueable, SerializesModels;
 
-    public $reminder;
+    public $fixtures;
 
     /**
      * Create a new message instance.
@@ -19,9 +20,9 @@ class PredictionsReminder extends Mailable
      * @param  \App\Order  $order
      * @return void
      */
-    public function __construct(Reminder $reminder)
+    public function __construct($matches)
     {
-        $this->reminder = $reminder;
+        $this->fixtures = $matches;
     }
 
     /**
@@ -34,8 +35,8 @@ class PredictionsReminder extends Mailable
         return $this->from(['address' => 'noreply@predictorleague.x4iiiis.com', 'name' => 'Prediction Reminder'])
                     ->view('emails.predictionsReminder')
                     ->with([
-                        'firstKickoff' => $this->reminder->kickoff,
-                        'matches' => $this->reminder->matches,
+                        'firstKickoff' => Carbon::parse($this->fixtures->first()->kickoff)->isoFormat('H:mm'),
+                        'matches' => $this->fixtures,
                     ]);
     }
 }

@@ -32,7 +32,7 @@ class Kernel extends ConsoleKernel
         $schedule->call(function () {
 
             // If it's 9am 
-            if(Carbon::now('Europe/London')->hour == 10 && Carbon::now('Europe/London')->minute == 45) {
+            if(Carbon::now('Europe/London')->hour == 9 && Carbon::now('Europe/London')->minute == 0) {
                 // If today is matchday
                 if(Carbon::parse(Match::where('homeGoals', null)->first()->kickoff)->isToday()) {
                     // find all users who have not yet submitted predictions

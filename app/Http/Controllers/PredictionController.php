@@ -7,6 +7,8 @@ use App\Prediction;
 use App\Match;
 use App\User;
 use Auth;
+Use Carbon\Carbon;
+use App\Providers\FixturesReleased;
 
 class PredictionController extends Controller
 {
@@ -113,6 +115,9 @@ class PredictionController extends Controller
                 $user->hasSubmitted = 0;
                 $user->save();
             }
+
+            $fixtures = Match::all()->where('kickoff', '>', Carbon::now('Europe/London'));
+            FixturesReleased::dispatch($fixtures, User::where('accept_emails', true)->get());
         }
     }
 

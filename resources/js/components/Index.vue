@@ -1,32 +1,43 @@
 <template>
-  <div class="container">
-    <div class="row justify-content-center">
-        
-        <div v-if="!ready" class="col-1 mx-auto">
-            <Spinner />
-        </div>
-        
-        <div v-if="!user.hasVoted && ready" class="col-10 mx-auto">
-            <PollingStation :user="user" @voted="closePollingStation" />
-        </div>
+    <div>
+        <Header :user="user" v-on:account="sidebarStatusFlip"/>
 
-        <div v-if="user.hasVoted && ready" class="col-md-7">
-            <!-- <Announcement></Announcement> -->
-            <League-Table :users="usersForLeague" />
-            <Rules />
-            <Key />
-            <Stats :users="usersForLeague" />
-            <Archive />
-        </div>
+        <MyAccount :show="showSidebar" v-on:account="sidebarStatusFlip"/>
 
-        <div v-if="user.hasVoted && ready" class="col-md-5">
-            <!-- <Fixtures class="my-2" :users="users" :user="user"/>
-            <Results :users="users" /> -->
-            <SalesPitch />
-        </div>
+        <div class="container">
+            <div class="row justify-content-center">
+                
+                <div v-if="!ready" class="col-1 mx-auto">
+                    <Spinner />
+                </div>
+                
+                <div v-if="!user.hasVoted && ready" class="col-10 mx-auto">
+                    <PollingStation :user="user" @voted="closePollingStation" />
+                </div>
 
+                <!-- <div class="col-10 mx-auto">
+                    <SalesPitch />
+                </div> -->
+
+
+                <div v-if="user.hasVoted && ready" class="col-md-7">
+                    <!-- <Announcement></Announcement> -->
+                    <League-Table :users="usersForLeague" />
+                    <Rules />
+                    <Key />
+                    <Stats :users="usersForLeague" />
+                    <Archive />
+                </div>
+
+                <div v-if="user.hasVoted && ready" class="col-md-5">
+                    <Fixtures class="my-2" :users="users" :user="user"/>
+                    <Results :users="users" />
+                </div>
+
+            </div>
+        </div>
+        <Footer />
     </div>
-</div>
 </template>
 
 <script>
@@ -40,6 +51,9 @@ import Archive from '../components/archive/Archive';
 import Fixtures from '../components/Fixtures';
 import Results from '../components/Results';
 import Spinner from '../components/Spinner.vue';
+import Header from '../components/nav/Header';
+import Footer from '../components/nav/Footer';
+import MyAccount from '../components/accounts/MyAccount';
 
 import SalesPitch from '../components/terms/RegistrationSalesPitch'
 
@@ -57,6 +71,7 @@ export default {
             user: [],
             users: [],
             usersForLeague: [],
+            showSidebar: false,
             ready: false
         }
     },
@@ -88,6 +103,9 @@ export default {
             setTimeout( function() {
                 self.user.hasVoted = true;
             }, 3000);
+        },
+        sidebarStatusFlip() {
+            this.showSidebar = !this.showSidebar;
         }
     },
     components: {
@@ -101,6 +119,9 @@ export default {
         Fixtures,
         Results,
         Spinner,
+        Header,
+        Footer,
+        MyAccount,
 
         SalesPitch
     }

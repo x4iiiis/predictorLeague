@@ -1,37 +1,199 @@
 <template>
-    <div class="container">
-        <div class="row text-center">
+    <div>
+        <Header :user="users[0]" />
+        <div class="container">
+            <div class="row text-center">
 
-            <div class="col-md-5 mx-auto">
-                <MatchMaker :teams="teams" @submitted="getUnresultedMatches" />
-                <PredictionStatus :users="users" @getusers="getUsers" />
-                <PollResults />
-                <VoterStatus :users="users" @getusers="getUsers" />
-            </div>
-
-
-            <div v-if="!showResulted" class="col-md-6 card mx-auto mt-2 mb-5">
-
-                <div class="row">
-                    <a class="btn btn-round btn-warning col-6 mx-auto" v-on:click="getResultedMatches()">Edit Resulted</a>
+                <div class="col-md-5 mx-auto">
+                    <MatchMaker :teams="teams" @submitted="getUnresultedMatches" />
+                    <PredictionStatus :users="users" @getusers="getUsers" />
+                    <PollResults />
+                    <VoterStatus :users="users" @getusers="getUsers" />
                 </div>
 
-                <h3 class="card-title pt-2">Unresulted Fixtures</h3>
 
+                <div v-if="!showResulted" class="col-md-6 card mx-auto mt-2 mb-5">
 
-                <div v-if="!ready" class="card-body">       
                     <div class="row">
-                        <div class="mx-auto">
-                            <Spinner></Spinner>
+                        <a class="btn btn-round btn-warning col-6 mx-auto" v-on:click="getResultedMatches()">Edit Resulted</a>
+                    </div>
+
+                    <h3 class="card-title pt-2">Unresulted Fixtures</h3>
+
+
+                    <div v-if="!ready" class="card-body">       
+                        <div class="row">
+                            <div class="mx-auto">
+                                <Spinner></Spinner>
+                            </div>
                         </div>
                     </div>
-                </div>
-                
-                <div v-else class="card-body">
+                    
+                    <div v-else class="card-body">
 
-                    <form action="match/addscores" method="post" @submit.prevent="onSubmitScores">
+                        <form action="match/addscores" method="post" @submit.prevent="onSubmitScores">
+                            <div v-for="(match, index) in matches" :key="match.id">
+                                <div class="row py-2">
+                                    <div class="col-12 text-center mb-2">
+                                        <hr>
+                                        <small>
+                                            {{ kickoffFormat(match.kickoff).split(' ')[0] }}
+                                            {{ kickoffFormat(match.kickoff).split(' ')[1] }}
+                                            {{ kickoffFormat(match.kickoff).split(' ')[2] }}
+                                            {{ kickoffFormat(match.kickoff).split(' ')[3] }}
+                                        </small>
+                                        <h6>{{ kickoffFormat(match.kickoff).split(' ')[4] }}</h6>
+                                        <div class="col-9 mx-auto">
+                                            <hr> 
+                                            <small v-if="match.etp_available"><em>Plays to conclusion</em></small>
+                                        </div>
+                                    </div>
+                                    <div class="col-3 mx-auto">
+                                        <img :src="match.homeEmblem" :alt="match.homeTeam">
+                                    </div>
+                                    <div class="form-group col-6 my-auto mx-auto text-center">
+                                        <input class="col-5" :name="'home' + match.id" v-model="match.homeGoals" type="number"></input>
+                                        <input class="col-5" :name="'away' + match.id" v-model="match.awayGoals" type="number"></input>
+
+                                        <div v-if="match.etp_available && match.homeGoals == match.awayGoals && match.homeGoals != null">
+                                            <br />
+                                            <b class="text-center">AET</b>
+                                            <br />
+                                            <input class="col-5" :name="'homeAET' + match.id" v-model="match.homeGoalsAET" type="number"></input>
+                                            <input class="col-5" :name="'awayAET' + match.id" v-model="match.awayGoalsAET" type="number"></input>
+
+                                            <br />
+                                            <b class="text-center">Pens</b>
+                                            <br />
+                                            <input class="col-5" :name="'homePens' + match.id" v-model="match.homeGoalsPens" type="number"></input>
+                                            <input class="col-5" :name="'awayPens' + match.id" v-model="match.awayGoalsPens" type="number"></input>
+                                        </div>
+                                    </div>
+                                    <div class="col-3 mx-auto">
+                                        <img :src="match.awayEmblem" :alt="match.awayTeam">
+                                    </div>
+
+                                </div>
+                                <div class="row">
+                                    <div class="col-8 mx-auto">
+                                        <hr>
+
+                                        <div class="btn-group dropup">
+                                            <span data-toggle="dropdown"><i class="fa fa-edit"></i></span>
+                                            <div class="dropdown-menu">
+                                            <a class="dropdown-item" v-on:click="cancelMatch(match)">P - P / A - A</a>
+                                            <a class="dropdown-item" data-toggle="modal" :data-target="'#teams-' + match.id">Edit Teams</a>
+                                            <a class="dropdown-item" data-toggle="modal" :data-target="'#kickoff-' + match.id">Edit Kickoff</a>
+                                            <a class="dropdown-item" data-toggle="modal" :data-target="'#ETP-' + match.id">Alter ET&P</a>
+                                            <a class="dropdown-item" v-on:click="reverseFixture(match)">Reverse Fixture</a>
+                                            </div>
+                                        </div>
+
+                                        <div class="modal fade" :id="'teams-' + match.id" tabindex="-1" role="dialog">
+                                            <div class="modal-dialog modal-sm" role="document">
+                                                <div class="modal-content">
+
+                                                    <div class="modal-body">
+                                                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                                            <span aria-hidden="true">&times;</span>
+                                                        </button>
+
+                                                        <form action="match/editkteams" method="post" @submit.prevent="onEditTeams(match)">
+                                                            <select class="form-control my-1"  id="editHomeTeam" placeholder="dateTime" v-model="match.homeTeam">
+                                                                <option v-for="(team, index) in teams" :key="team.id">{{team.name}}</option>
+                                                            </select>
+                                                            
+                                                            <select class="form-control my-1"  id="editAwayTeam" placeholder="dateTime" v-model="match.awayTeam">
+                                                                <option v-for="(team, index) in teams" :key="team.id">{{team.name}}</option>
+                                                            </select>
+
+                                                            <div class="text-center">
+                                                                <button type="submit" class="btn btn-lg btn-primary mx-auto mt-3" data-toggle="modal" :data-target="'#teams-' + match.id">Submit</button>
+                                                            </div>
+                                                        </form>
+                                                    </div>
+
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                        <div class="modal fade" :id="'kickoff-' + match.id" tabindex="-1" role="dialog">
+                                            <div class="modal-dialog modal-sm" role="document">
+                                                <div class="modal-content">
+
+                                                    <div class="modal-body">
+                                                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                                            <span aria-hidden="true">&times;</span>
+                                                        </button>
+
+                                                        <form action="match/editkickoff" method="post" @submit.prevent="onEditKickoff(match)">
+                                                            <input class="form-control" type="datetime-local" id="kickoff" placeholder="dateTime" v-model="match.kickoff">
+
+                                                            <div class="text-center">
+                                                                <button type="submit" class="btn btn-lg btn-primary mx-auto mt-3" data-toggle="modal" :data-target="'#kickoff-' + match.id">Submit</button>
+                                                            </div>
+                                                        </form>
+                                                    </div>
+
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                        <div class="modal fade" :id="'ETP-' + match.id" tabindex="-1" role="dialog">
+                                            <div class="modal-dialog modal-sm" role="document">
+                                                <div class="modal-content">
+
+                                                    <div class="modal-body">
+                                                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                                            <span aria-hidden="true">&times;</span>
+                                                        </button>
+
+                                                        <form action="match/editETP" method="post" @submit.prevent="onEditETP(match)">
+                                                            <label>Extra Time and / or Penalties Available</label>
+                                                            <input class="form-control col-1 mx-auto text-center" type="checkbox" v-model="match.etp_available">
+                                    
+                                                            <div class="text-center">
+                                                                <button type="submit" class="btn btn-lg btn-primary mx-auto mt-3" data-toggle="modal" :data-target="'#ETP-' + match.id">Submit</button>
+                                                            </div>
+                                                        </form>
+                                                    </div>
+
+                                                </div>
+                                            </div>
+                                        </div>
+                                        
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="text-center">
+                                <button type="submit" class="btn btn-lg btn-primary mx-auto mt-3">Submit</button>
+                            </div>
+                        </form>
+                    </div>
+
+                </div>
+
+
+                <div v-else class="col-md-6 card mx-auto mt-2 mb-5">
+                    <div class="row">
+                        <a class="btn btn-round btn-info col-6 mx-auto" v-on:click="getUnresultedMatches()">Edit Unresulted</a>
+                    </div>
+                    <h3 class="card-title pt-2">Resulted Fixtures</h3>
+
+
+                    <div v-if="!ready" class="card-body">       
+                        <div class="row">
+                            <div class="mx-auto">
+                                <Spinner></Spinner>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div v-else class="card-body">
+
                         <div v-for="(match, index) in matches" :key="match.id">
-                            <div class="row py-2">
+                            <form action="match/addscores" method="post" @submit.prevent="resetScores(match)" class="row py-2">
                                 <div class="col-12 text-center mb-2">
                                     <hr>
                                     <small>
@@ -43,193 +205,35 @@
                                     <h6>{{ kickoffFormat(match.kickoff).split(' ')[4] }}</h6>
                                     <div class="col-9 mx-auto">
                                         <hr> 
-                                        <small v-if="match.etp_available"><em>Plays to conclusion</em></small>
                                     </div>
                                 </div>
                                 <div class="col-3 mx-auto">
                                     <img :src="match.homeEmblem" :alt="match.homeTeam">
                                 </div>
                                 <div class="form-group col-6 my-auto mx-auto text-center">
-                                    <input class="col-5" :name="'home' + match.id" v-model="match.homeGoals" type="number"></input>
-                                    <input class="col-5" :name="'away' + match.id" v-model="match.awayGoals" type="number"></input>
-
-                                    <div v-if="match.etp_available && match.homeGoals == match.awayGoals && match.homeGoals != null">
-                                        <br />
-                                        <b class="text-center">AET</b>
-                                        <br />
-                                        <input class="col-5" :name="'homeAET' + match.id" v-model="match.homeGoalsAET" type="number"></input>
-                                        <input class="col-5" :name="'awayAET' + match.id" v-model="match.awayGoalsAET" type="number"></input>
-
-                                        <br />
-                                        <b class="text-center">Pens</b>
-                                        <br />
-                                        <input class="col-5" :name="'homePens' + match.id" v-model="match.homeGoalsPens" type="number"></input>
-                                        <input class="col-5" :name="'awayPens' + match.id" v-model="match.awayGoalsPens" type="number"></input>
-                                    </div>
+                                    <h1 style="display: inline;">{{ match.homeGoals }} - </h1>
+                                    <h1 style="display: inline;">{{ match.awayGoals }}</h1>
                                 </div>
                                 <div class="col-3 mx-auto">
                                     <img :src="match.awayEmblem" :alt="match.awayTeam">
                                 </div>
-
-                            </div>
-                            <div class="row">
-                                <div class="col-8 mx-auto">
-                                    <hr>
-
-                                    <div class="btn-group dropup">
-                                        <span data-toggle="dropdown"><i class="fa fa-edit"></i></span>
-                                        <div class="dropdown-menu">
-                                        <a class="dropdown-item" v-on:click="cancelMatch(match)">P - P / A - A</a>
-                                        <a class="dropdown-item" data-toggle="modal" :data-target="'#teams-' + match.id">Edit Teams</a>
-                                        <a class="dropdown-item" data-toggle="modal" :data-target="'#kickoff-' + match.id">Edit Kickoff</a>
-                                        <a class="dropdown-item" data-toggle="modal" :data-target="'#ETP-' + match.id">Alter ET&P</a>
-                                        <a class="dropdown-item" v-on:click="reverseFixture(match)">Reverse Fixture</a>
-                                        </div>
-                                    </div>
-
-                                    <div class="modal fade" :id="'teams-' + match.id" tabindex="-1" role="dialog">
-                                        <div class="modal-dialog modal-sm" role="document">
-                                            <div class="modal-content">
-
-                                                <div class="modal-body">
-                                                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                                                        <span aria-hidden="true">&times;</span>
-                                                    </button>
-
-                                                    <form action="match/editkteams" method="post" @submit.prevent="onEditTeams(match)">
-                                                        <select class="form-control my-1"  id="editHomeTeam" placeholder="dateTime" v-model="match.homeTeam">
-                                                            <option v-for="(team, index) in teams" :key="team.id">{{team.name}}</option>
-                                                        </select>
-                                                        
-                                                        <select class="form-control my-1"  id="editAwayTeam" placeholder="dateTime" v-model="match.awayTeam">
-                                                            <option v-for="(team, index) in teams" :key="team.id">{{team.name}}</option>
-                                                        </select>
-
-                                                        <div class="text-center">
-                                                            <button type="submit" class="btn btn-lg btn-primary mx-auto mt-3" data-toggle="modal" :data-target="'#teams-' + match.id">Submit</button>
-                                                        </div>
-                                                    </form>
-                                                </div>
-
-                                            </div>
-                                        </div>
-                                    </div>
-
-                                    <div class="modal fade" :id="'kickoff-' + match.id" tabindex="-1" role="dialog">
-                                        <div class="modal-dialog modal-sm" role="document">
-                                            <div class="modal-content">
-
-                                                <div class="modal-body">
-                                                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                                                        <span aria-hidden="true">&times;</span>
-                                                    </button>
-
-                                                    <form action="match/editkickoff" method="post" @submit.prevent="onEditKickoff(match)">
-                                                        <input class="form-control" type="datetime-local" id="kickoff" placeholder="dateTime" v-model="match.kickoff">
-
-                                                         <div class="text-center">
-                                                            <button type="submit" class="btn btn-lg btn-primary mx-auto mt-3" data-toggle="modal" :data-target="'#kickoff-' + match.id">Submit</button>
-                                                        </div>
-                                                    </form>
-                                                </div>
-
-                                            </div>
-                                        </div>
-                                    </div>
-
-                                    <div class="modal fade" :id="'ETP-' + match.id" tabindex="-1" role="dialog">
-                                        <div class="modal-dialog modal-sm" role="document">
-                                            <div class="modal-content">
-
-                                                <div class="modal-body">
-                                                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                                                        <span aria-hidden="true">&times;</span>
-                                                    </button>
-
-                                                    <form action="match/editETP" method="post" @submit.prevent="onEditETP(match)">
-                                                        <label>Extra Time and / or Penalties Available</label>
-                                                        <input class="form-control col-1 mx-auto text-center" type="checkbox" v-model="match.etp_available">
-                                
-                                                        <div class="text-center">
-                                                            <button type="submit" class="btn btn-lg btn-primary mx-auto mt-3" data-toggle="modal" :data-target="'#ETP-' + match.id">Submit</button>
-                                                        </div>
-                                                    </form>
-                                                </div>
-
-                                            </div>
-                                        </div>
-                                    </div>
-                                    
+                                <div class="col-12 text-center">
+                                    <button type="submit" class="btn btn-lg btn-warning mx-auto">Reset</button>
                                 </div>
-                            </div>
+                            </form>
                         </div>
 
-                        <div class="text-center">
-                            <button type="submit" class="btn btn-lg btn-primary mx-auto mt-3">Submit</button>
-                        </div>
-                    </form>
-                </div>
-
-            </div>
-
-
-            <div v-else class="col-md-6 card mx-auto mt-2 mb-5">
-                <div class="row">
-                    <a class="btn btn-round btn-info col-6 mx-auto" v-on:click="getUnresultedMatches()">Edit Unresulted</a>
-                </div>
-                <h3 class="card-title pt-2">Resulted Fixtures</h3>
-
-
-                <div v-if="!ready" class="card-body">       
-                    <div class="row">
-                        <div class="mx-auto">
-                            <Spinner></Spinner>
-                        </div>
-                    </div>
-                </div>
-                
-                <div v-else class="card-body">
-
-                    <div v-for="(match, index) in matches" :key="match.id">
-                        <form action="match/addscores" method="post" @submit.prevent="resetScores(match)" class="row py-2">
-                            <div class="col-12 text-center mb-2">
-                                <hr>
-                                <small>
-                                    {{ kickoffFormat(match.kickoff).split(' ')[0] }}
-                                    {{ kickoffFormat(match.kickoff).split(' ')[1] }}
-                                    {{ kickoffFormat(match.kickoff).split(' ')[2] }}
-                                    {{ kickoffFormat(match.kickoff).split(' ')[3] }}
-                                </small>
-                                <h6>{{ kickoffFormat(match.kickoff).split(' ')[4] }}</h6>
-                                <div class="col-9 mx-auto">
-                                    <hr> 
-                                </div>
-                            </div>
-                            <div class="col-3 mx-auto">
-                                <img :src="match.homeEmblem" :alt="match.homeTeam">
-                            </div>
-                            <div class="form-group col-6 my-auto mx-auto text-center">
-                                <h1 style="display: inline;">{{ match.homeGoals }} - </h1>
-                                <h1 style="display: inline;">{{ match.awayGoals }}</h1>
-                            </div>
-                            <div class="col-3 mx-auto">
-                                <img :src="match.awayEmblem" :alt="match.awayTeam">
-                            </div>
-                            <div class="col-12 text-center">
-                                <button type="submit" class="btn btn-lg btn-warning mx-auto">Reset</button>
-                            </div>
-                        </form>
                     </div>
 
                 </div>
 
-            </div>
+                <div class="col-md-4 mr-0 ml-auto">
+                    <SeasonReset />
+                </div>
 
-            <div class="col-md-4 mr-0 ml-auto">
-                <SeasonReset />
             </div>
-
         </div>
+        <Footer />
     </div>
 </template>
 
@@ -241,6 +245,8 @@
     import SeasonReset from '../backend/SeasonReset'
     import Spinner from '../Spinner'
     import FormatKickoff from '../../mixins/moment/formatKickoff'
+    import Header from '../nav/Header';
+    import Footer from '../nav/Footer';
 
     export default {
         mounted() {
@@ -440,6 +446,8 @@
             VoterStatus,
             SeasonReset,
             Spinner,
+            Header,
+            Footer
         }
     }
 </script>

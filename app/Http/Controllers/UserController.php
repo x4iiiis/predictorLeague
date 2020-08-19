@@ -11,7 +11,7 @@ use Illuminate\Support\Str;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Validator;
 
-class LeagueTableController extends Controller
+class UserController extends Controller
 {
     public function index()
     {
@@ -34,18 +34,15 @@ class LeagueTableController extends Controller
         ];
     }
 
-
-    public function whoAmI() {
+    public function update(Request $request) {
         if(Auth::user()) {
-            return [
-                'user', Auth::user()
-            ];
+            $user = Auth::user();
+            $user->name = $request->user['name'];
+            $user->email = $request->user['email'];
+            $user->accept_emails = $request->user['accept_emails'];
+            $user->save();
         }
-        else {
-            return [
-                'user', new User([ "name" => "Guest", "hasSubmitted" => 0, "hasVoted" => 1 ])
-            ];
-        }
+        return 'User updated';
     }
 
     public function checkEmail(Request $request) {
@@ -73,4 +70,16 @@ class LeagueTableController extends Controller
         }
     }
 
+    public function whoAmI() {
+        if(Auth::user()) {
+            return [
+                'user', Auth::user()
+            ];
+        }
+        else {
+            return [
+                'user', new User([ "name" => "Guest", "hasSubmitted" => 0, "hasVoted" => 1 ])
+            ];
+        }
+    }
 }

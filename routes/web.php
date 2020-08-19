@@ -12,6 +12,8 @@
 */
 
 Auth::routes();
+Route::get('logout', '\App\Http\Controllers\Auth\LoginController@logout');
+
 
 //Route::get('/home', 'HomeController@index')->name('home');
 Route::get('/', 'MatchController@index')->name('home');
@@ -32,8 +34,10 @@ Route::get('/lockpredictions', 'PredictionController@lock');
 Route::get('/unlockpredictions', 'PredictionController@unlock');
 
 Route::get('/getteams', 'MatchController@create');
-Route::get('/getusers', 'LeagueTableController@index');
-Route::get('/whoami', 'LeagueTableController@whoAmI');
+Route::get('/getusers', 'UserController@index');
+Route::get('/whoami', 'UserController@whoAmI');
+
+Route::post('/updateaccount', 'UserController@update');
 
 Route::post('/user/flipsubmissionstatus', 'PredictionController@flipStatus');
 
@@ -43,8 +47,8 @@ Route::get('/openpolls', 'VoteController@openPolls');
 Route::get('/closepolls', 'VoteController@closePolls');
 Route::get('/clearpolls', 'VoteController@clear');
 
-Route::post('/user/checkemailexists', 'LeagueTableController@checkEmail');
-Route::post('/user/resetpassword', 'LeagueTableController@resetPassword');
+Route::post('/user/checkemailexists', 'UserController@checkEmail');
+Route::post('/user/resetpassword', 'UserController@resetPassword');
 
 route::get('/getupcomingmatches', 'MatchController@upcomingMatches');
 route::get('/getresultedmatches', 'MatchController@resultedMatches');

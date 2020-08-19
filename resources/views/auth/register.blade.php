@@ -64,6 +64,11 @@
                             </div>
                         </div>
 
+                        <div class="form-group row">
+                            <input class="form-control col-md-4 text-md-right" type="checkbox" name="emails_notifications" value="Decline">
+                            <label class="col-form-label">I would like to receive email notifications when fixtures are released and a matchday reminder if I'm yet to submit</label>
+                        </div>
+
                         <div class="form-group row mb-0">
                             <div class="col-md-6 offset-md-4">
                                 <button type="submit" class="btn btn-primary">

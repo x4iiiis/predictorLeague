@@ -4,7 +4,7 @@
 
         <MyAccount :show="showSidebar" v-on:account="sidebarStatusFlip"/>
 
-        <div class="container">
+        <div class="container" :style="showSidebar ? 'opacity:0.3;' : ''">
             <div class="row justify-content-center">
                 
                 <div v-if="!ready" class="col-1 mx-auto">

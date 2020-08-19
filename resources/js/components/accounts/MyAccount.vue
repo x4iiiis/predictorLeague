@@ -58,7 +58,6 @@ export default {
             axios
             .get('/whoami')
             .then(res => {
-                console.log(res);
                 this.user = res.data[1];
             })
         },
@@ -68,7 +67,6 @@ export default {
                     user: this.user
                 })
                 .then(res => {
-                    console.log(res);
                     this.$emit('account')
                 })
                 .catch(err => {

@@ -17,10 +17,6 @@
                     </li>
                 </ul>
                 <ul v-else class="navbar-nav ml-auto">
-                    <li v-if="user.email == 'ryan@x4iiiis.com'" class="nav-item">
-                        <a class="nav-link" href="/backend">Backend</a>
-                    </li>
-                    
                     <div class="dropdown show">
                         <a class="nav-link dropdown-toggle" href="#" role="button" id="dropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                             {{ user.name }}
@@ -29,6 +25,8 @@
                         <div class="dropdown-menu dropdown-menu-right" aria-labelledby="dropdownMenuLink">
                             <a class="dropdown-item" @click="$emit('account')" >My Account</a>
                             <a class="dropdown-item" href="/logout">Logout</a>
+                            <div v-if="this.$parent.$vnode.componentOptions.tag != 'backend'" class="dropdown-divider"></div>
+                            <a v-if="this.$parent.$vnode.componentOptions.tag != 'backend'  && user.email == 'ryan@x4iiiis.com'" class="dropdown-item" href="/backend">Backend</a>
                         </div>
                     </div>
                 </ul>

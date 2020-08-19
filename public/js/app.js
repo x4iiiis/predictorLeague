@@ -3544,7 +3544,6 @@ __webpack_require__.r(__webpack_exports__);
       var _this = this;
 
       axios.get('/whoami').then(function (res) {
-        console.log(res);
         _this.user = res.data[1];
       });
     },
@@ -3554,8 +3553,6 @@ __webpack_require__.r(__webpack_exports__);
       axios.post('/updateaccount', {
         user: this.user
       }).then(function (res) {
-        console.log(res);
-
         _this2.$emit('account');
       })["catch"](function (err) {
         console.log(err.response);
@@ -3839,15 +3836,24 @@ __webpack_require__.r(__webpack_exports__);
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
-/* harmony import */ var _backend_MatchMaker__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../backend/MatchMaker */ "./resources/js/components/backend/MatchMaker.vue");
-/* harmony import */ var _backend_PredictionStatus__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../backend/PredictionStatus */ "./resources/js/components/backend/PredictionStatus.vue");
-/* harmony import */ var _backend_PollResults__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../backend/PollResults */ "./resources/js/components/backend/PollResults.vue");
-/* harmony import */ var _backend_VoterStatus__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ../backend/VoterStatus */ "./resources/js/components/backend/VoterStatus.vue");
-/* harmony import */ var _backend_SeasonReset__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ../backend/SeasonReset */ "./resources/js/components/backend/SeasonReset.vue");
-/* harmony import */ var _Spinner__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ../Spinner */ "./resources/js/components/Spinner.vue");
-/* harmony import */ var _mixins_moment_formatKickoff__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ../../mixins/moment/formatKickoff */ "./resources/js/mixins/moment/formatKickoff.js");
-/* harmony import */ var _nav_Header__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! ../nav/Header */ "./resources/js/components/nav/Header.vue");
-/* harmony import */ var _nav_Footer__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(/*! ../nav/Footer */ "./resources/js/components/nav/Footer.vue");
+/* harmony import */ var _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! @babel/runtime/regenerator */ "./node_modules/@babel/runtime/regenerator/index.js");
+/* harmony import */ var _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0__);
+/* harmony import */ var _backend_MatchMaker__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../backend/MatchMaker */ "./resources/js/components/backend/MatchMaker.vue");
+/* harmony import */ var _backend_PredictionStatus__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../backend/PredictionStatus */ "./resources/js/components/backend/PredictionStatus.vue");
+/* harmony import */ var _backend_PollResults__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ../backend/PollResults */ "./resources/js/components/backend/PollResults.vue");
+/* harmony import */ var _backend_VoterStatus__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ../backend/VoterStatus */ "./resources/js/components/backend/VoterStatus.vue");
+/* harmony import */ var _backend_SeasonReset__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ../backend/SeasonReset */ "./resources/js/components/backend/SeasonReset.vue");
+/* harmony import */ var _Spinner__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ../Spinner */ "./resources/js/components/Spinner.vue");
+/* harmony import */ var _mixins_moment_formatKickoff__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! ../../mixins/moment/formatKickoff */ "./resources/js/mixins/moment/formatKickoff.js");
+/* harmony import */ var _nav_Header__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(/*! ../nav/Header */ "./resources/js/components/nav/Header.vue");
+/* harmony import */ var _nav_Footer__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(/*! ../nav/Footer */ "./resources/js/components/nav/Footer.vue");
+/* harmony import */ var _accounts_MyAccount__WEBPACK_IMPORTED_MODULE_10__ = __webpack_require__(/*! ../accounts/MyAccount */ "./resources/js/components/accounts/MyAccount.vue");
+
+
+function asyncGeneratorStep(gen, resolve, reject, _next, _throw, key, arg) { try { var info = gen[key](arg); var value = info.value; } catch (error) { reject(error); return; } if (info.done) { resolve(value); } else { Promise.resolve(value).then(_next, _throw); } }
+
+function _asyncToGenerator(fn) { return function () { var self = this, args = arguments; return new Promise(function (resolve, reject) { var gen = fn.apply(self, args); function _next(value) { asyncGeneratorStep(gen, resolve, reject, _next, _throw, "next", value); } function _throw(err) { asyncGeneratorStep(gen, resolve, reject, _next, _throw, "throw", err); } _next(undefined); }); }; }
+
 //
 //
 //
@@ -4087,6 +4093,10 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+
 
 
 
@@ -4098,95 +4108,92 @@ __webpack_require__.r(__webpack_exports__);
 
 /* harmony default export */ __webpack_exports__["default"] = ({
   mounted: function mounted() {
-    console.log('Fixtures Component mounted.');
-    this.getTeams();
+    var _this = this;
+
+    return _asyncToGenerator(
+    /*#__PURE__*/
+    _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee() {
+      return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee$(_context) {
+        while (1) {
+          switch (_context.prev = _context.next) {
+            case 0:
+              console.log('Fixtures Component mounted.');
+              _context.next = 3;
+              return _this.userCheck();
+
+            case 3:
+              _this.getTeams();
+
+            case 4:
+            case "end":
+              return _context.stop();
+          }
+        }
+      }, _callee);
+    }))();
   },
   data: function data() {
     return {
+      user: [],
       teams: [],
       matches: [],
       ready: false,
       submitted: false,
-      showResulted: false
+      showResulted: false,
+      showSidebar: false
     };
   },
-  mixins: [_mixins_moment_formatKickoff__WEBPACK_IMPORTED_MODULE_6__["default"]],
+  mixins: [_mixins_moment_formatKickoff__WEBPACK_IMPORTED_MODULE_7__["default"]],
   methods: {
+    userCheck: function userCheck() {
+      var _this2 = this;
+
+      axios.get('/whoami').then(function (res) {
+        _this2.user = res.data[1];
+      })["catch"](function (err) {
+        console.log(err.response);
+      });
+    },
     getTeams: function getTeams() {
-      var _this = this;
+      var _this3 = this;
 
       axios.get('/getteams').then(function (res) {
-        _this.teams = res.data[1];
+        _this3.teams = res.data[1];
 
-        _this.getUnresultedMatches();
+        _this3.getUnresultedMatches();
       })["catch"](function (err) {
         console.log(err.response);
       });
     },
     getUnresultedMatches: function getUnresultedMatches() {
-      var _this2 = this;
+      var _this4 = this;
 
       axios.get('/getunresultedmatchesbackend').then(function (res) {
-        _this2.showResulted = false;
-        _this2.matches = res.data[1];
-        _this2.ready = true;
+        _this4.showResulted = false;
+        _this4.matches = res.data[1];
+        _this4.ready = true;
       })["catch"](function (err) {
         console.log(err.response);
       });
     },
     getResultedMatches: function getResultedMatches() {
-      var _this3 = this;
+      var _this5 = this;
 
       axios.get('/getresultedmatchesbackend').then(function (res) {
-        _this3.showResulted = true;
-        _this3.matches = res.data[1];
-        _this3.ready = true;
+        _this5.showResulted = true;
+        _this5.matches = res.data[1];
+        _this5.ready = true;
       })["catch"](function (err) {
         console.log(err.response);
       });
     },
     onSubmitScores: function onSubmitScores() {
-      var _this4 = this;
+      var _this6 = this;
 
       axios.post('/match/submitscores', {
         matches: this.matches
       }).then(function (response) {
         console.log('Scores Recieved');
-        console.log(response);
-        _this4.ready = false;
-
-        _this4.getUnresultedMatches();
-      })["catch"](function (err) {
-        console.log(err.response);
-      });
-    },
-    resetScores: function resetScores(match) {
-      var _this5 = this;
-
-      match.homeGoals = null;
-      match.awayGoals = null;
-      axios.post('/match/resetmatch', {
-        match: match
-      }).then(function (response) {
-        console.log('Scores Reset');
-        console.log(response);
-        _this5.ready = false;
-
-        _this5.recalculateTable();
-
-        _this5.getResultedMatches();
-      })["catch"](function (err) {
-        console.log(err.response);
-      });
-    },
-    onEditKickoff: function onEditKickoff(match) {
-      var _this6 = this;
-
-      axios.post('/match/updatekickoff', {
-        id: match.id,
-        kickoff: match.kickoff
-      }).then(function (response) {
-        console.log('Kickoff Updated');
         console.log(response);
         _this6.ready = false;
 
@@ -4195,30 +4202,33 @@ __webpack_require__.r(__webpack_exports__);
         console.log(err.response);
       });
     },
-    onEditTeams: function onEditTeams(match) {
+    resetScores: function resetScores(match) {
       var _this7 = this;
 
-      axios.post('/match/updateteams', {
-        id: match.id,
-        homeTeam: match.homeTeam,
-        awayTeam: match.awayTeam
+      match.homeGoals = null;
+      match.awayGoals = null;
+      axios.post('/match/resetmatch', {
+        match: match
       }).then(function (response) {
-        console.log('Match teams updated');
+        console.log('Scores Reset');
+        console.log(response);
         _this7.ready = false;
 
-        _this7.getUnresultedMatches();
+        _this7.recalculateTable();
+
+        _this7.getResultedMatches();
       })["catch"](function (err) {
         console.log(err.response);
       });
     },
-    onEditETP: function onEditETP(match) {
+    onEditKickoff: function onEditKickoff(match) {
       var _this8 = this;
 
-      axios.post('match/updateetp', {
+      axios.post('/match/updatekickoff', {
         id: match.id,
-        etp_available: match.etp_available
+        kickoff: match.kickoff
       }).then(function (response) {
-        console.log('ET & Pens Availability Updated');
+        console.log('Kickoff Updated');
         console.log(response);
         _this8.ready = false;
 
@@ -4227,8 +4237,40 @@ __webpack_require__.r(__webpack_exports__);
         console.log(err.response);
       });
     },
-    cancelMatch: function cancelMatch(match) {
+    onEditTeams: function onEditTeams(match) {
       var _this9 = this;
+
+      axios.post('/match/updateteams', {
+        id: match.id,
+        homeTeam: match.homeTeam,
+        awayTeam: match.awayTeam
+      }).then(function (response) {
+        console.log('Match teams updated');
+        _this9.ready = false;
+
+        _this9.getUnresultedMatches();
+      })["catch"](function (err) {
+        console.log(err.response);
+      });
+    },
+    onEditETP: function onEditETP(match) {
+      var _this10 = this;
+
+      axios.post('match/updateetp', {
+        id: match.id,
+        etp_available: match.etp_available
+      }).then(function (response) {
+        console.log('ET & Pens Availability Updated');
+        console.log(response);
+        _this10.ready = false;
+
+        _this10.getUnresultedMatches();
+      })["catch"](function (err) {
+        console.log(err.response);
+      });
+    },
+    cancelMatch: function cancelMatch(match) {
+      var _this11 = this;
 
       if (confirm("Are you sure you want to cancel " + match.homeTeam + " vs " + match.awayTeam + "?")) {
         axios.post('/match/cancelmatch', {
@@ -4236,16 +4278,16 @@ __webpack_require__.r(__webpack_exports__);
         }).then(function (response) {
           console.log(match.homeTeam + " vs " + match.awayTeam + " cancelled");
           console.log(response);
-          _this9.ready = false;
+          _this11.ready = false;
 
-          _this9.getUnresultedMatches();
+          _this11.getUnresultedMatches();
         })["catch"](function (err) {
           console.log(err.response);
         });
       }
     },
     reverseFixture: function reverseFixture(match) {
-      var _this10 = this;
+      var _this12 = this;
 
       if (confirm("Are you sure you want to switch sides for " + match.homeTeam + " vs " + match.awayTeam + "?")) {
         axios.post('match/reversefixture', {
@@ -4253,9 +4295,9 @@ __webpack_require__.r(__webpack_exports__);
         }).then(function (response) {
           console.log(match.homeTeam + " vs " + match.awayTeam + " reversed");
           console.log(response);
-          _this10.ready = false;
+          _this12.ready = false;
 
-          _this10.getUnresultedMatches();
+          _this12.getUnresultedMatches();
         })["catch"](function (err) {
           console.log(err.response);
         });
@@ -4269,25 +4311,29 @@ __webpack_require__.r(__webpack_exports__);
       });
     },
     getUsers: function getUsers() {
-      var _this11 = this;
+      var _this13 = this;
 
       axios.get('/getusers').then(function (res) {
-        _this11.users = res.data[3];
+        _this13.users = res.data[3];
       })["catch"](function (err) {
         console.log(err.response);
       });
+    },
+    sidebarStatusFlip: function sidebarStatusFlip() {
+      this.showSidebar = !this.showSidebar;
     }
   },
   props: ['users'],
   components: {
-    MatchMaker: _backend_MatchMaker__WEBPACK_IMPORTED_MODULE_0__["default"],
-    PredictionStatus: _backend_PredictionStatus__WEBPACK_IMPORTED_MODULE_1__["default"],
-    PollResults: _backend_PollResults__WEBPACK_IMPORTED_MODULE_2__["default"],
-    VoterStatus: _backend_VoterStatus__WEBPACK_IMPORTED_MODULE_3__["default"],
-    SeasonReset: _backend_SeasonReset__WEBPACK_IMPORTED_MODULE_4__["default"],
-    Spinner: _Spinner__WEBPACK_IMPORTED_MODULE_5__["default"],
-    Header: _nav_Header__WEBPACK_IMPORTED_MODULE_7__["default"],
-    Footer: _nav_Footer__WEBPACK_IMPORTED_MODULE_8__["default"]
+    MatchMaker: _backend_MatchMaker__WEBPACK_IMPORTED_MODULE_1__["default"],
+    PredictionStatus: _backend_PredictionStatus__WEBPACK_IMPORTED_MODULE_2__["default"],
+    PollResults: _backend_PollResults__WEBPACK_IMPORTED_MODULE_3__["default"],
+    VoterStatus: _backend_VoterStatus__WEBPACK_IMPORTED_MODULE_4__["default"],
+    SeasonReset: _backend_SeasonReset__WEBPACK_IMPORTED_MODULE_5__["default"],
+    Spinner: _Spinner__WEBPACK_IMPORTED_MODULE_6__["default"],
+    Header: _nav_Header__WEBPACK_IMPORTED_MODULE_8__["default"],
+    Footer: _nav_Footer__WEBPACK_IMPORTED_MODULE_9__["default"],
+    MyAccount: _accounts_MyAccount__WEBPACK_IMPORTED_MODULE_10__["default"]
   }
 });
 
@@ -5208,8 +5254,6 @@ __webpack_require__.r(__webpack_exports__);
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
-//
-//
 //
 //
 //
@@ -71964,82 +72008,1112 @@ var render = function() {
   return _c(
     "div",
     [
-      _c("Header", { attrs: { user: _vm.users[0] } }),
+      _c("Header", {
+        attrs: { user: _vm.user },
+        on: { account: _vm.sidebarStatusFlip }
+      }),
       _vm._v(" "),
-      _c("div", { staticClass: "container" }, [
-        _c("div", { staticClass: "row text-center" }, [
-          _c(
-            "div",
-            { staticClass: "col-md-5 mx-auto" },
-            [
-              _c("MatchMaker", {
-                attrs: { teams: _vm.teams },
-                on: { submitted: _vm.getUnresultedMatches }
-              }),
-              _vm._v(" "),
-              _c("PredictionStatus", {
-                attrs: { users: _vm.users },
-                on: { getusers: _vm.getUsers }
-              }),
-              _vm._v(" "),
-              _c("PollResults"),
-              _vm._v(" "),
-              _c("VoterStatus", {
-                attrs: { users: _vm.users },
-                on: { getusers: _vm.getUsers }
-              })
-            ],
-            1
-          ),
-          _vm._v(" "),
-          !_vm.showResulted
-            ? _c("div", { staticClass: "col-md-6 card mx-auto mt-2 mb-5" }, [
-                _c("div", { staticClass: "row" }, [
-                  _c(
-                    "a",
-                    {
-                      staticClass: "btn btn-round btn-warning col-6 mx-auto",
-                      on: {
-                        click: function($event) {
-                          return _vm.getResultedMatches()
+      _c("MyAccount", {
+        attrs: { show: _vm.showSidebar },
+        on: { account: _vm.sidebarStatusFlip }
+      }),
+      _vm._v(" "),
+      _c(
+        "div",
+        {
+          staticClass: "container",
+          style: _vm.showSidebar ? "opacity:0.3;" : ""
+        },
+        [
+          _c("div", { staticClass: "row text-center" }, [
+            _c(
+              "div",
+              { staticClass: "col-md-5 mx-auto" },
+              [
+                _c("MatchMaker", {
+                  attrs: { teams: _vm.teams },
+                  on: { submitted: _vm.getUnresultedMatches }
+                }),
+                _vm._v(" "),
+                _c("PredictionStatus", {
+                  attrs: { users: _vm.users },
+                  on: { getusers: _vm.getUsers }
+                }),
+                _vm._v(" "),
+                _c("PollResults"),
+                _vm._v(" "),
+                _c("VoterStatus", {
+                  attrs: { users: _vm.users },
+                  on: { getusers: _vm.getUsers }
+                })
+              ],
+              1
+            ),
+            _vm._v(" "),
+            !_vm.showResulted
+              ? _c("div", { staticClass: "col-md-6 card mx-auto mt-2 mb-5" }, [
+                  _c("div", { staticClass: "row" }, [
+                    _c(
+                      "a",
+                      {
+                        staticClass: "btn btn-round btn-warning col-6 mx-auto",
+                        on: {
+                          click: function($event) {
+                            return _vm.getResultedMatches()
+                          }
                         }
-                      }
-                    },
-                    [_vm._v("Edit Resulted")]
-                  )
-                ]),
-                _vm._v(" "),
-                _c("h3", { staticClass: "card-title pt-2" }, [
-                  _vm._v("Unresulted Fixtures")
-                ]),
-                _vm._v(" "),
-                !_vm.ready
-                  ? _c("div", { staticClass: "card-body" }, [
-                      _c("div", { staticClass: "row" }, [
+                      },
+                      [_vm._v("Edit Resulted")]
+                    )
+                  ]),
+                  _vm._v(" "),
+                  _c("h3", { staticClass: "card-title pt-2" }, [
+                    _vm._v("Unresulted Fixtures")
+                  ]),
+                  _vm._v(" "),
+                  !_vm.ready
+                    ? _c("div", { staticClass: "card-body" }, [
+                        _c("div", { staticClass: "row" }, [
+                          _c(
+                            "div",
+                            { staticClass: "mx-auto" },
+                            [_c("Spinner")],
+                            1
+                          )
+                        ])
+                      ])
+                    : _c("div", { staticClass: "card-body" }, [
                         _c(
-                          "div",
-                          { staticClass: "mx-auto" },
-                          [_c("Spinner")],
-                          1
+                          "form",
+                          {
+                            attrs: {
+                              action: "match/addscores",
+                              method: "post"
+                            },
+                            on: {
+                              submit: function($event) {
+                                $event.preventDefault()
+                                return _vm.onSubmitScores($event)
+                              }
+                            }
+                          },
+                          [
+                            _vm._l(_vm.matches, function(match, index) {
+                              return _c("div", { key: match.id }, [
+                                _c("div", { staticClass: "row py-2" }, [
+                                  _c(
+                                    "div",
+                                    { staticClass: "col-12 text-center mb-2" },
+                                    [
+                                      _c("hr"),
+                                      _vm._v(" "),
+                                      _c("small", [
+                                        _vm._v(
+                                          "\n                                        " +
+                                            _vm._s(
+                                              _vm
+                                                .kickoffFormat(match.kickoff)
+                                                .split(" ")[0]
+                                            ) +
+                                            "\n                                        " +
+                                            _vm._s(
+                                              _vm
+                                                .kickoffFormat(match.kickoff)
+                                                .split(" ")[1]
+                                            ) +
+                                            "\n                                        " +
+                                            _vm._s(
+                                              _vm
+                                                .kickoffFormat(match.kickoff)
+                                                .split(" ")[2]
+                                            ) +
+                                            "\n                                        " +
+                                            _vm._s(
+                                              _vm
+                                                .kickoffFormat(match.kickoff)
+                                                .split(" ")[3]
+                                            ) +
+                                            "\n                                    "
+                                        )
+                                      ]),
+                                      _vm._v(" "),
+                                      _c("h6", [
+                                        _vm._v(
+                                          _vm._s(
+                                            _vm
+                                              .kickoffFormat(match.kickoff)
+                                              .split(" ")[4]
+                                          )
+                                        )
+                                      ]),
+                                      _vm._v(" "),
+                                      _c(
+                                        "div",
+                                        { staticClass: "col-9 mx-auto" },
+                                        [
+                                          _c("hr"),
+                                          _vm._v(" "),
+                                          match.etp_available
+                                            ? _c("small", [
+                                                _c("em", [
+                                                  _vm._v("Plays to conclusion")
+                                                ])
+                                              ])
+                                            : _vm._e()
+                                        ]
+                                      )
+                                    ]
+                                  ),
+                                  _vm._v(" "),
+                                  _c("div", { staticClass: "col-3 mx-auto" }, [
+                                    _c("img", {
+                                      attrs: {
+                                        src: match.homeEmblem,
+                                        alt: match.homeTeam
+                                      }
+                                    })
+                                  ]),
+                                  _vm._v(" "),
+                                  _c(
+                                    "div",
+                                    {
+                                      staticClass:
+                                        "form-group col-6 my-auto mx-auto text-center"
+                                    },
+                                    [
+                                      _c("input", {
+                                        directives: [
+                                          {
+                                            name: "model",
+                                            rawName: "v-model",
+                                            value: match.homeGoals,
+                                            expression: "match.homeGoals"
+                                          }
+                                        ],
+                                        staticClass: "col-5",
+                                        attrs: {
+                                          name: "home" + match.id,
+                                          type: "number"
+                                        },
+                                        domProps: { value: match.homeGoals },
+                                        on: {
+                                          input: function($event) {
+                                            if ($event.target.composing) {
+                                              return
+                                            }
+                                            _vm.$set(
+                                              match,
+                                              "homeGoals",
+                                              $event.target.value
+                                            )
+                                          }
+                                        }
+                                      }),
+                                      _vm._v(" "),
+                                      _c("input", {
+                                        directives: [
+                                          {
+                                            name: "model",
+                                            rawName: "v-model",
+                                            value: match.awayGoals,
+                                            expression: "match.awayGoals"
+                                          }
+                                        ],
+                                        staticClass: "col-5",
+                                        attrs: {
+                                          name: "away" + match.id,
+                                          type: "number"
+                                        },
+                                        domProps: { value: match.awayGoals },
+                                        on: {
+                                          input: function($event) {
+                                            if ($event.target.composing) {
+                                              return
+                                            }
+                                            _vm.$set(
+                                              match,
+                                              "awayGoals",
+                                              $event.target.value
+                                            )
+                                          }
+                                        }
+                                      }),
+                                      _vm._v(" "),
+                                      match.etp_available &&
+                                      match.homeGoals == match.awayGoals &&
+                                      match.homeGoals != null
+                                        ? _c("div", [
+                                            _c("br"),
+                                            _vm._v(" "),
+                                            _c(
+                                              "b",
+                                              { staticClass: "text-center" },
+                                              [_vm._v("AET")]
+                                            ),
+                                            _vm._v(" "),
+                                            _c("br"),
+                                            _vm._v(" "),
+                                            _c("input", {
+                                              directives: [
+                                                {
+                                                  name: "model",
+                                                  rawName: "v-model",
+                                                  value: match.homeGoalsAET,
+                                                  expression:
+                                                    "match.homeGoalsAET"
+                                                }
+                                              ],
+                                              staticClass: "col-5",
+                                              attrs: {
+                                                name: "homeAET" + match.id,
+                                                type: "number"
+                                              },
+                                              domProps: {
+                                                value: match.homeGoalsAET
+                                              },
+                                              on: {
+                                                input: function($event) {
+                                                  if ($event.target.composing) {
+                                                    return
+                                                  }
+                                                  _vm.$set(
+                                                    match,
+                                                    "homeGoalsAET",
+                                                    $event.target.value
+                                                  )
+                                                }
+                                              }
+                                            }),
+                                            _vm._v(" "),
+                                            _c("input", {
+                                              directives: [
+                                                {
+                                                  name: "model",
+                                                  rawName: "v-model",
+                                                  value: match.awayGoalsAET,
+                                                  expression:
+                                                    "match.awayGoalsAET"
+                                                }
+                                              ],
+                                              staticClass: "col-5",
+                                              attrs: {
+                                                name: "awayAET" + match.id,
+                                                type: "number"
+                                              },
+                                              domProps: {
+                                                value: match.awayGoalsAET
+                                              },
+                                              on: {
+                                                input: function($event) {
+                                                  if ($event.target.composing) {
+                                                    return
+                                                  }
+                                                  _vm.$set(
+                                                    match,
+                                                    "awayGoalsAET",
+                                                    $event.target.value
+                                                  )
+                                                }
+                                              }
+                                            }),
+                                            _vm._v(" "),
+                                            _c("br"),
+                                            _vm._v(" "),
+                                            _c(
+                                              "b",
+                                              { staticClass: "text-center" },
+                                              [_vm._v("Pens")]
+                                            ),
+                                            _vm._v(" "),
+                                            _c("br"),
+                                            _vm._v(" "),
+                                            _c("input", {
+                                              directives: [
+                                                {
+                                                  name: "model",
+                                                  rawName: "v-model",
+                                                  value: match.homeGoalsPens,
+                                                  expression:
+                                                    "match.homeGoalsPens"
+                                                }
+                                              ],
+                                              staticClass: "col-5",
+                                              attrs: {
+                                                name: "homePens" + match.id,
+                                                type: "number"
+                                              },
+                                              domProps: {
+                                                value: match.homeGoalsPens
+                                              },
+                                              on: {
+                                                input: function($event) {
+                                                  if ($event.target.composing) {
+                                                    return
+                                                  }
+                                                  _vm.$set(
+                                                    match,
+                                                    "homeGoalsPens",
+                                                    $event.target.value
+                                                  )
+                                                }
+                                              }
+                                            }),
+                                            _vm._v(" "),
+                                            _c("input", {
+                                              directives: [
+                                                {
+                                                  name: "model",
+                                                  rawName: "v-model",
+                                                  value: match.awayGoalsPens,
+                                                  expression:
+                                                    "match.awayGoalsPens"
+                                                }
+                                              ],
+                                              staticClass: "col-5",
+                                              attrs: {
+                                                name: "awayPens" + match.id,
+                                                type: "number"
+                                              },
+                                              domProps: {
+                                                value: match.awayGoalsPens
+                                              },
+                                              on: {
+                                                input: function($event) {
+                                                  if ($event.target.composing) {
+                                                    return
+                                                  }
+                                                  _vm.$set(
+                                                    match,
+                                                    "awayGoalsPens",
+                                                    $event.target.value
+                                                  )
+                                                }
+                                              }
+                                            })
+                                          ])
+                                        : _vm._e()
+                                    ]
+                                  ),
+                                  _vm._v(" "),
+                                  _c("div", { staticClass: "col-3 mx-auto" }, [
+                                    _c("img", {
+                                      attrs: {
+                                        src: match.awayEmblem,
+                                        alt: match.awayTeam
+                                      }
+                                    })
+                                  ])
+                                ]),
+                                _vm._v(" "),
+                                _c("div", { staticClass: "row" }, [
+                                  _c("div", { staticClass: "col-8 mx-auto" }, [
+                                    _c("hr"),
+                                    _vm._v(" "),
+                                    _c(
+                                      "div",
+                                      { staticClass: "btn-group dropup" },
+                                      [
+                                        _vm._m(0, true),
+                                        _vm._v(" "),
+                                        _c(
+                                          "div",
+                                          { staticClass: "dropdown-menu" },
+                                          [
+                                            _c(
+                                              "a",
+                                              {
+                                                staticClass: "dropdown-item",
+                                                on: {
+                                                  click: function($event) {
+                                                    return _vm.cancelMatch(
+                                                      match
+                                                    )
+                                                  }
+                                                }
+                                              },
+                                              [_vm._v("P - P / A - A")]
+                                            ),
+                                            _vm._v(" "),
+                                            _c(
+                                              "a",
+                                              {
+                                                staticClass: "dropdown-item",
+                                                attrs: {
+                                                  "data-toggle": "modal",
+                                                  "data-target":
+                                                    "#teams-" + match.id
+                                                }
+                                              },
+                                              [_vm._v("Edit Teams")]
+                                            ),
+                                            _vm._v(" "),
+                                            _c(
+                                              "a",
+                                              {
+                                                staticClass: "dropdown-item",
+                                                attrs: {
+                                                  "data-toggle": "modal",
+                                                  "data-target":
+                                                    "#kickoff-" + match.id
+                                                }
+                                              },
+                                              [_vm._v("Edit Kickoff")]
+                                            ),
+                                            _vm._v(" "),
+                                            _c(
+                                              "a",
+                                              {
+                                                staticClass: "dropdown-item",
+                                                attrs: {
+                                                  "data-toggle": "modal",
+                                                  "data-target":
+                                                    "#ETP-" + match.id
+                                                }
+                                              },
+                                              [_vm._v("Alter ET&P")]
+                                            ),
+                                            _vm._v(" "),
+                                            _c(
+                                              "a",
+                                              {
+                                                staticClass: "dropdown-item",
+                                                on: {
+                                                  click: function($event) {
+                                                    return _vm.reverseFixture(
+                                                      match
+                                                    )
+                                                  }
+                                                }
+                                              },
+                                              [_vm._v("Reverse Fixture")]
+                                            )
+                                          ]
+                                        )
+                                      ]
+                                    ),
+                                    _vm._v(" "),
+                                    _c(
+                                      "div",
+                                      {
+                                        staticClass: "modal fade",
+                                        attrs: {
+                                          id: "teams-" + match.id,
+                                          tabindex: "-1",
+                                          role: "dialog"
+                                        }
+                                      },
+                                      [
+                                        _c(
+                                          "div",
+                                          {
+                                            staticClass:
+                                              "modal-dialog modal-sm",
+                                            attrs: { role: "document" }
+                                          },
+                                          [
+                                            _c(
+                                              "div",
+                                              { staticClass: "modal-content" },
+                                              [
+                                                _c(
+                                                  "div",
+                                                  { staticClass: "modal-body" },
+                                                  [
+                                                    _vm._m(1, true),
+                                                    _vm._v(" "),
+                                                    _c(
+                                                      "form",
+                                                      {
+                                                        attrs: {
+                                                          action:
+                                                            "match/editkteams",
+                                                          method: "post"
+                                                        },
+                                                        on: {
+                                                          submit: function(
+                                                            $event
+                                                          ) {
+                                                            $event.preventDefault()
+                                                            return _vm.onEditTeams(
+                                                              match
+                                                            )
+                                                          }
+                                                        }
+                                                      },
+                                                      [
+                                                        _c(
+                                                          "select",
+                                                          {
+                                                            directives: [
+                                                              {
+                                                                name: "model",
+                                                                rawName:
+                                                                  "v-model",
+                                                                value:
+                                                                  match.homeTeam,
+                                                                expression:
+                                                                  "match.homeTeam"
+                                                              }
+                                                            ],
+                                                            staticClass:
+                                                              "form-control my-1",
+                                                            attrs: {
+                                                              id:
+                                                                "editHomeTeam",
+                                                              placeholder:
+                                                                "dateTime"
+                                                            },
+                                                            on: {
+                                                              change: function(
+                                                                $event
+                                                              ) {
+                                                                var $$selectedVal = Array.prototype.filter
+                                                                  .call(
+                                                                    $event
+                                                                      .target
+                                                                      .options,
+                                                                    function(
+                                                                      o
+                                                                    ) {
+                                                                      return o.selected
+                                                                    }
+                                                                  )
+                                                                  .map(function(
+                                                                    o
+                                                                  ) {
+                                                                    var val =
+                                                                      "_value" in
+                                                                      o
+                                                                        ? o._value
+                                                                        : o.value
+                                                                    return val
+                                                                  })
+                                                                _vm.$set(
+                                                                  match,
+                                                                  "homeTeam",
+                                                                  $event.target
+                                                                    .multiple
+                                                                    ? $$selectedVal
+                                                                    : $$selectedVal[0]
+                                                                )
+                                                              }
+                                                            }
+                                                          },
+                                                          _vm._l(
+                                                            _vm.teams,
+                                                            function(
+                                                              team,
+                                                              index
+                                                            ) {
+                                                              return _c(
+                                                                "option",
+                                                                {
+                                                                  key: team.id
+                                                                },
+                                                                [
+                                                                  _vm._v(
+                                                                    _vm._s(
+                                                                      team.name
+                                                                    )
+                                                                  )
+                                                                ]
+                                                              )
+                                                            }
+                                                          ),
+                                                          0
+                                                        ),
+                                                        _vm._v(" "),
+                                                        _c(
+                                                          "select",
+                                                          {
+                                                            directives: [
+                                                              {
+                                                                name: "model",
+                                                                rawName:
+                                                                  "v-model",
+                                                                value:
+                                                                  match.awayTeam,
+                                                                expression:
+                                                                  "match.awayTeam"
+                                                              }
+                                                            ],
+                                                            staticClass:
+                                                              "form-control my-1",
+                                                            attrs: {
+                                                              id:
+                                                                "editAwayTeam",
+                                                              placeholder:
+                                                                "dateTime"
+                                                            },
+                                                            on: {
+                                                              change: function(
+                                                                $event
+                                                              ) {
+                                                                var $$selectedVal = Array.prototype.filter
+                                                                  .call(
+                                                                    $event
+                                                                      .target
+                                                                      .options,
+                                                                    function(
+                                                                      o
+                                                                    ) {
+                                                                      return o.selected
+                                                                    }
+                                                                  )
+                                                                  .map(function(
+                                                                    o
+                                                                  ) {
+                                                                    var val =
+                                                                      "_value" in
+                                                                      o
+                                                                        ? o._value
+                                                                        : o.value
+                                                                    return val
+                                                                  })
+                                                                _vm.$set(
+                                                                  match,
+                                                                  "awayTeam",
+                                                                  $event.target
+                                                                    .multiple
+                                                                    ? $$selectedVal
+                                                                    : $$selectedVal[0]
+                                                                )
+                                                              }
+                                                            }
+                                                          },
+                                                          _vm._l(
+                                                            _vm.teams,
+                                                            function(
+                                                              team,
+                                                              index
+                                                            ) {
+                                                              return _c(
+                                                                "option",
+                                                                {
+                                                                  key: team.id
+                                                                },
+                                                                [
+                                                                  _vm._v(
+                                                                    _vm._s(
+                                                                      team.name
+                                                                    )
+                                                                  )
+                                                                ]
+                                                              )
+                                                            }
+                                                          ),
+                                                          0
+                                                        ),
+                                                        _vm._v(" "),
+                                                        _c(
+                                                          "div",
+                                                          {
+                                                            staticClass:
+                                                              "text-center"
+                                                          },
+                                                          [
+                                                            _c(
+                                                              "button",
+                                                              {
+                                                                staticClass:
+                                                                  "btn btn-lg btn-primary mx-auto mt-3",
+                                                                attrs: {
+                                                                  type:
+                                                                    "submit",
+                                                                  "data-toggle":
+                                                                    "modal",
+                                                                  "data-target":
+                                                                    "#teams-" +
+                                                                    match.id
+                                                                }
+                                                              },
+                                                              [_vm._v("Submit")]
+                                                            )
+                                                          ]
+                                                        )
+                                                      ]
+                                                    )
+                                                  ]
+                                                )
+                                              ]
+                                            )
+                                          ]
+                                        )
+                                      ]
+                                    ),
+                                    _vm._v(" "),
+                                    _c(
+                                      "div",
+                                      {
+                                        staticClass: "modal fade",
+                                        attrs: {
+                                          id: "kickoff-" + match.id,
+                                          tabindex: "-1",
+                                          role: "dialog"
+                                        }
+                                      },
+                                      [
+                                        _c(
+                                          "div",
+                                          {
+                                            staticClass:
+                                              "modal-dialog modal-sm",
+                                            attrs: { role: "document" }
+                                          },
+                                          [
+                                            _c(
+                                              "div",
+                                              { staticClass: "modal-content" },
+                                              [
+                                                _c(
+                                                  "div",
+                                                  { staticClass: "modal-body" },
+                                                  [
+                                                    _vm._m(2, true),
+                                                    _vm._v(" "),
+                                                    _c(
+                                                      "form",
+                                                      {
+                                                        attrs: {
+                                                          action:
+                                                            "match/editkickoff",
+                                                          method: "post"
+                                                        },
+                                                        on: {
+                                                          submit: function(
+                                                            $event
+                                                          ) {
+                                                            $event.preventDefault()
+                                                            return _vm.onEditKickoff(
+                                                              match
+                                                            )
+                                                          }
+                                                        }
+                                                      },
+                                                      [
+                                                        _c("input", {
+                                                          directives: [
+                                                            {
+                                                              name: "model",
+                                                              rawName:
+                                                                "v-model",
+                                                              value:
+                                                                match.kickoff,
+                                                              expression:
+                                                                "match.kickoff"
+                                                            }
+                                                          ],
+                                                          staticClass:
+                                                            "form-control",
+                                                          attrs: {
+                                                            type:
+                                                              "datetime-local",
+                                                            id: "kickoff",
+                                                            placeholder:
+                                                              "dateTime"
+                                                          },
+                                                          domProps: {
+                                                            value: match.kickoff
+                                                          },
+                                                          on: {
+                                                            input: function(
+                                                              $event
+                                                            ) {
+                                                              if (
+                                                                $event.target
+                                                                  .composing
+                                                              ) {
+                                                                return
+                                                              }
+                                                              _vm.$set(
+                                                                match,
+                                                                "kickoff",
+                                                                $event.target
+                                                                  .value
+                                                              )
+                                                            }
+                                                          }
+                                                        }),
+                                                        _vm._v(" "),
+                                                        _c(
+                                                          "div",
+                                                          {
+                                                            staticClass:
+                                                              "text-center"
+                                                          },
+                                                          [
+                                                            _c(
+                                                              "button",
+                                                              {
+                                                                staticClass:
+                                                                  "btn btn-lg btn-primary mx-auto mt-3",
+                                                                attrs: {
+                                                                  type:
+                                                                    "submit",
+                                                                  "data-toggle":
+                                                                    "modal",
+                                                                  "data-target":
+                                                                    "#kickoff-" +
+                                                                    match.id
+                                                                }
+                                                              },
+                                                              [_vm._v("Submit")]
+                                                            )
+                                                          ]
+                                                        )
+                                                      ]
+                                                    )
+                                                  ]
+                                                )
+                                              ]
+                                            )
+                                          ]
+                                        )
+                                      ]
+                                    ),
+                                    _vm._v(" "),
+                                    _c(
+                                      "div",
+                                      {
+                                        staticClass: "modal fade",
+                                        attrs: {
+                                          id: "ETP-" + match.id,
+                                          tabindex: "-1",
+                                          role: "dialog"
+                                        }
+                                      },
+                                      [
+                                        _c(
+                                          "div",
+                                          {
+                                            staticClass:
+                                              "modal-dialog modal-sm",
+                                            attrs: { role: "document" }
+                                          },
+                                          [
+                                            _c(
+                                              "div",
+                                              { staticClass: "modal-content" },
+                                              [
+                                                _c(
+                                                  "div",
+                                                  { staticClass: "modal-body" },
+                                                  [
+                                                    _vm._m(3, true),
+                                                    _vm._v(" "),
+                                                    _c(
+                                                      "form",
+                                                      {
+                                                        attrs: {
+                                                          action:
+                                                            "match/editETP",
+                                                          method: "post"
+                                                        },
+                                                        on: {
+                                                          submit: function(
+                                                            $event
+                                                          ) {
+                                                            $event.preventDefault()
+                                                            return _vm.onEditETP(
+                                                              match
+                                                            )
+                                                          }
+                                                        }
+                                                      },
+                                                      [
+                                                        _c("label", [
+                                                          _vm._v(
+                                                            "Extra Time and / or Penalties Available"
+                                                          )
+                                                        ]),
+                                                        _vm._v(" "),
+                                                        _c("input", {
+                                                          directives: [
+                                                            {
+                                                              name: "model",
+                                                              rawName:
+                                                                "v-model",
+                                                              value:
+                                                                match.etp_available,
+                                                              expression:
+                                                                "match.etp_available"
+                                                            }
+                                                          ],
+                                                          staticClass:
+                                                            "form-control col-1 mx-auto text-center",
+                                                          attrs: {
+                                                            type: "checkbox"
+                                                          },
+                                                          domProps: {
+                                                            checked: Array.isArray(
+                                                              match.etp_available
+                                                            )
+                                                              ? _vm._i(
+                                                                  match.etp_available,
+                                                                  null
+                                                                ) > -1
+                                                              : match.etp_available
+                                                          },
+                                                          on: {
+                                                            change: function(
+                                                              $event
+                                                            ) {
+                                                              var $$a =
+                                                                  match.etp_available,
+                                                                $$el =
+                                                                  $event.target,
+                                                                $$c = $$el.checked
+                                                                  ? true
+                                                                  : false
+                                                              if (
+                                                                Array.isArray(
+                                                                  $$a
+                                                                )
+                                                              ) {
+                                                                var $$v = null,
+                                                                  $$i = _vm._i(
+                                                                    $$a,
+                                                                    $$v
+                                                                  )
+                                                                if (
+                                                                  $$el.checked
+                                                                ) {
+                                                                  $$i < 0 &&
+                                                                    _vm.$set(
+                                                                      match,
+                                                                      "etp_available",
+                                                                      $$a.concat(
+                                                                        [$$v]
+                                                                      )
+                                                                    )
+                                                                } else {
+                                                                  $$i > -1 &&
+                                                                    _vm.$set(
+                                                                      match,
+                                                                      "etp_available",
+                                                                      $$a
+                                                                        .slice(
+                                                                          0,
+                                                                          $$i
+                                                                        )
+                                                                        .concat(
+                                                                          $$a.slice(
+                                                                            $$i +
+                                                                              1
+                                                                          )
+                                                                        )
+                                                                    )
+                                                                }
+                                                              } else {
+                                                                _vm.$set(
+                                                                  match,
+                                                                  "etp_available",
+                                                                  $$c
+                                                                )
+                                                              }
+                                                            }
+                                                          }
+                                                        }),
+                                                        _vm._v(" "),
+                                                        _c(
+                                                          "div",
+                                                          {
+                                                            staticClass:
+                                                              "text-center"
+                                                          },
+                                                          [
+                                                            _c(
+                                                              "button",
+                                                              {
+                                                                staticClass:
+                                                                  "btn btn-lg btn-primary mx-auto mt-3",
+                                                                attrs: {
+                                                                  type:
+                                                                    "submit",
+                                                                  "data-toggle":
+                                                                    "modal",
+                                                                  "data-target":
+                                                                    "#ETP-" +
+                                                                    match.id
+                                                                }
+                                                              },
+                                                              [_vm._v("Submit")]
+                                                            )
+                                                          ]
+                                                        )
+                                                      ]
+                                                    )
+                                                  ]
+                                                )
+                                              ]
+                                            )
+                                          ]
+                                        )
+                                      ]
+                                    )
+                                  ])
+                                ])
+                              ])
+                            }),
+                            _vm._v(" "),
+                            _vm._m(4)
+                          ],
+                          2
                         )
                       ])
-                    ])
-                  : _c("div", { staticClass: "card-body" }, [
-                      _c(
-                        "form",
-                        {
-                          attrs: { action: "match/addscores", method: "post" },
-                          on: {
-                            submit: function($event) {
-                              $event.preventDefault()
-                              return _vm.onSubmitScores($event)
-                            }
+                ])
+              : _c("div", { staticClass: "col-md-6 card mx-auto mt-2 mb-5" }, [
+                  _c("div", { staticClass: "row" }, [
+                    _c(
+                      "a",
+                      {
+                        staticClass: "btn btn-round btn-info col-6 mx-auto",
+                        on: {
+                          click: function($event) {
+                            return _vm.getUnresultedMatches()
                           }
-                        },
-                        [
-                          _vm._l(_vm.matches, function(match, index) {
-                            return _c("div", { key: match.id }, [
-                              _c("div", { staticClass: "row py-2" }, [
+                        }
+                      },
+                      [_vm._v("Edit Unresulted")]
+                    )
+                  ]),
+                  _vm._v(" "),
+                  _c("h3", { staticClass: "card-title pt-2" }, [
+                    _vm._v("Resulted Fixtures")
+                  ]),
+                  _vm._v(" "),
+                  !_vm.ready
+                    ? _c("div", { staticClass: "card-body" }, [
+                        _c("div", { staticClass: "row" }, [
+                          _c(
+                            "div",
+                            { staticClass: "mx-auto" },
+                            [_c("Spinner")],
+                            1
+                          )
+                        ])
+                      ])
+                    : _c(
+                        "div",
+                        { staticClass: "card-body" },
+                        _vm._l(_vm.matches, function(match, index) {
+                          return _c("div", { key: match.id }, [
+                            _c(
+                              "form",
+                              {
+                                staticClass: "row py-2",
+                                attrs: {
+                                  action: "match/addscores",
+                                  method: "post"
+                                },
+                                on: {
+                                  submit: function($event) {
+                                    $event.preventDefault()
+                                    return _vm.resetScores(match)
+                                  }
+                                }
+                              },
+                              [
                                 _c(
                                   "div",
                                   { staticClass: "col-12 text-center mb-2" },
@@ -72048,31 +73122,31 @@ var render = function() {
                                     _vm._v(" "),
                                     _c("small", [
                                       _vm._v(
-                                        "\n                                        " +
+                                        "\n                                    " +
                                           _vm._s(
                                             _vm
                                               .kickoffFormat(match.kickoff)
                                               .split(" ")[0]
                                           ) +
-                                          "\n                                        " +
+                                          "\n                                    " +
                                           _vm._s(
                                             _vm
                                               .kickoffFormat(match.kickoff)
                                               .split(" ")[1]
                                           ) +
-                                          "\n                                        " +
+                                          "\n                                    " +
                                           _vm._s(
                                             _vm
                                               .kickoffFormat(match.kickoff)
                                               .split(" ")[2]
                                           ) +
-                                          "\n                                        " +
+                                          "\n                                    " +
                                           _vm._s(
                                             _vm
                                               .kickoffFormat(match.kickoff)
                                               .split(" ")[3]
                                           ) +
-                                          "\n                                    "
+                                          "\n                                "
                                       )
                                     ]),
                                     _vm._v(" "),
@@ -72086,21 +73160,7 @@ var render = function() {
                                       )
                                     ]),
                                     _vm._v(" "),
-                                    _c(
-                                      "div",
-                                      { staticClass: "col-9 mx-auto" },
-                                      [
-                                        _c("hr"),
-                                        _vm._v(" "),
-                                        match.etp_available
-                                          ? _c("small", [
-                                              _c("em", [
-                                                _vm._v("Plays to conclusion")
-                                              ])
-                                            ])
-                                          : _vm._e()
-                                      ]
-                                    )
+                                    _vm._m(5, true)
                                   ]
                                 ),
                                 _vm._v(" "),
@@ -72120,215 +73180,17 @@ var render = function() {
                                       "form-group col-6 my-auto mx-auto text-center"
                                   },
                                   [
-                                    _c("input", {
-                                      directives: [
-                                        {
-                                          name: "model",
-                                          rawName: "v-model",
-                                          value: match.homeGoals,
-                                          expression: "match.homeGoals"
-                                        }
-                                      ],
-                                      staticClass: "col-5",
-                                      attrs: {
-                                        name: "home" + match.id,
-                                        type: "number"
-                                      },
-                                      domProps: { value: match.homeGoals },
-                                      on: {
-                                        input: function($event) {
-                                          if ($event.target.composing) {
-                                            return
-                                          }
-                                          _vm.$set(
-                                            match,
-                                            "homeGoals",
-                                            $event.target.value
-                                          )
-                                        }
-                                      }
-                                    }),
+                                    _c(
+                                      "h1",
+                                      { staticStyle: { display: "inline" } },
+                                      [_vm._v(_vm._s(match.homeGoals) + " - ")]
+                                    ),
                                     _vm._v(" "),
-                                    _c("input", {
-                                      directives: [
-                                        {
-                                          name: "model",
-                                          rawName: "v-model",
-                                          value: match.awayGoals,
-                                          expression: "match.awayGoals"
-                                        }
-                                      ],
-                                      staticClass: "col-5",
-                                      attrs: {
-                                        name: "away" + match.id,
-                                        type: "number"
-                                      },
-                                      domProps: { value: match.awayGoals },
-                                      on: {
-                                        input: function($event) {
-                                          if ($event.target.composing) {
-                                            return
-                                          }
-                                          _vm.$set(
-                                            match,
-                                            "awayGoals",
-                                            $event.target.value
-                                          )
-                                        }
-                                      }
-                                    }),
-                                    _vm._v(" "),
-                                    match.etp_available &&
-                                    match.homeGoals == match.awayGoals &&
-                                    match.homeGoals != null
-                                      ? _c("div", [
-                                          _c("br"),
-                                          _vm._v(" "),
-                                          _c(
-                                            "b",
-                                            { staticClass: "text-center" },
-                                            [_vm._v("AET")]
-                                          ),
-                                          _vm._v(" "),
-                                          _c("br"),
-                                          _vm._v(" "),
-                                          _c("input", {
-                                            directives: [
-                                              {
-                                                name: "model",
-                                                rawName: "v-model",
-                                                value: match.homeGoalsAET,
-                                                expression: "match.homeGoalsAET"
-                                              }
-                                            ],
-                                            staticClass: "col-5",
-                                            attrs: {
-                                              name: "homeAET" + match.id,
-                                              type: "number"
-                                            },
-                                            domProps: {
-                                              value: match.homeGoalsAET
-                                            },
-                                            on: {
-                                              input: function($event) {
-                                                if ($event.target.composing) {
-                                                  return
-                                                }
-                                                _vm.$set(
-                                                  match,
-                                                  "homeGoalsAET",
-                                                  $event.target.value
-                                                )
-                                              }
-                                            }
-                                          }),
-                                          _vm._v(" "),
-                                          _c("input", {
-                                            directives: [
-                                              {
-                                                name: "model",
-                                                rawName: "v-model",
-                                                value: match.awayGoalsAET,
-                                                expression: "match.awayGoalsAET"
-                                              }
-                                            ],
-                                            staticClass: "col-5",
-                                            attrs: {
-                                              name: "awayAET" + match.id,
-                                              type: "number"
-                                            },
-                                            domProps: {
-                                              value: match.awayGoalsAET
-                                            },
-                                            on: {
-                                              input: function($event) {
-                                                if ($event.target.composing) {
-                                                  return
-                                                }
-                                                _vm.$set(
-                                                  match,
-                                                  "awayGoalsAET",
-                                                  $event.target.value
-                                                )
-                                              }
-                                            }
-                                          }),
-                                          _vm._v(" "),
-                                          _c("br"),
-                                          _vm._v(" "),
-                                          _c(
-                                            "b",
-                                            { staticClass: "text-center" },
-                                            [_vm._v("Pens")]
-                                          ),
-                                          _vm._v(" "),
-                                          _c("br"),
-                                          _vm._v(" "),
-                                          _c("input", {
-                                            directives: [
-                                              {
-                                                name: "model",
-                                                rawName: "v-model",
-                                                value: match.homeGoalsPens,
-                                                expression:
-                                                  "match.homeGoalsPens"
-                                              }
-                                            ],
-                                            staticClass: "col-5",
-                                            attrs: {
-                                              name: "homePens" + match.id,
-                                              type: "number"
-                                            },
-                                            domProps: {
-                                              value: match.homeGoalsPens
-                                            },
-                                            on: {
-                                              input: function($event) {
-                                                if ($event.target.composing) {
-                                                  return
-                                                }
-                                                _vm.$set(
-                                                  match,
-                                                  "homeGoalsPens",
-                                                  $event.target.value
-                                                )
-                                              }
-                                            }
-                                          }),
-                                          _vm._v(" "),
-                                          _c("input", {
-                                            directives: [
-                                              {
-                                                name: "model",
-                                                rawName: "v-model",
-                                                value: match.awayGoalsPens,
-                                                expression:
-                                                  "match.awayGoalsPens"
-                                              }
-                                            ],
-                                            staticClass: "col-5",
-                                            attrs: {
-                                              name: "awayPens" + match.id,
-                                              type: "number"
-                                            },
-                                            domProps: {
-                                              value: match.awayGoalsPens
-                                            },
-                                            on: {
-                                              input: function($event) {
-                                                if ($event.target.composing) {
-                                                  return
-                                                }
-                                                _vm.$set(
-                                                  match,
-                                                  "awayGoalsPens",
-                                                  $event.target.value
-                                                )
-                                              }
-                                            }
-                                          })
-                                        ])
-                                      : _vm._e()
+                                    _c(
+                                      "h1",
+                                      { staticStyle: { display: "inline" } },
+                                      [_vm._v(_vm._s(match.awayGoals))]
+                                    )
                                   ]
                                 ),
                                 _vm._v(" "),
@@ -72339,799 +73201,26 @@ var render = function() {
                                       alt: match.awayTeam
                                     }
                                   })
-                                ])
-                              ]),
-                              _vm._v(" "),
-                              _c("div", { staticClass: "row" }, [
-                                _c("div", { staticClass: "col-8 mx-auto" }, [
-                                  _c("hr"),
-                                  _vm._v(" "),
-                                  _c(
-                                    "div",
-                                    { staticClass: "btn-group dropup" },
-                                    [
-                                      _vm._m(0, true),
-                                      _vm._v(" "),
-                                      _c(
-                                        "div",
-                                        { staticClass: "dropdown-menu" },
-                                        [
-                                          _c(
-                                            "a",
-                                            {
-                                              staticClass: "dropdown-item",
-                                              on: {
-                                                click: function($event) {
-                                                  return _vm.cancelMatch(match)
-                                                }
-                                              }
-                                            },
-                                            [_vm._v("P - P / A - A")]
-                                          ),
-                                          _vm._v(" "),
-                                          _c(
-                                            "a",
-                                            {
-                                              staticClass: "dropdown-item",
-                                              attrs: {
-                                                "data-toggle": "modal",
-                                                "data-target":
-                                                  "#teams-" + match.id
-                                              }
-                                            },
-                                            [_vm._v("Edit Teams")]
-                                          ),
-                                          _vm._v(" "),
-                                          _c(
-                                            "a",
-                                            {
-                                              staticClass: "dropdown-item",
-                                              attrs: {
-                                                "data-toggle": "modal",
-                                                "data-target":
-                                                  "#kickoff-" + match.id
-                                              }
-                                            },
-                                            [_vm._v("Edit Kickoff")]
-                                          ),
-                                          _vm._v(" "),
-                                          _c(
-                                            "a",
-                                            {
-                                              staticClass: "dropdown-item",
-                                              attrs: {
-                                                "data-toggle": "modal",
-                                                "data-target":
-                                                  "#ETP-" + match.id
-                                              }
-                                            },
-                                            [_vm._v("Alter ET&P")]
-                                          ),
-                                          _vm._v(" "),
-                                          _c(
-                                            "a",
-                                            {
-                                              staticClass: "dropdown-item",
-                                              on: {
-                                                click: function($event) {
-                                                  return _vm.reverseFixture(
-                                                    match
-                                                  )
-                                                }
-                                              }
-                                            },
-                                            [_vm._v("Reverse Fixture")]
-                                          )
-                                        ]
-                                      )
-                                    ]
-                                  ),
-                                  _vm._v(" "),
-                                  _c(
-                                    "div",
-                                    {
-                                      staticClass: "modal fade",
-                                      attrs: {
-                                        id: "teams-" + match.id,
-                                        tabindex: "-1",
-                                        role: "dialog"
-                                      }
-                                    },
-                                    [
-                                      _c(
-                                        "div",
-                                        {
-                                          staticClass: "modal-dialog modal-sm",
-                                          attrs: { role: "document" }
-                                        },
-                                        [
-                                          _c(
-                                            "div",
-                                            { staticClass: "modal-content" },
-                                            [
-                                              _c(
-                                                "div",
-                                                { staticClass: "modal-body" },
-                                                [
-                                                  _vm._m(1, true),
-                                                  _vm._v(" "),
-                                                  _c(
-                                                    "form",
-                                                    {
-                                                      attrs: {
-                                                        action:
-                                                          "match/editkteams",
-                                                        method: "post"
-                                                      },
-                                                      on: {
-                                                        submit: function(
-                                                          $event
-                                                        ) {
-                                                          $event.preventDefault()
-                                                          return _vm.onEditTeams(
-                                                            match
-                                                          )
-                                                        }
-                                                      }
-                                                    },
-                                                    [
-                                                      _c(
-                                                        "select",
-                                                        {
-                                                          directives: [
-                                                            {
-                                                              name: "model",
-                                                              rawName:
-                                                                "v-model",
-                                                              value:
-                                                                match.homeTeam,
-                                                              expression:
-                                                                "match.homeTeam"
-                                                            }
-                                                          ],
-                                                          staticClass:
-                                                            "form-control my-1",
-                                                          attrs: {
-                                                            id: "editHomeTeam",
-                                                            placeholder:
-                                                              "dateTime"
-                                                          },
-                                                          on: {
-                                                            change: function(
-                                                              $event
-                                                            ) {
-                                                              var $$selectedVal = Array.prototype.filter
-                                                                .call(
-                                                                  $event.target
-                                                                    .options,
-                                                                  function(o) {
-                                                                    return o.selected
-                                                                  }
-                                                                )
-                                                                .map(function(
-                                                                  o
-                                                                ) {
-                                                                  var val =
-                                                                    "_value" in
-                                                                    o
-                                                                      ? o._value
-                                                                      : o.value
-                                                                  return val
-                                                                })
-                                                              _vm.$set(
-                                                                match,
-                                                                "homeTeam",
-                                                                $event.target
-                                                                  .multiple
-                                                                  ? $$selectedVal
-                                                                  : $$selectedVal[0]
-                                                              )
-                                                            }
-                                                          }
-                                                        },
-                                                        _vm._l(
-                                                          _vm.teams,
-                                                          function(
-                                                            team,
-                                                            index
-                                                          ) {
-                                                            return _c(
-                                                              "option",
-                                                              { key: team.id },
-                                                              [
-                                                                _vm._v(
-                                                                  _vm._s(
-                                                                    team.name
-                                                                  )
-                                                                )
-                                                              ]
-                                                            )
-                                                          }
-                                                        ),
-                                                        0
-                                                      ),
-                                                      _vm._v(" "),
-                                                      _c(
-                                                        "select",
-                                                        {
-                                                          directives: [
-                                                            {
-                                                              name: "model",
-                                                              rawName:
-                                                                "v-model",
-                                                              value:
-                                                                match.awayTeam,
-                                                              expression:
-                                                                "match.awayTeam"
-                                                            }
-                                                          ],
-                                                          staticClass:
-                                                            "form-control my-1",
-                                                          attrs: {
-                                                            id: "editAwayTeam",
-                                                            placeholder:
-                                                              "dateTime"
-                                                          },
-                                                          on: {
-                                                            change: function(
-                                                              $event
-                                                            ) {
-                                                              var $$selectedVal = Array.prototype.filter
-                                                                .call(
-                                                                  $event.target
-                                                                    .options,
-                                                                  function(o) {
-                                                                    return o.selected
-                                                                  }
-                                                                )
-                                                                .map(function(
-                                                                  o
-                                                                ) {
-                                                                  var val =
-                                                                    "_value" in
-                                                                    o
-                                                                      ? o._value
-                                                                      : o.value
-                                                                  return val
-                                                                })
-                                                              _vm.$set(
-                                                                match,
-                                                                "awayTeam",
-                                                                $event.target
-                                                                  .multiple
-                                                                  ? $$selectedVal
-                                                                  : $$selectedVal[0]
-                                                              )
-                                                            }
-                                                          }
-                                                        },
-                                                        _vm._l(
-                                                          _vm.teams,
-                                                          function(
-                                                            team,
-                                                            index
-                                                          ) {
-                                                            return _c(
-                                                              "option",
-                                                              { key: team.id },
-                                                              [
-                                                                _vm._v(
-                                                                  _vm._s(
-                                                                    team.name
-                                                                  )
-                                                                )
-                                                              ]
-                                                            )
-                                                          }
-                                                        ),
-                                                        0
-                                                      ),
-                                                      _vm._v(" "),
-                                                      _c(
-                                                        "div",
-                                                        {
-                                                          staticClass:
-                                                            "text-center"
-                                                        },
-                                                        [
-                                                          _c(
-                                                            "button",
-                                                            {
-                                                              staticClass:
-                                                                "btn btn-lg btn-primary mx-auto mt-3",
-                                                              attrs: {
-                                                                type: "submit",
-                                                                "data-toggle":
-                                                                  "modal",
-                                                                "data-target":
-                                                                  "#teams-" +
-                                                                  match.id
-                                                              }
-                                                            },
-                                                            [_vm._v("Submit")]
-                                                          )
-                                                        ]
-                                                      )
-                                                    ]
-                                                  )
-                                                ]
-                                              )
-                                            ]
-                                          )
-                                        ]
-                                      )
-                                    ]
-                                  ),
-                                  _vm._v(" "),
-                                  _c(
-                                    "div",
-                                    {
-                                      staticClass: "modal fade",
-                                      attrs: {
-                                        id: "kickoff-" + match.id,
-                                        tabindex: "-1",
-                                        role: "dialog"
-                                      }
-                                    },
-                                    [
-                                      _c(
-                                        "div",
-                                        {
-                                          staticClass: "modal-dialog modal-sm",
-                                          attrs: { role: "document" }
-                                        },
-                                        [
-                                          _c(
-                                            "div",
-                                            { staticClass: "modal-content" },
-                                            [
-                                              _c(
-                                                "div",
-                                                { staticClass: "modal-body" },
-                                                [
-                                                  _vm._m(2, true),
-                                                  _vm._v(" "),
-                                                  _c(
-                                                    "form",
-                                                    {
-                                                      attrs: {
-                                                        action:
-                                                          "match/editkickoff",
-                                                        method: "post"
-                                                      },
-                                                      on: {
-                                                        submit: function(
-                                                          $event
-                                                        ) {
-                                                          $event.preventDefault()
-                                                          return _vm.onEditKickoff(
-                                                            match
-                                                          )
-                                                        }
-                                                      }
-                                                    },
-                                                    [
-                                                      _c("input", {
-                                                        directives: [
-                                                          {
-                                                            name: "model",
-                                                            rawName: "v-model",
-                                                            value:
-                                                              match.kickoff,
-                                                            expression:
-                                                              "match.kickoff"
-                                                          }
-                                                        ],
-                                                        staticClass:
-                                                          "form-control",
-                                                        attrs: {
-                                                          type:
-                                                            "datetime-local",
-                                                          id: "kickoff",
-                                                          placeholder:
-                                                            "dateTime"
-                                                        },
-                                                        domProps: {
-                                                          value: match.kickoff
-                                                        },
-                                                        on: {
-                                                          input: function(
-                                                            $event
-                                                          ) {
-                                                            if (
-                                                              $event.target
-                                                                .composing
-                                                            ) {
-                                                              return
-                                                            }
-                                                            _vm.$set(
-                                                              match,
-                                                              "kickoff",
-                                                              $event.target
-                                                                .value
-                                                            )
-                                                          }
-                                                        }
-                                                      }),
-                                                      _vm._v(" "),
-                                                      _c(
-                                                        "div",
-                                                        {
-                                                          staticClass:
-                                                            "text-center"
-                                                        },
-                                                        [
-                                                          _c(
-                                                            "button",
-                                                            {
-                                                              staticClass:
-                                                                "btn btn-lg btn-primary mx-auto mt-3",
-                                                              attrs: {
-                                                                type: "submit",
-                                                                "data-toggle":
-                                                                  "modal",
-                                                                "data-target":
-                                                                  "#kickoff-" +
-                                                                  match.id
-                                                              }
-                                                            },
-                                                            [_vm._v("Submit")]
-                                                          )
-                                                        ]
-                                                      )
-                                                    ]
-                                                  )
-                                                ]
-                                              )
-                                            ]
-                                          )
-                                        ]
-                                      )
-                                    ]
-                                  ),
-                                  _vm._v(" "),
-                                  _c(
-                                    "div",
-                                    {
-                                      staticClass: "modal fade",
-                                      attrs: {
-                                        id: "ETP-" + match.id,
-                                        tabindex: "-1",
-                                        role: "dialog"
-                                      }
-                                    },
-                                    [
-                                      _c(
-                                        "div",
-                                        {
-                                          staticClass: "modal-dialog modal-sm",
-                                          attrs: { role: "document" }
-                                        },
-                                        [
-                                          _c(
-                                            "div",
-                                            { staticClass: "modal-content" },
-                                            [
-                                              _c(
-                                                "div",
-                                                { staticClass: "modal-body" },
-                                                [
-                                                  _vm._m(3, true),
-                                                  _vm._v(" "),
-                                                  _c(
-                                                    "form",
-                                                    {
-                                                      attrs: {
-                                                        action: "match/editETP",
-                                                        method: "post"
-                                                      },
-                                                      on: {
-                                                        submit: function(
-                                                          $event
-                                                        ) {
-                                                          $event.preventDefault()
-                                                          return _vm.onEditETP(
-                                                            match
-                                                          )
-                                                        }
-                                                      }
-                                                    },
-                                                    [
-                                                      _c("label", [
-                                                        _vm._v(
-                                                          "Extra Time and / or Penalties Available"
-                                                        )
-                                                      ]),
-                                                      _vm._v(" "),
-                                                      _c("input", {
-                                                        directives: [
-                                                          {
-                                                            name: "model",
-                                                            rawName: "v-model",
-                                                            value:
-                                                              match.etp_available,
-                                                            expression:
-                                                              "match.etp_available"
-                                                          }
-                                                        ],
-                                                        staticClass:
-                                                          "form-control col-1 mx-auto text-center",
-                                                        attrs: {
-                                                          type: "checkbox"
-                                                        },
-                                                        domProps: {
-                                                          checked: Array.isArray(
-                                                            match.etp_available
-                                                          )
-                                                            ? _vm._i(
-                                                                match.etp_available,
-                                                                null
-                                                              ) > -1
-                                                            : match.etp_available
-                                                        },
-                                                        on: {
-                                                          change: function(
-                                                            $event
-                                                          ) {
-                                                            var $$a =
-                                                                match.etp_available,
-                                                              $$el =
-                                                                $event.target,
-                                                              $$c = $$el.checked
-                                                                ? true
-                                                                : false
-                                                            if (
-                                                              Array.isArray($$a)
-                                                            ) {
-                                                              var $$v = null,
-                                                                $$i = _vm._i(
-                                                                  $$a,
-                                                                  $$v
-                                                                )
-                                                              if (
-                                                                $$el.checked
-                                                              ) {
-                                                                $$i < 0 &&
-                                                                  _vm.$set(
-                                                                    match,
-                                                                    "etp_available",
-                                                                    $$a.concat([
-                                                                      $$v
-                                                                    ])
-                                                                  )
-                                                              } else {
-                                                                $$i > -1 &&
-                                                                  _vm.$set(
-                                                                    match,
-                                                                    "etp_available",
-                                                                    $$a
-                                                                      .slice(
-                                                                        0,
-                                                                        $$i
-                                                                      )
-                                                                      .concat(
-                                                                        $$a.slice(
-                                                                          $$i +
-                                                                            1
-                                                                        )
-                                                                      )
-                                                                  )
-                                                              }
-                                                            } else {
-                                                              _vm.$set(
-                                                                match,
-                                                                "etp_available",
-                                                                $$c
-                                                              )
-                                                            }
-                                                          }
-                                                        }
-                                                      }),
-                                                      _vm._v(" "),
-                                                      _c(
-                                                        "div",
-                                                        {
-                                                          staticClass:
-                                                            "text-center"
-                                                        },
-                                                        [
-                                                          _c(
-                                                            "button",
-                                                            {
-                                                              staticClass:
-                                                                "btn btn-lg btn-primary mx-auto mt-3",
-                                                              attrs: {
-                                                                type: "submit",
-                                                                "data-toggle":
-                                                                  "modal",
-                                                                "data-target":
-                                                                  "#ETP-" +
-                                                                  match.id
-                                                              }
-                                                            },
-                                                            [_vm._v("Submit")]
-                                                          )
-                                                        ]
-                                                      )
-                                                    ]
-                                                  )
-                                                ]
-                                              )
-                                            ]
-                                          )
-                                        ]
-                                      )
-                                    ]
-                                  )
-                                ])
-                              ])
-                            ])
-                          }),
-                          _vm._v(" "),
-                          _vm._m(4)
-                        ],
-                        2
+                                ]),
+                                _vm._v(" "),
+                                _vm._m(6, true)
+                              ]
+                            )
+                          ])
+                        }),
+                        0
                       )
-                    ])
-              ])
-            : _c("div", { staticClass: "col-md-6 card mx-auto mt-2 mb-5" }, [
-                _c("div", { staticClass: "row" }, [
-                  _c(
-                    "a",
-                    {
-                      staticClass: "btn btn-round btn-info col-6 mx-auto",
-                      on: {
-                        click: function($event) {
-                          return _vm.getUnresultedMatches()
-                        }
-                      }
-                    },
-                    [_vm._v("Edit Unresulted")]
-                  )
                 ]),
-                _vm._v(" "),
-                _c("h3", { staticClass: "card-title pt-2" }, [
-                  _vm._v("Resulted Fixtures")
-                ]),
-                _vm._v(" "),
-                !_vm.ready
-                  ? _c("div", { staticClass: "card-body" }, [
-                      _c("div", { staticClass: "row" }, [
-                        _c(
-                          "div",
-                          { staticClass: "mx-auto" },
-                          [_c("Spinner")],
-                          1
-                        )
-                      ])
-                    ])
-                  : _c(
-                      "div",
-                      { staticClass: "card-body" },
-                      _vm._l(_vm.matches, function(match, index) {
-                        return _c("div", { key: match.id }, [
-                          _c(
-                            "form",
-                            {
-                              staticClass: "row py-2",
-                              attrs: {
-                                action: "match/addscores",
-                                method: "post"
-                              },
-                              on: {
-                                submit: function($event) {
-                                  $event.preventDefault()
-                                  return _vm.resetScores(match)
-                                }
-                              }
-                            },
-                            [
-                              _c(
-                                "div",
-                                { staticClass: "col-12 text-center mb-2" },
-                                [
-                                  _c("hr"),
-                                  _vm._v(" "),
-                                  _c("small", [
-                                    _vm._v(
-                                      "\n                                    " +
-                                        _vm._s(
-                                          _vm
-                                            .kickoffFormat(match.kickoff)
-                                            .split(" ")[0]
-                                        ) +
-                                        "\n                                    " +
-                                        _vm._s(
-                                          _vm
-                                            .kickoffFormat(match.kickoff)
-                                            .split(" ")[1]
-                                        ) +
-                                        "\n                                    " +
-                                        _vm._s(
-                                          _vm
-                                            .kickoffFormat(match.kickoff)
-                                            .split(" ")[2]
-                                        ) +
-                                        "\n                                    " +
-                                        _vm._s(
-                                          _vm
-                                            .kickoffFormat(match.kickoff)
-                                            .split(" ")[3]
-                                        ) +
-                                        "\n                                "
-                                    )
-                                  ]),
-                                  _vm._v(" "),
-                                  _c("h6", [
-                                    _vm._v(
-                                      _vm._s(
-                                        _vm
-                                          .kickoffFormat(match.kickoff)
-                                          .split(" ")[4]
-                                      )
-                                    )
-                                  ]),
-                                  _vm._v(" "),
-                                  _vm._m(5, true)
-                                ]
-                              ),
-                              _vm._v(" "),
-                              _c("div", { staticClass: "col-3 mx-auto" }, [
-                                _c("img", {
-                                  attrs: {
-                                    src: match.homeEmblem,
-                                    alt: match.homeTeam
-                                  }
-                                })
-                              ]),
-                              _vm._v(" "),
-                              _c(
-                                "div",
-                                {
-                                  staticClass:
-                                    "form-group col-6 my-auto mx-auto text-center"
-                                },
-                                [
-                                  _c(
-                                    "h1",
-                                    { staticStyle: { display: "inline" } },
-                                    [_vm._v(_vm._s(match.homeGoals) + " - ")]
-                                  ),
-                                  _vm._v(" "),
-                                  _c(
-                                    "h1",
-                                    { staticStyle: { display: "inline" } },
-                                    [_vm._v(_vm._s(match.awayGoals))]
-                                  )
-                                ]
-                              ),
-                              _vm._v(" "),
-                              _c("div", { staticClass: "col-3 mx-auto" }, [
-                                _c("img", {
-                                  attrs: {
-                                    src: match.awayEmblem,
-                                    alt: match.awayTeam
-                                  }
-                                })
-                              ]),
-                              _vm._v(" "),
-                              _vm._m(6, true)
-                            ]
-                          )
-                        ])
-                      }),
-                      0
-                    )
-              ]),
-          _vm._v(" "),
-          _c(
-            "div",
-            { staticClass: "col-md-4 mr-0 ml-auto" },
-            [_c("SeasonReset")],
-            1
-          )
-        ])
-      ]),
+            _vm._v(" "),
+            _c(
+              "div",
+              { staticClass: "col-md-4 mr-0 ml-auto" },
+              [_c("SeasonReset")],
+              1
+            )
+          ])
+        ]
+      ),
       _vm._v(" "),
       _c("Footer")
     ],
@@ -74807,19 +74896,6 @@ var render = function() {
                 _vm._m(1)
               ])
             : _c("ul", { staticClass: "navbar-nav ml-auto" }, [
-                _vm.user.email == "ryan@x4iiiis.com"
-                  ? _c("li", { staticClass: "nav-item" }, [
-                      _c(
-                        "a",
-                        {
-                          staticClass: "nav-link",
-                          attrs: { href: "/backend" }
-                        },
-                        [_vm._v("Backend")]
-                      )
-                    ])
-                  : _vm._e(),
-                _vm._v(" "),
                 _c("div", { staticClass: "dropdown show" }, [
                   _c(
                     "a",
@@ -74870,7 +74946,23 @@ var render = function() {
                           attrs: { href: "/logout" }
                         },
                         [_vm._v("Logout")]
-                      )
+                      ),
+                      _vm._v(" "),
+                      this.$parent.$vnode.componentOptions.tag != "backend"
+                        ? _c("div", { staticClass: "dropdown-divider" })
+                        : _vm._e(),
+                      _vm._v(" "),
+                      this.$parent.$vnode.componentOptions.tag != "backend" &&
+                      _vm.user.email == "ryan@x4iiiis.com"
+                        ? _c(
+                            "a",
+                            {
+                              staticClass: "dropdown-item",
+                              attrs: { href: "/backend" }
+                            },
+                            [_vm._v("Backend")]
+                          )
+                        : _vm._e()
                     ]
                   )
                 ])

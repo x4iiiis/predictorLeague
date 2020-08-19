@@ -1,7 +1,10 @@
 <template>
     <div>
-        <Header :user="users[0]" />
-        <div class="container">
+        <Header :user="user" v-on:account="sidebarStatusFlip"/>
+
+        <MyAccount :show="showSidebar" v-on:account="sidebarStatusFlip"/>
+
+        <div class="container" :style="showSidebar ? 'opacity:0.3;' : ''">
             <div class="row text-center">
 
                 <div class="col-md-5 mx-auto">
@@ -247,23 +250,37 @@
     import FormatKickoff from '../../mixins/moment/formatKickoff'
     import Header from '../nav/Header';
     import Footer from '../nav/Footer';
+    import MyAccount from '../accounts/MyAccount';
 
     export default {
-        mounted() {
+        async mounted() {
             console.log('Fixtures Component mounted.')
+            await this.userCheck();
             this.getTeams();
         },
         data() {
             return {
+                user: [],
                 teams: [],
                 matches: [],
                 ready: false,
                 submitted: false,
                 showResulted: false,
+                showSidebar: false,
             }
         },
         mixins: [ FormatKickoff ],
         methods: {
+            userCheck() {
+                axios
+                    .get('/whoami')
+                    .then(res => {
+                        this.user = res.data[1];
+                    })
+                    .catch(err => {
+                        console.log(err.response);
+                    })
+            },
             getTeams() {
                 axios
                     .get('/getteams')
@@ -435,6 +452,9 @@
                         console.log(err.response);
                     })
             },
+            sidebarStatusFlip() {
+                this.showSidebar = !this.showSidebar;
+            },
         },
         props: [
             'users',
@@ -447,7 +467,8 @@
             SeasonReset,
             Spinner,
             Header,
-            Footer
+            Footer,
+            MyAccount,
         }
     }
 </script>

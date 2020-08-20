@@ -1,7 +1,7 @@
 <template>
     <div class="position-relative h-full w-full bg-dark">
         <div class="px-0 mr-0 ml-auto col-10 col-md-3 fixed-bottom h-75 shadow-lg innyooty" style="z-index:1"
-            :style="show ? '' : 'right:-350px;'"
+            :style="show ? '' : 'right:-500px'"
         >
             <div class="card h-100">
                 <div class="card-header">
@@ -72,7 +72,7 @@ export default {
                 .catch(err => {
                     console.log(err.response);
                 })
-        }
+        },
     }
 }
 </script>

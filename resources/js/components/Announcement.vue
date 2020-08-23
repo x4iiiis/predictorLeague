@@ -24,7 +24,7 @@
                 </p>
                 <p>
                     If you're interested in receiving such notifications, click the dropdown from your name at the top of the page
-                    and open the 'My Account' section, tick the box, and click submit. Piece of piss.
+                    and open the 'My Account' section, tick the box, and click 'Update Profile.' Piece of piss.
                 </p>
                 <small><em>Blair, Colman, I've already enabled yours so you can just ignore this.</em></small>
                 <p class="mt-3">

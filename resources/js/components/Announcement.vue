@@ -31,7 +31,7 @@
                     Please note:
                 </p>
                 <p>
-                    These emails may end up in your junk folder so I'll still be chasing people up for predictions as long as I remember to.
+                    These emails may end up in your junk folder so I'll still be chasing people up for predictions <em>as long as I remember to</em>.
                 </p>
 
                 <p>

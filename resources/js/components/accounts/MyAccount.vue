@@ -1,7 +1,8 @@
 <template>
     <div class="position-relative h-full w-full bg-dark">
         <div class="px-0 mr-0 ml-auto col-10 col-md-3 fixed-bottom h-75 shadow-lg innyooty" style="z-index:1"
-            :style="show ? '' : 'right:-500px'"
+            :style="show ? '' : right"
+            ref="innyooty"
         >
             <div class="card h-100">
                 <div class="card-header">
@@ -46,10 +47,16 @@
 export default {
     mounted() {
         this.getUser();
+
+        const that = this
+        that.$nextTick(function () {
+            that.getWidth()
+        })
     },
     data() {
         return {
             user: {},
+            right: 'right:-2500px;'
         }
     },
     props: [ 'show' ],
@@ -73,6 +80,11 @@ export default {
                     console.log(err.response);
                 })
         },
+        getWidth() {
+            this.right = 'right:-' + this.$refs.innyooty.clientWidth + 'px;';
+            console.log(this.$refs.innyooty.clientWidth);
+
+        }
     }
 }
 </script>

@@ -4,7 +4,6 @@
 
         <MyAccount :show="showSidebar" v-on:account="sidebarStatusFlip"/>
 
-        <Announcement />
 
         <div class="container" :style="showSidebar ? 'opacity:0.3;' : ''">
             <div class="row justify-content-center">
@@ -12,6 +11,8 @@
                 <div v-if="!ready" class="col-1 mx-auto">
                     <Spinner />
                 </div>
+                
+                <Announcement />
                 
                 <!-- <div v-if="!user.hasVoted && ready" class="col-10 mx-auto">
                     <PollingStation :user="user" @voted="closePollingStation" />

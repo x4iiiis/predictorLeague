@@ -82,7 +82,6 @@ export default {
         },
         getWidth() {
             this.right = 'right:-' + this.$refs.innyooty.clientWidth + 'px;';
-            console.log(this.$refs.innyooty.clientWidth);
 
         }
     }

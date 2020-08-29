@@ -16,13 +16,24 @@ class PredictionController extends Controller
     {
         foreach($request->match as $match) {
 
-            Prediction::create([
-                'user_id' => $request->user_id,
-                'match_id' => $match['id'],
-                'homeGoals' => $match['homeGoals'],
-                'awayGoals' => $match['awayGoals'],
-                'winner' => $match['winner']
-                ]);   
+            $prediction = Prediction::create([
+                            'user_id' => $request->user_id,
+                            'match_id' => $match['id'],
+                            'homeGoals' => $match['homeGoals'],
+                            'awayGoals' => $match['awayGoals'],
+                        ]);   
+
+            if($match['homeGoals'] > $match['awayGoals']) {
+                $prediction->winner = Match::where('id', $match['id'])->first()->homeTeam;
+            }
+            else if($match['homeGoals'] < $match['awayGoals']) {
+                $prediction->winner = Match::where('id', $match['id'])->first()->awayTeam;
+            }
+            else {
+                $prediction->winner = $match['winner'];
+            }
+            $prediction->save();
+
         }
         $user = User::where('id', $request->user_id)->first();
         $user->hasSubmitted = 1; 

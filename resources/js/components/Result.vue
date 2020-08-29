@@ -31,15 +31,16 @@
                 <br />
                 <h4 style="display: inline;">{{ this.match.homeGoalsAET }} - </h4>
                 <h4 style="display: inline;">{{ this.match.awayGoalsAET }}</h4>
+            </div>
 
-                <div v-if="this.match.homeGoalsPens">
-                    <br />
-                    <b class="text-center">Penalties</b>
+            <div v-if="this.match.homeGoalsPens">
+                <br />
+                <b class="text-center">Penalties</b>
 
-                    <br />
-                    <h4 style="display: inline;">{{ this.match.homeGoalsPens }} - </h4>
-                    <h4 style="display: inline;">{{ this.match.awayGoalsPens }}</h4>
-                </div>
+                <br />
+                <h4 style="display: inline;">{{ this.match.homeGoalsPens }} - </h4>
+                <h4 style="display: inline;">{{ this.match.awayGoalsPens }}</h4>
+
             </div>
         </div>
 

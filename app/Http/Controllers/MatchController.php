@@ -349,6 +349,11 @@ class MatchController extends Controller
             $relevantMatch = Match::where('id', $request->match['id'])->first();
             $relevantMatch->homeGoals = null;
             $relevantMatch->awayGoals = null;
+            $relevantMatch->homeGoalsAET = null;
+            $relevantMatch->awayGoalsAET = null;
+            $relevantMatch->homeGoalsPens = null;
+            $relevantMatch->awayGoalsPens = null;
+            $relevantMatch->winner = null;
             $relevantMatch->save();
         }
         else {

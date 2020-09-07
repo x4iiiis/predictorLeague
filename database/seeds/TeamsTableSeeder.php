@@ -12,7 +12,7 @@ class TeamsTableSeeder extends Seeder
     public function run()
     {
         $this->ScottishPremiership();
-        // $this->ScottishChampionship();
+        $this->ScottishChampionship();
         $this->PremierLeague();
     }
 

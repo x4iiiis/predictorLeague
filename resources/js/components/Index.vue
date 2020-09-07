@@ -12,8 +12,8 @@
                     <Spinner />
                 </div>
                 
-                <Announcement />
-                
+                <!-- <Announcement /> -->
+
                 <!-- <div v-if="!user.hasVoted && ready" class="col-10 mx-auto">
                     <PollingStation :user="user" @voted="closePollingStation" />
                 </div> -->

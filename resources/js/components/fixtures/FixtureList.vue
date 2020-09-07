@@ -26,7 +26,7 @@
                                 <td style="text-align:right">
                                     <small>{{ users[prediction.user_id - 1].name }}</small>
                                 </td>
-                                <td v-if="prediction.winner == null">
+                                <td v-if="prediction.winner == null || !match.etp_available">
                                     <small>{{ prediction.homeGoals }} - {{ prediction.awayGoals }}</small>
                                 </td>
                                 <td v-else>

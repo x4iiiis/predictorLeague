@@ -52,7 +52,7 @@
                     <td style="text-align:right">
                         <small class="text-success">{{ users[prediction.user_id - 1].name }}</small>
                     </td>
-                    <td v-if="prediction.winner == null">
+                    <td v-if="match.homeGoalsAET == null && match.homeGoalsPens == null">
                         <small class="text-success">{{ prediction.homeGoals }} - {{ prediction.awayGoals }}</small>
                     </td>
                     <td v-else>
@@ -76,7 +76,7 @@
                     <td style="text-align:right">
                         <small style="color:#f6993f">{{ users[prediction.user_id - 1].name }}</small>
                     </td>
-                    <td v-if="prediction.winner == null">
+                    <td v-if="match.homeGoalsAET == null && match.homeGoalsPens == null">
                         <small style="color:#f6993f">{{ prediction.homeGoals }} - {{ prediction.awayGoals }}</small>
                     </td>
                     <td v-else>
@@ -98,7 +98,7 @@
                     <td style="text-align:right">
                         <small>{{ users[prediction.user_id - 1].name }}</small>
                     </td>
-                    <td v-if="prediction.winner == null">
+                    <td v-if="match.homeGoalsAET == null && match.homeGoalsPens == null">
                         <small>{{ prediction.homeGoals }} - {{ prediction.awayGoals }}</small>
                     </td>
                     <td v-else>
